@@ -65,7 +65,7 @@ int main()
     while (running)
     {
         command_line = input("> ", 0);
-        if (!run_command(command_line, &text, separation, &height, &width, &running, &rewritte))
+        if (run_command(command_line, &text, separation, &height, &width, &running, &rewritte))
         {
             error_msg("Unknow command");
         }
@@ -190,20 +190,6 @@ int str_sort(char *str1, char *str2)
         return 0;
     }
     return 0;
-}
-
-int str_standard(char *str)
-{
-    int index = 0;
-    while (str[index])
-    {
-        if (str[index] < 33 || str[index] > 126)
-        {    
-            return 0;
-        }
-        index++;
-    }
-    return 1;
 }
 
 char **read_file(FILE *file)
@@ -391,6 +377,11 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
                 _index = 0;
             }
         }
+        else
+        {
+            error_msg("Name standard isn't respected");
+            return 0;
+        }
         if (_command[index+1] == '\0')
         {
             if (is_word)
@@ -411,7 +402,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             list_command(*text, separation, *height);
         }
-        return 1;
+        return 0;
     }
     else if (!strcmp(args[0], "get"))
     {
@@ -431,7 +422,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             get_command(args[1], *text, separation, *height);
         }
-        return 1;
+        return 0;
     }
     else if (!strcmp(args[0], "add"))
     {
@@ -450,7 +441,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
                 *rewritte = 1;
             }
         }
-        return 1;
+        return 0;
     }
     else if (!strcmp(args[0], "remove") || !strcmp(args[0], "rm"))
     {
@@ -473,7 +464,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
                 *rewritte = 1;
             }
         }
-        return 1;
+        return 0;
     }
     else if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
     {
@@ -492,7 +483,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
                 help(NULL);
             }
         }
-        return 1;
+        return 0;
     }
     else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
     {
@@ -504,9 +495,9 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             *running = 0;
         }
-        return 1;
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 int get_command(char *page, char **text, char *separation, int height)
@@ -523,21 +514,6 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
     if (exist(*text, page, separation, *height))
     {
         error_msg("This plateform already exist");
-        return 1;
-    }
-    if (!str_standard(page))
-    {
-        error_msg("Plateforme name standard isn't respected");
-        return 1;
-    }
-    if (!str_standard(identifiant))
-    {
-        error_msg("Identifiant name standard isn't respected");
-        return 1;
-    }
-    if (!str_standard(password))
-    {
-        error_msg("Password name standard isn't respected");
         return 1;
     }
     int output = add_pass(page, identifiant, password, text, separation, height);
@@ -777,9 +753,9 @@ int help(char *command)
         printf("\n > add : ADD an identifiant and a password with a plateform name you can access with it\n");
         printf("\n > exit : EXIT the program\n");
         printf("\n > get : GET an identifiant and a password from a plateform name\n");
-        printf("\n > help : DISPLAY the description of the commands and their function\n\n");
+        printf("\n > help : DISPLAY the description of the commands and their function\n");
         printf("\n > list : DISPLAY all the plateform's names you can access\n");
-        printf("\n > remove : REMOVE an identifiant and a password from a plateform name\n");
+        printf("\n > remove : REMOVE an identifiant and a password from a plateform name\n\n");
     }
     else
     {
