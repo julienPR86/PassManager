@@ -2,7 +2,7 @@
 I named my project like this, cause the goal was to create in C a "pass manager", who's able to add, remove, get, passwords in a database. But keep in mind that is not safe ! And when a made it, i was thinking that it could be used for passwords, but it can also be used for other things ! It's just a little experiment from me and i like to make projects like this.
 
 ## Requirements
-If you've download the project, then you'll need a .txt file, named passwords.txt, where the data will be store.
+If you've download the project, then you'll need a .txt file, named passwords.txt, which is in the same directory as the executable, where the data will be store.
 Then you just have to run the .exe file !
 ```bash
 manager.exe
