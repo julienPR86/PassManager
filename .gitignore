@@ -2,5 +2,6 @@
 .vscode/
 #.exe file of the script
 *.exe
+!manager.exe
 #password txt file
 passwords.txt
