@@ -774,12 +774,12 @@ int help(char *command)
 {
     if (command == NULL)
     {
-        printf("\n > list : DISPLAY all the plateform's names you can access\n");
-        printf("\n > get : GET an identifiant and a password from a plateform name\n");
         printf("\n > add : ADD an identifiant and a password with a plateform name you can access with it\n");
-        printf("\n > remove : REMOVE an identifiant and a password from a plateform name\n");
         printf("\n > exit : EXIT the program\n");
+        printf("\n > get : GET an identifiant and a password from a plateform name\n");
         printf("\n > help : DISPLAY the description of the commands and their function\n\n");
+        printf("\n > list : DISPLAY all the plateform's names you can access\n");
+        printf("\n > remove : REMOVE an identifiant and a password from a plateform name\n");
     }
     else
     {
