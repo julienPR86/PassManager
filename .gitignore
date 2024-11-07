@@ -1,0 +1,6 @@
+#vs code file
+.vscode/
+#.exe file of the script
+*.exe
+#password txt file
+passwords.txt
