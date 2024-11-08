@@ -32,6 +32,7 @@ int remove_command(char *page, char ***text, char *separation, int *height, int 
 int list_command(char **text, char *separation_str, int height);
 int get_pass(char *name, char **text, char *separation_str, int height);
 int add_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int *height);
+int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line);
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width);
 int help(char *command);
 int error_msg(char *message);
@@ -304,7 +305,7 @@ int exist(char **text, char *name, char *separation_str, int height)
         if (!strcmp(plateform, name))
         {
             free(plateform);
-            return 1;
+            return i+1;
         }
         free(plateform);
     }
@@ -536,7 +537,23 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
         printf("Tap add! to overwrite\n");
         return 1;
     }
-    int output = add_pass(page, identifiant, password, text, separation, height);
+    int output;
+    if (!overwrite)
+    {
+        output = add_pass(page, identifiant, password, text, separation, height);
+    }
+    else
+    {
+        int line = exist(*text, page, separation, *height);
+        if (line)
+        {
+            output = overwrite_pass(page, identifiant, password, text, separation, line);
+        }
+        else
+        {
+            output = add_pass(page, identifiant, password, text, separation, height);
+        }
+    }
     if (output < 0)
     {
         error_msg("Cannot add the password");
@@ -692,6 +709,11 @@ int add_pass(char *name, char *identifiant, char *password, char ***text, char *
     strcat((*text)[*height], line);
     (*height)++;
     return lenght-1;
+}
+
+int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line)
+{
+
 }
 
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width)
