@@ -32,7 +32,7 @@ int remove_command(char *page, char ***text, char *separation, int *height, int 
 int list_command(char **text, char *separation_str, int height);
 int get_pass(char *name, char **text, char *separation_str, int height);
 int add_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int *height);
-int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line);
+int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line_num);
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width);
 int help(char *command);
 int error_msg(char *message);
@@ -537,33 +537,33 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
         printf("Tap add! to overwrite\n");
         return 1;
     }
-    int output;
+    int new_width;
     if (!overwrite)
     {
-        output = add_pass(page, identifiant, password, text, separation, height);
+        new_width = add_pass(page, identifiant, password, text, separation, height);
     }
     else
     {
         int line = exist(*text, page, separation, *height);
         if (line)
         {
-            output = overwrite_pass(page, identifiant, password, text, separation, line);
+            new_width = overwrite_pass(page, identifiant, password, text, separation, line);
         }
         else
         {
-            output = add_pass(page, identifiant, password, text, separation, height);
+            new_width = add_pass(page, identifiant, password, text, separation, height);
         }
     }
-    if (output < 0)
+    if (new_width < 0)
     {
         error_msg("Cannot add the password");
         return 1;
     }
     else
     {
-        if (output > *width)
+        if (new_width > *width)
         {
-            *width = output;
+            *width = new_width;
         }
     }
     (*text) = sort(*text, *height);
@@ -572,14 +572,17 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
 
 int remove_command(char *page, char ***text, char *separation, int *height, int *width)
 {
-    int output = remove_pass(page, text, separation, height, *width);
-    if (output < 0)
+    int new_width = remove_pass(page, text, separation, height, *width);
+    if (new_width < 0)
     {
         return 1;
     }
     else
     {
-        *width = output;
+        if (!new_width)
+        {
+        *width = new_width;
+        }
     }
     (*text) = sort(*text, *height);
     return 0;
@@ -711,9 +714,20 @@ int add_pass(char *name, char *identifiant, char *password, char ***text, char *
     return lenght-1;
 }
 
-int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line)
+int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line_num)
 {
+    int lenght = strlen(name)+strlen(identifiant)+strlen(password)+strlen(separation)*2+1;
 
+    char line[lenght];
+    line[0] = '\0';
+    strcat(line, name);
+    strcat(line, separation);
+    strcat(line, identifiant);
+    strcat(line, separation);
+    strcat(line, password);
+
+
+    return lenght-1;
 }
 
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width)
