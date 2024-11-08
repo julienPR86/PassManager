@@ -8,7 +8,7 @@ touch passwords.txt
 ```
 Then you just have to run the .exe file !
 ```bash
-manager.exe
+./manager.exe
 ```
 
 ## Contributing
