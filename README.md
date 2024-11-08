@@ -3,6 +3,9 @@ I named my project like this, cause the goal was to create in C a "pass manager"
 
 ## Requirements
 If you've download the project, then you'll need a .txt file, named passwords.txt, which is in the same directory as the executable, where the data will be store.
+```bash
+touch passwords.txt
+```
 Then you just have to run the .exe file !
 ```bash
 manager.exe
