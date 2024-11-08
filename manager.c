@@ -424,7 +424,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         return 0;
     }
-    else if (!strncmp(args[0], "add", 3))
+    else if (!strcmp(args[0], "add"))
     {
         if (length > 4)
         {
@@ -436,19 +436,28 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            if (args[0][4] == '!')
+            if (!add_command(args[1],args[2],args[3], text, separation, height, width, 0))
             {
-                if (!add_command(args[1],args[2],args[3], text, separation, height, width, 1))
-                {
-                    *rewritte = 1;
-                }
+                *rewritte = 1;
             }
-            else
+        }
+        return 0;
+    }
+    else if (!strcmp(args[0], "add!"))
+    {
+        if (length > 4)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 4)
+        {
+            error_msg("Not enough arguments");
+        }
+        else
+        {
+            if (!add_command(args[1],args[2],args[3], text, separation, height, width, 1))
             {
-                if (!add_command(args[1],args[2],args[3], text, separation, height, width, 0))
-                {
-                    *rewritte = 1;
-                }
+                *rewritte = 1;
             }
         }
         return 0;
