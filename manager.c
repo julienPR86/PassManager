@@ -726,7 +726,7 @@ int overwrite_pass(char *name, char *identifiant, char *password, char ***text, 
     strcat(line, separation);
     strcat(line, password);
 
-    strcpy(*text[line_num-1], line);
+    strcpy((*text)[line_num-1], line);
     return lenght-1;
 }
 
