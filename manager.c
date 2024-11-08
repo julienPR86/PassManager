@@ -27,7 +27,7 @@ int exist(char **text, char *str, char *separation_str, int height);
 
 int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewritte);
 int get_command(char *page, char **text, char *separation, int height);
-int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width);
+int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width, int overwrite);
 int remove_command(char *page, char ***text, char *separation, int *height, int *width);
 int list_command(char **text, char *separation_str, int height);
 int get_pass(char *name, char **text, char *separation_str, int height);
@@ -424,7 +424,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         return 0;
     }
-    else if (!strcmp(args[0], "add"))
+    else if (!strncmp(args[0], "add", 3))
     {
         if (length > 4)
         {
@@ -436,9 +436,19 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            if (!add_command(args[1],args[2],args[3], text, separation, height, width))
+            if (args[0][4] == '!')
             {
-                *rewritte = 1;
+                if (!add_command(args[1],args[2],args[3], text, separation, height, width, 1))
+                {
+                    *rewritte = 1;
+                }
+            }
+            else
+            {
+                if (!add_command(args[1],args[2],args[3], text, separation, height, width, 0))
+                {
+                    *rewritte = 1;
+                }
             }
         }
         return 0;
@@ -509,11 +519,12 @@ int get_command(char *page, char **text, char *separation, int height)
     return 0;
 }
 
-int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width)
+int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width, int overwrite)
 {
-    if (exist(*text, page, separation, *height))
+    if (exist(*text, page, separation, *height) && !overwrite)
     {
         error_msg("This plateform already exist");
+        printf("Tap add! to overwrite\n");
         return 1;
     }
     int output = add_pass(page, identifiant, password, text, separation, height);
@@ -524,7 +535,10 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
     }
     else
     {
-        *width = output;
+        if (output > *width)
+        {
+            *width = output;
+        }
     }
     (*text) = sort(*text, *height);
     return 0;
@@ -632,7 +646,7 @@ int get_pass(char *name, char **text, char *separation_str, int height)
     fprintf(clipboard, password);
     pclose(clipboard);
 
-    printf("Password copied !\n\n");
+    printf("Password copied !\n");
     free(page);
     free(identifiant);
     free(password);
