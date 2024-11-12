@@ -732,12 +732,10 @@ int overwrite_pass(char *name, char *identifiant, char *password, char ***text, 
 
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width)
 {
-    int line_index, find = 0, separation_index, separation_length = strlen(separation_str);
+    int line_index, find = 0;
     char *page;
     for (int line = 0; line < *height; line++)
     {
-        int index = 0;
-        separation_index = 0;
         page = get_plateform_name(((*text)[line]), separation_str);
         if (page == NULL)
         {
@@ -764,8 +762,10 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
             return 0;
         }
         if (line_index != (*height)-1)
+        {
             free(*((*text)+line_index));
             *((*text)+line_index) = *((*text)+(*height-1));
+        }
         (*height)--;
         *text = realloc(*text, (*height) * sizeof(char *));
         if (*text == NULL)
