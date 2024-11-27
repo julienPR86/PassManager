@@ -15,7 +15,7 @@
 
 int get_height(FILE *file);
 int get_width(FILE *file);
-int chrcmp(char chr1, char chr2, int value1, int value2);
+int charcmp(char chr1, char chr2, int value1, int value2);
 int str_sort(char *str1, char *str2);
 int str_standard(char *str);
 int get_words_num(char *_command);
@@ -25,14 +25,14 @@ char *get_plateform_name(char *str, char *separation_str);
 char **sort(char **text, int height);
 int exist(char **text, char *str, char *separation_str, int height);
 
-int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewritte);
+int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewrite);
 int get_command(char *page, char **text, char *separation, int height);
-int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width, int overwrite);
+int add_command(char *page, char *identifier, char *password, char ***text, char *separation, int *height, int *width, int overwrite);
 int remove_command(char *page, char ***text, char *separation, int *height, int *width);
 int list_command(char **text, char *separation_str, int height);
 int get_pass(char *name, char **text, char *separation_str, int height);
-int add_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int *height);
-int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line_num);
+int add_pass(char *name, char *identifier, char *password, char ***text, char *separation, int *height);
+int overwrite_pass(char *name, char *identifier, char *password, char ***text, char *separation, int line_num);
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width);
 int help(char *command);
 int error_msg(char *message);
@@ -55,7 +55,7 @@ int main()
     }
     
     char *separation = "     ", *command_line;
-    int running = 1, rewritte = 0, width = get_width(file), height = get_height(file);
+    int running = 1, rewrite = 0, width = get_width(file), height = get_height(file);
     fclose(file);
     text = sort(text, height);
     if (!width)
@@ -66,13 +66,13 @@ int main()
     while (running)
     {
         command_line = input("> ", 0);
-        if (run_command(command_line, &text, separation, &height, &width, &running, &rewritte))
+        if (run_command(command_line, &text, separation, &height, &width, &running, &rewrite))
         {
             error_msg("Unknow command");
         }
         free(command_line);
     }
-    if (rewritte)
+    if (rewrite)
     {    
         text = sort(text, height);
         FILE *end_file = fopen(filename, "w");
@@ -125,7 +125,7 @@ int get_width(FILE *file)
     return max_width;
 }
 
-int chrcmp(char chr1, char chr2, int value1, int value2)
+int charcmp(char chr1, char chr2, int value1, int value2)
 {
     if (chr1+value1 < chr2+value2)
     {
@@ -140,53 +140,53 @@ int chrcmp(char chr1, char chr2, int value1, int value2)
 
 int str_sort(char *str1, char *str2)
 {
-    int index = 0, indice = 0;
-    while (str1[index] || str2[indice])
+    int index = 0, _index = 0;
+    while (str1[index] || str2[_index])
     {
-        if (str1[index] == str2[indice])
+        if (str1[index] == str2[_index])
         {
             if (str1[index]){index++;}
-            if (str2[indice]){indice++;}
+            if (str2[_index]){_index++;}
         }
         else
         {
             if ((str1[index] >= 65 && str1[index] <= 90) && (str2[index] >= 65 && str2[index] <= 90))
             {
-                return chrcmp(str1[index], str2[index], 0, 0);
+                return charcmp(str1[index], str2[index], 0, 0);
             }
             else if ((str1[index] >= 65 && str1[index] <= 90) && !(str2[index] >= 65 && str2[index] <= 90))
             {
-                if (str1[index]+32 == str2[indice])
+                if (str1[index]+32 == str2[_index])
                 {
                     return 0;
                 }
                 else
                 {
-                    return chrcmp(str1[index], str2[index], 32, 0);
+                    return charcmp(str1[index], str2[index], 32, 0);
                 }
             }
             else if (!(str1[index] >= 65 && str1[index] <= 90) && (str2[index] >= 65 && str2[index] <= 90))
             {
-                if (str1[index] == str2[indice]+32)
+                if (str1[index] == str2[_index]+32)
                 {
                     return 1;
                 }
                 else
                 {
-                    return chrcmp(str1[index], str2[index], 0, 32);
+                    return charcmp(str1[index], str2[index], 0, 32);
                 }
             }
             else
             {
-                return chrcmp(str1[index], str2[index], 0, 0);
+                return charcmp(str1[index], str2[index], 0, 0);
             }
         }
     }
-    if (index < indice)
+    if (index < _index)
     {
         return 1;
     }
-    else if (indice > index)
+    else if (_index > index)
     {
         return 0;
     }
@@ -353,29 +353,29 @@ int get_words_num(char *string)
     return words;
 }
 
-int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewritte)
+int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewrite)
 {
     int length = get_words_num(_command);
     char args[length][strlen(_command)];
-    int index = 0, indice = 0, _index = 0, is_word = 0;
+    int index = 0, _index = 0, word_index = 0, is_word = 0;
     char word[strlen(_command)];
     while (_command[index])
     {
         if (_command[index] >= 33 && _command[index] <= 126)
         {
-            word[_index] = _command[index];
+            word[word_index] = _command[index];
             is_word = 1;
-            _index++;
+            word_index++;
         }
         else if (_command[index] == ' ')
         {
             if (is_word)
             {
-                word[_index] = '\0';
-                strcpy(args[indice], word);
-                indice++;
+                word[word_index] = '\0';
+                strcpy(args[_index], word);
+                _index++;
                 is_word = 0;
-                _index = 0;
+                word_index = 0;
             }
         }
         else
@@ -387,8 +387,8 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             if (is_word)
             {
-                word[_index] = '\0';
-                strcpy(args[indice], word);
+                word[word_index] = '\0';
+                strcpy(args[_index], word);
             }
         }
         index++;
@@ -439,7 +439,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             if (!add_command(args[1],args[2],args[3], text, separation, height, width, 0))
             {
-                *rewritte = 1;
+                *rewrite = 1;
             }
         }
         return 0;
@@ -458,7 +458,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             if (!add_command(args[1],args[2],args[3], text, separation, height, width, 1))
             {
-                *rewritte = 1;
+                *rewrite = 1;
             }
         }
         return 0;
@@ -481,7 +481,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         {
             if (!remove_command(args[1], text, separation, height, width))
             {
-                *rewritte = 1;
+                *rewrite = 1;
             }
         }
         return 0;
@@ -529,7 +529,7 @@ int get_command(char *page, char **text, char *separation, int height)
     return 0;
 }
 
-int add_command(char *page, char *identifiant, char *password, char ***text, char *separation, int *height, int *width, int overwrite)
+int add_command(char *page, char *identifier, char *password, char ***text, char *separation, int *height, int *width, int overwrite)
 {
     if (exist(*text, page, separation, *height) && !overwrite)
     {
@@ -540,18 +540,18 @@ int add_command(char *page, char *identifiant, char *password, char ***text, cha
     int new_width;
     if (!overwrite)
     {
-        new_width = add_pass(page, identifiant, password, text, separation, height);
+        new_width = add_pass(page, identifier, password, text, separation, height);
     }
     else
     {
         int line = exist(*text, page, separation, *height);
         if (line)
         {
-            new_width = overwrite_pass(page, identifiant, password, text, separation, line);
+            new_width = overwrite_pass(page, identifier, password, text, separation, line);
         }
         else
         {
-            new_width = add_pass(page, identifiant, password, text, separation, height);
+            new_width = add_pass(page, identifier, password, text, separation, height);
         }
     }
     if (new_width < 0)
@@ -590,30 +590,30 @@ int remove_command(char *page, char ***text, char *separation, int *height, int 
 
 int get_pass(char *name, char **text, char *separation_str, int height)
 {
-    int find = 0, index = 0, indice, separation_index, separation_length = strlen(separation_str);
-    char *page, *identifiant, *password;
+    int find = 0, index = 0, _index, separation_index, separation_length = strlen(separation_str);
+    char *page, *identifier, *password;
     for (int line = 0; line < height; line++)
     {
         page = get_plateform_name(text[line], separation_str);
         if (page == NULL)
         {
-            error_msg("Cannot get the plateforme name");
+            error_msg("Cannot get the plateform name");
             return 1;
         }
-        //if the aksing plateform name and the one finded are the same, get the identifiant and password
+        //if the asking plateform name and the one found are the same, get the identifier and password
         if (!strcmp(name, page))
         {
             index += strlen(page) + strlen(separation_str);
             find = 1;
-            //get the identifiant
-            identifiant = (char *)malloc(strlen(text[line]) * sizeof(char));
-            if (identifiant == NULL)
+            //get the identifier
+            identifier = (char *)malloc(strlen(text[line]) * sizeof(char));
+            if (identifier == NULL)
             {
                 free(page);
                 error_msg("Memory allocation error");
                 return 1;
             }
-            indice = separation_index = 0;
+            _index = separation_index = 0;
             while (separation_index < separation_length && text[line][index])
             {
                 if (text[line][index] == separation_str[separation_index])
@@ -624,28 +624,28 @@ int get_pass(char *name, char **text, char *separation_str, int height)
                 {
                     separation_index = 0;
                 }
-                identifiant[indice] = text[line][index];
+                identifier[_index] = text[line][index];
                 index++;
-                indice++;
+                _index++;
             }
-            identifiant[indice-separation_length] = '\0';
+            identifier[_index-separation_length] = '\0';
             //get the password
             password = (char *)malloc(strlen(text[line]) * sizeof(char));
             if (password == NULL)
             {
                 free(page);
-                free(identifiant);
+                free(identifier);
                 error_msg("Memory allocation error");
                 return 1;
             }
-            indice = 0;
+            _index = 0;
             while (text[line][index] && text[line][index] != 10 && text[line][index] != 13)
             {
-                password[indice] = text[line][index];
-                indice++;
+                password[_index] = text[line][index];
+                _index++;
                 index++;
             }
-            password[indice] = '\0';
+            password[_index] = '\0';
             break;
         }
         else
@@ -655,19 +655,19 @@ int get_pass(char *name, char **text, char *separation_str, int height)
     }
     if (!find)
     {
-        error_msg("The given name is inexisting or incorrect");
+        error_msg("The given name is non-exitent or incorrect");
         return 1;
     }
     //display the informations
     printf("\n > Plateform : %s\n", page);
-    printf(" > Identifiant : %s\n", identifiant);
+    printf(" > Identifier : %s\n", identifier);
     printf(" > Password : %s\n\n", password);
 
     FILE *clipboard = popen(CLIPBOARD_CMD, "w");
     if (clipboard == NULL)
     {
         free(page);
-        free(identifiant);
+        free(identifier);
         free(password);
         error_msg("Failed to open clipboard");
         return 1;
@@ -677,14 +677,14 @@ int get_pass(char *name, char **text, char *separation_str, int height)
 
     printf("Password copied !\n");
     free(page);
-    free(identifiant);
+    free(identifier);
     free(password);
     return 0;
 }
 
-int add_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int *height)
+int add_pass(char *name, char *identifier, char *password, char ***text, char *separation, int *height)
 {
-    int lenght = strlen(name)+strlen(identifiant)+strlen(password)+strlen(separation)*2+1;
+    int length = strlen(name)+strlen(identifier)+strlen(password)+strlen(separation)*2+1;
 
     *text = (char **)realloc(*text, ((*height)+1) * sizeof(char *));
     if (*text == NULL)
@@ -693,46 +693,46 @@ int add_pass(char *name, char *identifiant, char *password, char ***text, char *
         error_msg("Memory allocation error");
         return -1;
     }
-    (*text)[*height] = (char *)malloc(lenght * sizeof(char));
+    (*text)[*height] = (char *)malloc(length * sizeof(char));
     if ((*text)[*height] == NULL)
     {
         error_msg("Memory allocation error");
         return -1;
     }
 
-    char line[lenght];
+    char line[length];
     line[0] = '\0';
     strcat(line, name);
     strcat(line, separation);
-    strcat(line, identifiant);
+    strcat(line, identifier);
     strcat(line, separation);
     strcat(line, password);
 
     (*text)[*height][0] = '\0';
     strcat((*text)[*height], line);
     (*height)++;
-    return lenght-1;
+    return length-1;
 }
 
-int overwrite_pass(char *name, char *identifiant, char *password, char ***text, char *separation, int line_num)
+int overwrite_pass(char *name, char *identifier, char *password, char ***text, char *separation, int line_num)
 {
-    int lenght = strlen(name)+strlen(identifiant)+strlen(password)+strlen(separation)*2+1;
+    int length = strlen(name)+strlen(identifier)+strlen(password)+strlen(separation)*2+1;
 
-    char line[lenght];
+    char line[length];
     line[0] = '\0';
     strcat(line, name);
     strcat(line, separation);
-    strcat(line, identifiant);
+    strcat(line, identifier);
     strcat(line, separation);
     strcat(line, password);
 
     strcpy((*text)[line_num-1], line);
-    return lenght-1;
+    return length-1;
 }
 
 int remove_pass(char *name, char ***text, char *separation_str, int *height, int width)
 {
-    int line_index, find = 0;
+    int lineword_index, find = 0;
     char *page;
     for (int line = 0; line < *height; line++)
     {
@@ -744,7 +744,7 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
         if (!strcmp(name, page))
         {
             free(page);
-            line_index = line;
+            lineword_index = line;
             find = 1;
             break;
         }
@@ -761,10 +761,10 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
             (*height)--;
             return 0;
         }
-        if (line_index != (*height)-1)
+        if (lineword_index != (*height)-1)
         {
-            free(*((*text)+line_index));
-            *((*text)+line_index) = *((*text)+(*height-1));
+            free(*((*text)+lineword_index));
+            *((*text)+lineword_index) = *((*text)+(*height-1));
         }
         (*height)--;
         *text = realloc(*text, (*height) * sizeof(char *));
@@ -776,7 +776,7 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
     }
     else
     {
-        error_msg("The given name is inexisting or incorrect");
+        error_msg("The given name is non-exitent or incorrect");
         return -1;
     }
     return width;
@@ -809,12 +809,12 @@ int help(char *command)
 {
     if (command == NULL)
     {
-        printf("\n > add : ADD an identifiant and a password with a plateform name you can access with it\n");
+        printf("\n > add : ADD an identifier and a password with a plateform name you can access with it\n");
         printf("\n > exit : EXIT the program\n");
-        printf("\n > get : GET an identifiant and a password from a plateform name\n");
+        printf("\n > get : GET an identifier and a password from a plateform name\n");
         printf("\n > help : DISPLAY the description of the commands and their function\n");
         printf("\n > list : DISPLAY all the plateform's names you can access\n");
-        printf("\n > remove : REMOVE an identifiant and a password from a plateform name\n\n");
+        printf("\n > remove : REMOVE an identifier and a password from a plateform name\n\n");
     }
     else
     {
@@ -826,17 +826,17 @@ int help(char *command)
         else if (!strcmp(command, "get"))
         {
             printf("\n > get [name]\n");
-            printf("\n  > GET an identifiant and a password from a plateform name\n\n");
+            printf("\n  > GET an identifier and a password from a plateform name\n\n");
         }
         else if (!strcmp(command, "add"))
         {
-            printf("\n > add [name] [identifiant] [password]\n");
-            printf("\n  > ADD an identifiant and a password with a plateform name you can access with it\n\n");
+            printf("\n > add [name] [identifier] [password]\n");
+            printf("\n  > ADD an identifier and a password with a plateform name you can access with it\n\n");
         }
         else if (!strcmp(command, "remove") || !strcmp(command, "rm"))
         {
             printf("\n > remove [name]\n");
-            printf("\n  > REMOVE an identifiant and a password from a plateform name\n\n");
+            printf("\n  > REMOVE an identifier and a password from a plateform name\n\n");
         }
         else if (!strcmp(command, "help") || !strcmp(command, "?"))
         {
