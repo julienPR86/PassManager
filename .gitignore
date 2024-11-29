@@ -1,6 +1,8 @@
 #vs code files
 .vscode/
-#.exe files of the script
+#.exe files
 *.exe
+#obj files
+*.o
 #password file
 passwords.txt
