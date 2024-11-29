@@ -17,4 +17,4 @@ $(TMP)%.o : $(SCRIPTS)%.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 	
 clean :
-	rm -f $(TMP)*.o
+	rm -f $(TMP)*.o main.o
