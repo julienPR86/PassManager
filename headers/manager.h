@@ -13,8 +13,9 @@
 #include "utils.h"
 #include "remove.h"
 #include "str.h"
+#include "vars.h"
 
 /*run a command that can affect text*/
-int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewrite);
+int run_command(char *_command, int *rewrite);
 
 #endif

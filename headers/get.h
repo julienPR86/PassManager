@@ -17,9 +17,9 @@
 #endif
 
 /*get the identifier and the password of the name passed in*/
-int get_command(char *name, char **text, char *separation, int height);
+int get_command(char *name);
 
 /*get the identifier and the password of the name passed in*/
-int get_pass(char *name, char **text, char *separation, int height);
+int get_pass(char *name);
 
 #endif

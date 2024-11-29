@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include "str.h"
 #include "utils.h"
-/*remove a password based on the name passed in*/
-int remove_command(char *name, char ***text, char *separation, int *height, int *width);
+#include "vars.h"
 
 /*remove a password based on the name passed in*/
-int remove_pass(char *name, char ***text, char *separation, int *height, int width);
+int remove_command(char *name);
+
+/*remove a password based on the name passed in*/
+int remove_pass(char *name);
 
 #endif

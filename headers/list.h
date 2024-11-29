@@ -3,8 +3,9 @@
 
 #include <stdio.h>
 #include "utils.h"
+#include "vars.h"
 
 /*Display all the names the are registers*/
-int list_command(char **text, char *separation, int height);
+int list_command();
 
 #endif

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "vars.h"
 
 /*read the file passed in, and return a arrray of strings*/
 char **read_file(FILE *file);
@@ -15,6 +16,6 @@ int get_height(FILE *file);
 int get_width(FILE *file);
 
 /*write the text in the file passed in*/
-int write_file(FILE *file, char **text, int height);
+int write_file(FILE *file);
 
 #endif

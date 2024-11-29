@@ -6,14 +6,15 @@
 #include <string.h>
 #include "utils.h"
 #include "str.h"
+#include "vars.h"
 
 /*add a password to the database*/
-int add_command(char *name, char *identifier, char *password, char ***text, char *separation, int *height, int *width, int overwrite);
+int add_command(char *name, char *identifier, char *password, int overwrite);
 
 /*add a password to the database*/
-int add_pass(char *name, char *identifier, char *password, char ***text, char *separation, int *height);
+int add_pass(char *name, char *identifier, char *password);
 
 /*overwrite a password already existing*/
-int overwrite_pass(char *name, char *identifier, char *password, char ***text, char *separation, int line);
+int overwrite_pass(char *name, char *identifier, char *password, int line);
 
 #endif
