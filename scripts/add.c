@@ -2,7 +2,7 @@
 
 int add_command(char *page, char *identifier, char *password, int overwrite)
 {
-    if (exist(*text, page) && !overwrite)
+    if (exist(*text) && !overwrite)
     {
         error_msg("This plateform already exist");
         printf("Tap add! to overwrite\n");
@@ -15,7 +15,7 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
     }
     else
     {
-        int line = exist(*text, page);
+        int line = exist(page);
         if (line)
         {
             new_width = overwrite_pass(page, identifier, password, line);
@@ -37,7 +37,7 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
             text_width = new_width;
         }
     }
-    (*text) = sort(*text);
+    text = sort(text);
     return 0;
 }
 
@@ -45,15 +45,15 @@ int add_pass(char *name, char *identifier, char *password)
 {
     int length = strlen(name)+strlen(identifier)+strlen(password)+strlen(separation)*2+1;
 
-    *text = (char **)realloc(*text, (text_height+1) * sizeof(char *));
-    if (*text == NULL)
+    text = (char **)realloc(text, (text_height+1) * sizeof(char *));
+    if (text == NULL)
     {
         printf("realloc ?\n");
         error_msg("Memory allocation error");
         return -1;
     }
-    (*text)[text_height] = (char *)malloc(length * sizeof(char));
-    if ((*text)[text_height] == NULL)
+    text[text_height] = (char *)malloc(length * sizeof(char));
+    if (text[text_height] == NULL)
     {
         error_msg("Memory allocation error");
         return -1;
@@ -68,7 +68,7 @@ int add_pass(char *name, char *identifier, char *password)
     strcat(line, password);
 
     text[text_height][0] = '\0';
-    strcat((*text)[text_height], line);
+    strcat(text[text_height], line);
     text_height++;
     return length-1;
 }
@@ -85,6 +85,6 @@ int overwrite_pass(char *name, char *identifier, char *password, int line_num)
     strcat(line, separation);
     strcat(line, password);
 
-    strcpy((*text)[line_num-1], line);
+    strcpy(text[line_num-1], line);
     return length-1;
 }
