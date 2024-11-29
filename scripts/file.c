@@ -87,11 +87,11 @@ int get_width(FILE *file)
     return max_width;
 }
 
-int write_file(FILE *file, char **text, int height)
+int write_file(FILE *file)
 {
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < text_height; i++)
     {
-        if (i != height-1)
+        if (i != text_height-1)
             fprintf(file, "%s\n", text[i]);
         else
             fprintf(file, "%s", text[i]);

@@ -1,10 +1,10 @@
 #include "../headers/utils.h"
 
-int exist(char **text, char *name, char *separation_str, int height)
+int exist(char *name)
 {
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < text_height; i++)
     {
-        char *plateform = get_plateform_name(text[i], separation_str);
+        char *plateform = get_plateform_name(text[i]);
         if (plateform == NULL)
         {
             exit(1);
@@ -48,9 +48,9 @@ int get_words_num(char *string)
     return words;
 }
 
-char *get_plateform_name(char *str, char *separation_str)
+char *get_plateform_name(char *str)
 {
-    int index = 0, separation_index, separation_length = strlen(separation_str);
+    int index = 0, separation_index, separation_length = strlen(separation);
     char *page = (char *)malloc(sizeof(char *) * strlen(str));
     if (page == NULL)
     {
@@ -60,7 +60,7 @@ char *get_plateform_name(char *str, char *separation_str)
     separation_index = 0;
     while (separation_index < separation_length && str[index])
     {
-        if (str[index] == separation_str[separation_index])
+        if (str[index] == separation[separation_index])
         {
             separation_index++;
         }

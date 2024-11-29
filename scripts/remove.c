@@ -1,8 +1,8 @@
 #include "../headers/remove.h"
 
-int remove_command(char *page, char ***text, char *separation, int *height, int *width)
+int remove_command(char *page)
 {
-    int new_width = remove_pass(page, text, separation, height, *width);
+    int new_width = remove_pass(page);
     if (new_width < 0)
     {
         return 1;
@@ -11,20 +11,20 @@ int remove_command(char *page, char ***text, char *separation, int *height, int 
     {
         if (!new_width)
         {
-        *width = new_width;
+            text_width = new_width;
         }
     }
-    (*text) = sort(*text, *height);
+    text = sort(text);
     return 0;
 }
 
-int remove_pass(char *name, char ***text, char *separation_str, int *height, int width)
+int remove_pass(char *name)
 {
     int lineword_index, find = 0;
     char *page;
-    for (int line = 0; line < *height; line++)
+    for (int line = 0; line < text_height; line++)
     {
-        page = get_plateform_name(((*text)[line]), separation_str);
+        page = get_plateform_name(text[line]);
         if (page == NULL)
         {
             exit(1);
@@ -43,20 +43,20 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
     }
     if (find)
     {
-        if (*height == 1)
+        if (text_height == 1)
         {
-            ***text = '\0';
-            (*height)--;
+            **text = '\0';
+            text_height--;
             return 0;
         }
-        if (lineword_index != (*height)-1)
+        if (lineword_index != text_height-1)
         {
             free(*((*text)+lineword_index));
-            *((*text)+lineword_index) = *((*text)+(*height-1));
+            *((*text)+lineword_index) = (*text)+text_height-1;
         }
-        (*height)--;
-        *text = realloc(*text, (*height) * sizeof(char *));
-        if (*text == NULL)
+        text_height--;
+        text = realloc(text, text_height * sizeof(char *));
+        if (text == NULL)
         {
             error_msg("Memory allocation error");
             return -1;
@@ -67,5 +67,5 @@ int remove_pass(char *name, char ***text, char *separation_str, int *height, int
         error_msg("The given name is non-exitent or incorrect");
         return -1;
     }
-    return width;
+    return text_width;
 }

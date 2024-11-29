@@ -1,6 +1,6 @@
 #include "../headers/manager.h"
 
-int run_command(char *_command, char ***text, char *separation, int *height, int *width, int *running, int *rewrite)
+int run_command(char *_command, int *rewrite)
 {
     int length = get_words_num(_command);
     char args[length][strlen(_command)];
@@ -48,13 +48,13 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            list_command(*text, separation, *height);
+            list_command();
         }
         return 0;
     }
     else if (!strcmp(args[0], "get"))
     {
-        if (!(*height))
+        if (!text_height)
         {
             error_msg("There is no passwords you can get");
         }
@@ -68,7 +68,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            get_command(args[1], *text, separation, *height);
+            get_command(args[1]);
         }
         return 0;
     }
@@ -84,7 +84,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            if (!add_command(args[1],args[2],args[3], text, separation, height, width, 0))
+            if (!add_command(args[1],args[2],args[3], 0))
             {
                 *rewrite = 1;
             }
@@ -103,7 +103,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            if (!add_command(args[1],args[2],args[3], text, separation, height, width, 1))
+            if (!add_command(args[1],args[2],args[3], 1))
             {
                 *rewrite = 1;
             }
@@ -112,7 +112,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
     }
     else if (!strcmp(args[0], "remove") || !strcmp(args[0], "rm"))
     {
-        if (!(*height))
+        if (!text_height)
         {
             error_msg("There is no passwords to remove");
         }
@@ -126,7 +126,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            if (!remove_command(args[1], text, separation, height, width))
+            if (!remove_command(args[1]))
             {
                 *rewrite = 1;
             }
@@ -160,7 +160,7 @@ int run_command(char *_command, char ***text, char *separation, int *height, int
         }
         else
         {
-            *running = 0;
+            running = 0;
         }
         return 0;
     }

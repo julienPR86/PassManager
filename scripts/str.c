@@ -68,15 +68,15 @@ int str_sort(char *str1, char *str2)
     return 0;
 }
 
-char **sort(char **text, int height)
+char **sort(char **text)
 {
-    if (!height || height == 1)
+    if (!text_height || text_height == 1)
     {
         return text;
     }
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < text_height; i++)
     {
-        for (int j = 0; j < height-1; j++)
+        for (int j = 0; j < text_height-1; j++)
         {
             if (!str_sort(text[j], text[j+1]))
             {

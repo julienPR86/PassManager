@@ -1,21 +1,21 @@
 #include "../headers/get.h"
 
-int get_command(char *page, char **text, char *separation, int height)
+int get_command(char *page)
 {
-    if (get_pass(page, text, separation, height))
+    if (get_pass(page))
     {
         return 1;
     }
     return 0;
 }
 
-int get_pass(char *name, char **text, char *separation_str, int height)
+int get_pass(char *name)
 {
-    int find = 0, index = 0, _index, separation_index, separation_length = strlen(separation_str);
+    int find = 0, index = 0, _index, separation_index, separation_length = strlen(separation);
     char *page, *identifier, *password;
-    for (int line = 0; line < height; line++)
+    for (int line = 0; line < text_height; line++)
     {
-        page = get_plateform_name(text[line], separation_str);
+        page = get_plateform_name(text[line]);
         if (page == NULL)
         {
             error_msg("Cannot get the plateform name");
@@ -24,7 +24,7 @@ int get_pass(char *name, char **text, char *separation_str, int height)
         //if the asking plateform name and the one found are the same, get the identifier and password
         if (!strcmp(name, page))
         {
-            index += strlen(page) + strlen(separation_str);
+            index += strlen(page) + strlen(separation);
             find = 1;
             //get the identifier
             identifier = (char *)malloc(strlen(text[line]) * sizeof(char));
@@ -37,7 +37,7 @@ int get_pass(char *name, char **text, char *separation_str, int height)
             _index = separation_index = 0;
             while (separation_index < separation_length && text[line][index])
             {
-                if (text[line][index] == separation_str[separation_index])
+                if (text[line][index] == separation[separation_index])
                 {
                     separation_index++;
                 }

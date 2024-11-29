@@ -4,37 +4,37 @@
 #include "headers/manager.h"
 #include "headers/str.h"
 #include "headers/utils.h"
+#include "headers/vars.h"
 
 int main(void)
 {
-    char filename[] = "passwords.txt";
     FILE *file = fopen(filename, "rb");
     if (file == NULL)
     {
         error_msg("Cannot open the file");
         return 1;
     }
-    char **text = read_file(file);
+    text = read_file(file);
     if (text == NULL)
     {
         error_msg("Cannot read the file");
         fclose(file);
         return 1;
     }
-    
-    char *separation = "     ", *command_line;
-    int running = 1, rewrite = 0, width = get_width(file), height = get_height(file);
     fclose(file);
-    text = sort(text, height);
-    if (!width)
+    text = sort(text);
+    if (!text_width)
     {
-        height = 0;
+        text_height = 0;
     }
+    
+    char *command_line;
+    int rewrite = 0;
     printf("\nTap help for more informations\n\n");
     while (running)
     {
         command_line = input("> ", 0);
-        if (run_command(command_line, &text, separation, &height, &width, &running, &rewrite))
+        if (run_command(command_line, &rewrite))
         {
             error_msg("Unknow command");
         }
@@ -42,16 +42,16 @@ int main(void)
     }
     if (rewrite)
     {    
-        text = sort(text, height);
+        text = sort(text);
         FILE *end_file = fopen(filename, "w");
         if (end_file == NULL)
         {
             error_msg("Cannot open the file");
             return 1;
         }
-        write_file(end_file, text, height);
+        write_file(end_file);
         fclose(end_file);
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < text_height; i++)
             free(text[i]);
     }
     free(text);
