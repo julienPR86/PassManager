@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "str.h"
 #include "utils.h"
-#include "vars.h"
+#include "setup.h"
 
 /*remove a password based on the name passed in*/
 int remove_command(char *name);

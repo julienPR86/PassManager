@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
-#include "vars.h"
+#include "setup.h"
 
 /*read the file passed in, and return a arrray of strings*/
 char **read_file(FILE *file);

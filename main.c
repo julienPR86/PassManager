@@ -4,25 +4,15 @@
 #include "headers/manager.h"
 #include "headers/str.h"
 #include "headers/utils.h"
-#include "headers/vars.h"
+#include "headers/setup.h"
 
 int main(void)
 {
-    FILE *file = fopen(filename, "rb");
-    if (file == NULL)
+    if (!init())
     {
-        error_msg("Cannot open the file");
+        
         return 1;
     }
-    text = read_file(file);
-    if (text == NULL)
-    {
-        error_msg("Cannot read the file");
-        fclose(file);
-        return 1;
-    }
-    fclose(file);
-    text = sort(text);
     if (!text_width)
     {
         text_height = 0;

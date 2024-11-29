@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-OBJ = $(TMP)main.o $(TMP)manager.o $(TMP)add.o $(TMP)file.o $(TMP)get.o $(TMP)help.o $(TMP)inputs.o $(TMP)list.o $(TMP)remove.o $(TMP)str.o $(TMP)utils.o
+OBJ = $(TMP)main.o $(TMP)manager.o $(TMP)add.o $(TMP)file.o $(TMP)get.o $(TMP)help.o $(TMP)inputs.o $(TMP)list.o $(TMP)remove.o $(TMP)setup.o $(TMP)str.o $(TMP)utils.o
 EXEC = main.exe
 SCRIPTS = scripts/
 TMP = tmp/

@@ -1,7 +1,7 @@
 #ifndef _STR_
 #define _STR_
 
-#include "vars.h"
+#include "setup.h"
 
 /*compare to characters
 You can modify their value by puting a number in n1 or n2*/

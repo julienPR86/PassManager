@@ -6,7 +6,7 @@
 #include <string.h>
 #include "utils.h"
 #include "str.h"
-#include "vars.h"
+#include "setup.h"
 
 /*add a password to the database*/
 int add_command(char *name, char *identifier, char *password, int overwrite);

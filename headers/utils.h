@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "vars.h"
+#include "setup.h"
 
 /*Check if name is in text
 return 0 if not found, otherwise, it return the line where it is*/

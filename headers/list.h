@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include "utils.h"
-#include "vars.h"
+#include "setup.h"
 
 /*Display all the names the are registers*/
 int list_command();
