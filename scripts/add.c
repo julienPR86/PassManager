@@ -2,7 +2,7 @@
 
 int add_command(char *page, char *identifier, char *password, int overwrite)
 {
-    if (exist(*text) && !overwrite)
+    if (exist(page) && !overwrite)
     {
         error_msg("This plateform already exist");
         printf("Tap add! to overwrite\n");

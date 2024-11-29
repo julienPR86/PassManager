@@ -1,18 +1,18 @@
-#ifndef _VARS_
-#define _VARS_
+#ifndef _SETUP_
+#define _SETUP_
 
 #include <stdio.h>
 #include "file.h"
 #include "str.h"
 
-const char *separation;
-const char *filename;
+extern const char *separation;
+extern const char *filename;
 
-int running;
+extern int running;
 
-int text_height;
-int text_width;
-char **text;
+extern int text_height;
+extern int text_width;
+extern char **text;
 
 /*init all the global variables*/
 int init(void);

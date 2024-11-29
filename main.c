@@ -1,18 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/file.h"
 #include "headers/manager.h"
-#include "headers/str.h"
 #include "headers/utils.h"
 #include "headers/setup.h"
 
 int main(void)
 {
-    if (!init())
-    {
-        
-        return 1;
-    }
     if (!text_width)
     {
         text_height = 0;

@@ -1,10 +1,15 @@
 #include "../headers/setup.h"
 
+separation = "     ";
+filename = "passwords.txt";
+running = 1;
+text_height = 0;
+text_width = 0;
+text = NULL;
+
 int init(void)
 {
-    separation = "     ";
-    filename = "passwords.txt";
-    running = 1;
+    
     
     FILE *file = fopen(filename, "rb");
     if (file == NULL)
