@@ -2,6 +2,10 @@
 #define _ADD_
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "utils.h"
+#include "str.h"
 
 /*add a password to the database*/
 int add_command(char *name, char *identifier, char *password, char ***text, char *separation, int *height, int *width, int overwrite);

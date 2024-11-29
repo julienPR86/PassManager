@@ -2,6 +2,9 @@
 #define _GET_
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "utils.h"
 
 #if defined(_WIN32) || defined(_WIN64)
     #define CLIPBOARD_CMD "clip"
