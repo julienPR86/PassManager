@@ -1,7 +1,6 @@
-#vs code file
+#vs code files
 .vscode/
-#.exe file of the script
+#.exe files of the script
 *.exe
-!manager.exe
-#password txt file
+#password file
 passwords.txt
