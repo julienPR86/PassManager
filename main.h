@@ -6,7 +6,15 @@
 #include <string.h>
 
 #define MAX_LENGTH 256
-
+#if defined(_WIN32) || defined(_WIN64)
+    #define CLIPBOARD_CMD "clip"
+#elif defined(__APPLE__) && defined(__MACH__)
+    #define CLIPBOARD_CMD "pbcopy"
+#elif defined(__linux__)
+    #define CLIPBOARD_CMD "xclip -selection clipboard"
+#else
+    #error "Unsupported OS"
+#endif
 
 extern const char *separation;
 extern const char *filename;
