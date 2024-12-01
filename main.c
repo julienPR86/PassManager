@@ -7,7 +7,7 @@ int main(void)
 {
     if (init())
     {
-        fprintf(stderr, "Could not init the variables\n");
+        error_msg("Could not init the variables\n");
         return 1;
     }
     if (!text_width)
