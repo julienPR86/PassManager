@@ -1,10 +1,13 @@
 all : main clean
 
-main : tmp/main.o tmp/add.o tmp/file.o tmp/get.o tmp/help.o tmp/inputs.o tmp/list.o tmp/manager.o tmp/remove.o tmp/str.o tmp/utils.o
-	gcc -o main tmp/main.o tmp/add.o tmp/file.o tmp/get.o tmp/help.o tmp/inputs.o tmp/list.o tmp/manager.o tmp/remove.o tmp/str.o tmp/utils.o
+main : tmp/main.o tmp/init.o tmp/add.o tmp/file.o tmp/get.o tmp/help.o tmp/inputs.o tmp/list.o tmp/manager.o tmp/remove.o tmp/str.o tmp/utils.o
+	gcc -o main tmp/main.o tmp/init.o tmp/add.o tmp/file.o tmp/get.o tmp/help.o tmp/inputs.o tmp/list.o tmp/manager.o tmp/remove.o tmp/str.o tmp/utils.o
 
 tmp/main.o : main.c
 	gcc -o tmp/main.o -c main.c
+
+tmp/init.o : scripts/init.c
+	gcc -o tmp/init.o -c scripts/init.c
 
 tmp/add.o : scripts/add.c
 	gcc -o tmp/add.o -c scripts/add.c

@@ -23,6 +23,7 @@ extern int text_height;
 extern int text_width;
 extern char **text;
 
+int init();
 char **read_file(FILE *file);
 int get_height(FILE *file);
 int get_width(FILE *file);
