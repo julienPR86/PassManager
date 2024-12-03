@@ -15,9 +15,9 @@ int init()
         error_msg("Cannot open the file");
         return 1;
     }
-    text = read_file(file);
     text_height = get_height(file);
     text_width = get_width(file);
+    text = read_file(file);
     if (text == NULL)
     {
         error_msg("Cannot read the file");
