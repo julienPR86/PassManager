@@ -6,6 +6,7 @@
 #include <string.h>
 
 #define MAX_LENGTH 256
+
 #if defined(_WIN32) || defined(_WIN64)
     #define CLIPBOARD_CMD "clip"
 #elif defined(__APPLE__) && defined(__MACH__)

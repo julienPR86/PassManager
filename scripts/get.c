@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 int get_command(char *page)
 {

@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 int charcmp(char chr1, char chr2, int value1, int value2)
 {

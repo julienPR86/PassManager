@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 char *input(char *str, int returns)
 {

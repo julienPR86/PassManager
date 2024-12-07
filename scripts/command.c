@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 int run_command(char *_command, int *rewrite)
 {

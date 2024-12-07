@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 const char *separation = "     ";
 const char *filename = "passwords.txt";

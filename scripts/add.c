@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 int add_command(char *page, char *identifier, char *password, int overwrite)
 {

@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 int exist(char *name)
 {

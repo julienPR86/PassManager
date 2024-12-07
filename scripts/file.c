@@ -1,4 +1,4 @@
-#include "../main.h"
+#include "../manager.h"
 
 char **read_file(FILE *file)
 {
