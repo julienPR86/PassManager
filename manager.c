@@ -17,17 +17,20 @@ int main(void)
     while (running)
     {
         command_line = input("> ", 0);
-        if (run_command(command_line, &rewrite))
+        if (NULL != command_line)
         {
-            error_msg("Unknow command");
+            if (run_command(command_line, &rewrite))
+            {
+                error_msg("Unknow command");
+            }
+            free(command_line);
         }
-        free(command_line);
     }
     if (rewrite)
     {    
         text = sort(text);
         FILE *end_file = fopen(filename, "w");
-        if (end_file == NULL)
+        if (NULL == end_file)
         {
             error_msg("Cannot open the file");
             return 1;

@@ -19,6 +19,7 @@ char *input(char *str, int returns)
     {
         if (c == '&' || c == '$' || c == ';')
         {
+            while ((c = getchar()) != '\n');
             error_msg("Forbidden character in input");
             free(string);
             return NULL;
