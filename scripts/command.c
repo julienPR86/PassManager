@@ -3,9 +3,9 @@
 int run_command(char *_command, int *rewrite)
 {
     int length = get_words_num(_command);
-    char args[length][strlen(_command)];
+    char args[length][strlen(_command)+1];
     int index = 0, _index = 0, word_index = 0, is_word = 0;
-    char word[strlen(_command)];
+    char word[strlen(_command)+1];
     while (_command[index])
     {
         if (_command[index] >= 33 && _command[index] <= 126)

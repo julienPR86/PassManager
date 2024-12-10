@@ -6,7 +6,7 @@ char *input(char *str, int returns)
     char c;
     int index = 0;
 
-    string = (char *) malloc((MAX_LENGTH+1) * sizeof(char));
+    string = (char *)malloc((MAX_LENGTH+1) * sizeof(char));
     if (string == NULL)
     {
         fprintf(stderr, "Memory allocation error\n");
