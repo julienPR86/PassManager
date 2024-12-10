@@ -9,7 +9,7 @@ char *input(char *str, int returns)
     string = (char *)malloc((MAX_LENGTH+1) * sizeof(char));
     if (string == NULL)
     {
-        fprintf(stderr, "Memory allocation error\n");
+        error_msg("Memory allocation error");
         return NULL;
     }
     
@@ -17,6 +17,12 @@ char *input(char *str, int returns)
 
     while ((c = getchar()) != '\n' && index < MAX_LENGTH)
     {
+        if (c == '&' || c == '$' || c == ';')
+        {
+            error_msg("Forbidden character in input");
+            free(string);
+            return NULL;
+        }
         string[index] = c;
         index++;
     }
