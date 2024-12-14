@@ -1,14 +1,5 @@
 #include "../manager.h"
 
-int get_command(char *page)
-{
-    if (get_pass(page))
-    {
-        return 1;
-    }
-    return 0;
-}
-
 int get_pass(char *name)
 {
     int find = 0, index = 0, _index, separation_index, separation_length = strlen(separation);

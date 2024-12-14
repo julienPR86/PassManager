@@ -68,7 +68,7 @@ int run_command(char *_command)
         }
         else
         {
-            get_command(args[1]);
+            get_pass(args[1]);
         }
         return 0;
     }

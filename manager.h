@@ -78,9 +78,6 @@ char *input(char *str, int returns);
 int help(char *command);
 
 /*return a page name, identifier, and password from the page passed in*/
-int get_command(char *page);
-
-/*return a page name, identifier, and password from the page passed in*/
 int get_pass(char *name);
 
 /*add a page, identifier, and password in text*/
