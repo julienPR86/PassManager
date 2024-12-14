@@ -1,6 +1,6 @@
 #include "../manager.h"
 
-int run_command(char *_command, int *rewrite)
+int run_command(char *_command)
 {
     int length = get_words_num(_command);
     char args[length][strlen(_command)+1];
@@ -56,7 +56,7 @@ int run_command(char *_command, int *rewrite)
     {
         if (!text_height)
         {
-            error_msg("There is no passwords you can get");
+            error_msg("There is no passwords to get");
         }
         else if (length > 2)
         {
@@ -86,7 +86,7 @@ int run_command(char *_command, int *rewrite)
         {
             if (!add_command(args[1],args[2],args[3], 0))
             {
-                *rewrite = 1;
+                rewrite = 1;
             }
         }
         return 0;
@@ -105,7 +105,7 @@ int run_command(char *_command, int *rewrite)
         {
             if (!add_command(args[1],args[2],args[3], 1))
             {
-                *rewrite = 1;
+                rewrite = 1;
             }
         }
         return 0;
@@ -128,7 +128,7 @@ int run_command(char *_command, int *rewrite)
         {
             if (!remove_command(args[1]))
             {
-                *rewrite = 1;
+                rewrite = 1;
             }
         }
         return 0;

@@ -6,6 +6,7 @@ int running = 1;
 int text_height = 0;
 int text_width = 0;
 char **text = NULL;
+int rewrite = 0;
 
 int init()
 {

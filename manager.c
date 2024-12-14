@@ -12,14 +12,13 @@ int main(void)
         text_height = 0;
     }
     char *command_line;
-    int rewrite = 0;
     printf("\nTap help for more informations\n\n");
     while (running)
     {
         command_line = input("> ", 0);
         if (NULL != command_line)
         {
-            if (run_command(command_line, &rewrite))
+            if (run_command(command_line))
             {
                 error_msg("Unknow command");
             }

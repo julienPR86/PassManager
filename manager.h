@@ -24,6 +24,7 @@ extern int text_height;
 extern int text_width;
 /*the variable which contains all the passwords*/
 extern char **text;
+extern int rewrite;
 
 /*init all variables about the text*/
 int init();
@@ -65,7 +66,7 @@ int remove_command(char *page);
 int remove_pass(char *name);
 
 /*execute the command passed in*/
-int run_command(char *_command, int *rewrite);
+int run_command(char *_command);
 
 /*list all plateform's name available*/
 int list_command();
