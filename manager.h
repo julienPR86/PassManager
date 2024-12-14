@@ -68,6 +68,12 @@ int remove_pass(char *name);
 /*execute the command passed in*/
 int run_command(char *_command);
 
+/*get the words of a string*/
+char **get_args(char *command);
+
+/*free the args array's strings*/
+void free_args(char **args, int length);
+
 /*list all plateform's name available*/
 int list_command();
 

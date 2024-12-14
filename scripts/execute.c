@@ -3,7 +3,168 @@
 int run_command(char *_command)
 {
     int length = get_words_num(_command);
-    char args[length][strlen(_command)+1];
+    char **args = get_args(_command);
+    if (NULL == args)
+    {
+        free_args(args, length);
+        return 0;
+    }
+    if (!strcmp(args[0], "list") || !strcmp(args[0], "ls"))
+    {
+        if (length > 1)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            list_command();
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "get"))
+    {
+        if (!text_height)
+        {
+            error_msg("There is no passwords to get");
+        }
+        else if (length > 2)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 2)
+        {
+            error_msg("Not enough arguments");
+        }
+        else
+        {
+            get_pass(args[1]);
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "add"))
+    {
+        if (length > 4)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 4)
+        {
+            error_msg("Not enough arguments");
+        }
+        else
+        {
+            if (!add_command(args[1],args[2],args[3], 0))
+            {
+                rewrite = 1;
+            }
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "add!"))
+    {
+        if (length > 4)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 4)
+        {
+            error_msg("Not enough arguments");
+        }
+        else
+        {
+            if (!add_command(args[1],args[2],args[3], 1))
+            {
+                rewrite = 1;
+            }
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "remove") || !strcmp(args[0], "rm"))
+    {
+        if (!text_height)
+        {
+            error_msg("There is no passwords to remove");
+        }
+        else if (length > 2)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 2)
+        {
+            error_msg("Not enough arguments");
+        }
+        else
+        {
+            if (!remove_command(args[1]))
+            {
+                rewrite = 1;
+            }
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
+    {
+        if (length > 2)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            if (length == 2)
+            {
+                help(args[1]);
+            }
+            else
+            {
+                help(NULL);
+            }
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
+    {
+        if (length > 1)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            running = 0;
+        }
+        free_args(args, length);
+        return 0;
+    }
+    free_args(args, length);
+    return 1;
+}
+
+char **get_args(char *_command)
+{
+    char **args = (char **)malloc(get_words_num(_command) * sizeof(char *));
+    if (NULL == args)
+    {
+        error_msg("Memory allocation error");
+        return NULL;
+    }
+    for (int i = 0; i < get_words_num(_command); i++)
+    {
+        args[i] = (char *)malloc(strlen(_command) * sizeof(char));
+        if (NULL == args[i])
+        {
+            for (int j = 0; j < i; j++)
+            {
+                free(args[j]);
+            }
+            free(args);
+            return NULL;
+        }
+    }
     int index = 0, _index = 0, word_index = 0, is_word = 0;
     char word[strlen(_command)+1];
     while (_command[index])
@@ -40,129 +201,14 @@ int run_command(char *_command)
         }
         index++;
     }
-    if (!strcmp(args[0], "list") || !strcmp(args[0], "ls"))
+    return args;
+}
+
+void free_args(char **args, int length)
+{
+    for (int i = 0; i < length; i++)
     {
-        if (length > 1)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            list_command();
-        }
-        return 0;
+        free(args[i]);
     }
-    else if (!strcmp(args[0], "get"))
-    {
-        if (!text_height)
-        {
-            error_msg("There is no passwords to get");
-        }
-        else if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 2)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            get_pass(args[1]);
-        }
-        return 0;
-    }
-    else if (!strcmp(args[0], "add"))
-    {
-        if (length > 4)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 4)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!add_command(args[1],args[2],args[3], 0))
-            {
-                rewrite = 1;
-            }
-        }
-        return 0;
-    }
-    else if (!strcmp(args[0], "add!"))
-    {
-        if (length > 4)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 4)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!add_command(args[1],args[2],args[3], 1))
-            {
-                rewrite = 1;
-            }
-        }
-        return 0;
-    }
-    else if (!strcmp(args[0], "remove") || !strcmp(args[0], "rm"))
-    {
-        if (!text_height)
-        {
-            error_msg("There is no passwords to remove");
-        }
-        else if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 2)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!remove_command(args[1]))
-            {
-                rewrite = 1;
-            }
-        }
-        return 0;
-    }
-    else if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
-    {
-        if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            if (length == 2)
-            {
-                help(args[1]);
-            }
-            else
-            {
-                help(NULL);
-            }
-        }
-        return 0;
-    }
-    else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
-    {
-        if (length > 1)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            running = 0;
-        }
-        return 0;
-    }
-    return 1;
+    free(args);
 }
