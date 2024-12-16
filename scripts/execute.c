@@ -1,9 +1,9 @@
 #include "../manager.h"
 
-int run_command(char *_command)
+int run_command(char *command)
 {
-    int length = get_words_num(_command);
-    char **args = get_args(_command);
+    int length = get_words_num(command);
+    char **args = get_args(command);
     if (NULL == args)
     {
         free_args(args, length);
@@ -144,17 +144,17 @@ int run_command(char *_command)
     return 1;
 }
 
-char **get_args(char *_command)
+char **get_args(char *command)
 {
-    char **args = (char **)malloc(get_words_num(_command) * sizeof(char *));
+    char **args = (char **)malloc(get_words_num(command) * sizeof(char *));
     if (NULL == args)
     {
         error_msg("Memory allocation error");
         return NULL;
     }
-    for (int i = 0; i < get_words_num(_command); i++)
+    for (int i = 0; i < get_words_num(command); i++)
     {
-        args[i] = (char *)malloc(strlen(_command) * sizeof(char));
+        args[i] = (char *)malloc(strlen(command) * sizeof(char));
         if (NULL == args[i])
         {
             for (int j = 0; j < i; j++)
@@ -166,16 +166,16 @@ char **get_args(char *_command)
         }
     }
     int index = 0, _index = 0, word_index = 0, is_word = 0;
-    char word[strlen(_command)+1];
-    while (_command[index])
+    char word[strlen(command)+1];
+    while (command[index])
     {
-        if (_command[index] >= 33 && _command[index] <= 126)
+        if (command[index] >= 33 && command[index] <= 126)
         {
-            word[word_index] = _command[index];
+            word[word_index] = command[index];
             is_word = 1;
             word_index++;
         }
-        else if (_command[index] == ' ')
+        else if (command[index] == ' ')
         {
             if (is_word)
             {
@@ -189,9 +189,9 @@ char **get_args(char *_command)
         else
         {
             error_msg("Name standard isn't respected");
-            return 0;
+            return NULL;
         }
-        if (_command[index+1] == '\0')
+        if (command[index+1] == '\0')
         {
             if (is_word)
             {
