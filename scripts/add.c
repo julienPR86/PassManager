@@ -61,11 +61,8 @@ int add_pass(char *name, char *identifier, char *password)
 
     char line[length];
     line[0] = '\0';
-    strcat(line, name);
-    strcat(line, separation);
-    strcat(line, identifier);
-    strcat(line, separation);
-    strcat(line, password);
+    char *args[] = {name, (char *)separation, identifier, (char *)separation, password};
+    string(line, args, 5);
 
     text[text_height][0] = '\0';
     strcat(text[text_height], line);
@@ -79,12 +76,8 @@ int overwrite_pass(char *name, char *identifier, char *password, int line_num)
 
     char line[length];
     line[0] = '\0';
-    strcat(line, name);
-    strcat(line, separation);
-    strcat(line, identifier);
-    strcat(line, separation);
-    strcat(line, password);
-
+    char *args[] = {name, (char *)separation, identifier, (char *)separation, password};
+    string(line, args, 5);
     strcpy(text[line_num-1], line);
     return length-1;
 }

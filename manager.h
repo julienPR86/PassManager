@@ -95,6 +95,9 @@ int add_pass(char *name, char *identifier, char *password);
 /*overwrite a page, identifier, and password in text*/
 int overwrite_pass(char *name, char *identifier, char *password, int line_num);
 
+/*return a string, source, created with args*/
+char *string(char *source, char **args, int args_length);
+
 /*display message as an error msg*/
 void error_msg(char *message);
 
