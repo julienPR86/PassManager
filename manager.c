@@ -28,14 +28,14 @@ int main(void)
     if (rewrite)
     {    
         text = sort(text);
-        FILE *end_file = fopen(filename, "w");
-        if (NULL == end_file)
+        FILE *file = fopen(filename, "w");
+        if (NULL == file)
         {
             error_msg("Cannot open the file");
             return 1;
         }
-        write_file(end_file);
-        fclose(end_file);
+        write_file(file);
+        fclose(file);
         for (int i = 0; i < text_height; i++)
             free(text[i]);
     }
