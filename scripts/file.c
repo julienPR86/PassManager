@@ -2,32 +2,29 @@
 
 char **read_file(FILE *file)
 {
-    int height = get_height(file);
-    int width = get_width(file);
-    char **text = (char **)malloc(sizeof(char *) * height);
+    char **text = (char **)malloc(sizeof(char *) * text_height);
     if (text == NULL)
     {
         error_msg("Memory allocation error");
         return NULL;
     }
-    if (width)
-    {
-        for (int i = 0; i < height; i++)
-        {
-            text[i] = (char *)malloc(sizeof(char) * width);
-            if (text[i] == NULL)
-            {
-                error_msg("Memory allocation error");
-                for (int j = 0; j < i; j++)
-                    free(text[j]);
-                free(text);
-                return NULL;
-            }
-        }
-    }
-    else
+    if (!text_height)
     {
         return text;
+    }
+    for (int i = 0; i < text_height; i++)
+    {
+        text[i] = (char *)malloc(sizeof(char) * text_height);
+        if (text[i] == NULL)
+        {
+            error_msg("Memory allocation error");
+            for (int j = 0; j < i; j++)
+            {
+                    free(text[j]);
+            }
+            free(text);
+            return NULL;
+        }
     }
     int column = 0, line = 0;
     char c;
@@ -39,7 +36,9 @@ char **read_file(FILE *file)
             line++;
             column = 0;
             if (c == '\r' && (c = fgetc(file)) != '\n')
+            {
                 ungetc(c, file);
+            }
         }
         else
         {
@@ -59,7 +58,9 @@ int get_height(FILE *file)
     while ((c = fgetc(file)) != EOF)
     {
         if (c == '\n')
+        {
             lines++;
+        }
     }
     rewind(file);
     return lines;
@@ -75,14 +76,18 @@ int get_width(FILE *file)
         if (c == '\n')
         {
             if (width > max_width)
+            {
                 max_width = width;
+            }
             width = 0;
             continue;
         }
         width++;
     }
     if (width > max_width)
+    {
         max_width = width;
+    }
     rewind(file);
     return max_width;
 }
@@ -91,10 +96,12 @@ int write_file(FILE *file)
 {
     for (int i = 0; i < text_height; i++)
     {
-        if (i != text_height-1)
-            fprintf(file, "%s\n", text[i]);
-        else
+        if (i == text_height-1)
+        {
             fprintf(file, "%s", text[i]);
+            break;
+        }
+        fprintf(file, "%s\n", text[i]);
     }
     return 0;
 }
