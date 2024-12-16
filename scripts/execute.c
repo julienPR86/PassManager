@@ -165,23 +165,23 @@ char **get_args(char *command)
             return NULL;
         }
     }
-    int index = 0, _index = 0, word_index = 0, is_word = 0;
+    int command_index = 0, args_index = 0, word_index = 0, is_word = 0;
     char word[strlen(command)+1];
-    while (command[index])
+    while (command[command_index])
     {
-        if (command[index] >= 33 && command[index] <= 126)
+        if (command[command_index] >= 33 && command[command_index] <= 126)
         {
-            word[word_index] = command[index];
+            word[word_index] = command[command_index];
             is_word = 1;
             word_index++;
         }
-        else if (command[index] == ' ')
+        else if (command[command_index] == ' ')
         {
             if (is_word)
             {
                 word[word_index] = '\0';
-                strcpy(args[_index], word);
-                _index++;
+                strcpy(args[args_index], word);
+                args_index++;
                 is_word = 0;
                 word_index = 0;
             }
@@ -191,15 +191,15 @@ char **get_args(char *command)
             error_msg("Name standard isn't respected");
             return NULL;
         }
-        if (command[index+1] == '\0')
+        if (command[command_index+1] == '\0')
         {
             if (is_word)
             {
                 word[word_index] = '\0';
-                strcpy(args[_index], word);
+                strcpy(args[args_index], word);
             }
         }
-        index++;
+        command_index++;
     }
     return args;
 }
