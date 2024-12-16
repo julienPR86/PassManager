@@ -157,11 +157,7 @@ char **get_args(char *command)
         args[i] = (char *)malloc(strlen(command) * sizeof(char));
         if (NULL == args[i])
         {
-            for (int j = 0; j < i; j++)
-            {
-                free(args[j]);
-            }
-            free(args);
+            free_args(args, i);
             return NULL;
         }
     }
