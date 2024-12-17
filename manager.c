@@ -27,17 +27,14 @@ int main(void)
     }
     if (rewrite)
     {    
-        text = sort(text);
-        FILE *file = fopen(filename, "w");
-        if (NULL == file)
+        if (write_file())
         {
-            error_msg("Cannot open the file");
-            return 1;
+            error_msg("Could not write in the file");
         }
-        write_file(file);
-        fclose(file);
-        for (int i = 0; i < text_height; i++)
-            free(text[i]);
+    }
+    for (int i = 0; i < text_height; i++)
+    {
+        free(text[i]);
     }
     free(text);
     return 0;

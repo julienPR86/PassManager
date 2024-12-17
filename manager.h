@@ -39,7 +39,7 @@ int get_height(FILE *file);
 int get_width(FILE *file);
 
 /*write the content of text in the file passed in*/
-int write_file(FILE *file);
+int write_file();
 
 /*check if name exist in text*/
 int exist(char *name);

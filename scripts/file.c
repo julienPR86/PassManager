@@ -92,8 +92,15 @@ int get_width(FILE *file)
     return max_width;
 }
 
-int write_file(FILE *file)
+int write_file()
 {
+    text = sort(text);
+    FILE *file = fopen(filename, "w");
+    if (NULL == file)
+    {
+        error_msg("Cannot open the file");
+        return 1;
+    }
     for (int i = 0; i < text_height; i++)
     {
         if (i == text_height-1)
@@ -103,5 +110,6 @@ int write_file(FILE *file)
         }
         fprintf(file, "%s\n", text[i]);
     }
+    fclose(file);
     return 0;
 }
