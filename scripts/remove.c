@@ -51,7 +51,7 @@ int remove_pass(char *name)
         }
         if (lineword_index != text_height-1)
         {
-            free((*text)+lineword_index);
+            free(*(text+lineword_index));
             *(text+lineword_index) = *(text+text_height-1);
         }
         text_height--;
