@@ -19,7 +19,7 @@ char *input(char *str, int returns)
     {
         if (c == '&' || c == '$' || c == ';')
         {
-            while ((c = getchar()) != '\n');
+            empty_stdin();
             error_msg("Forbidden character in input");
             free(string);
             return NULL;
@@ -31,6 +31,17 @@ char *input(char *str, int returns)
 
     for (int i = 0; i < returns; i++)
         printf("\n");
+    
+    if (index >= MAX_LENGTH)
+    {
+        empty_stdin();
+    }
         
     return string;
+}
+
+void empty_stdin()
+{
+    while (getchar() != '\n');
+    return;
 }

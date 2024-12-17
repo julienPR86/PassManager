@@ -80,6 +80,9 @@ int list_command();
 /*return a string write by the user*/
 char *input(char *str, int returns);
 
+/*make the stdin empty*/
+void empty_stdin();
+
 /*display help about the commands*/
 int help(char *command);
 
