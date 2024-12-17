@@ -26,6 +26,5 @@ int init()
         return 1;
     }
     fclose(file);
-    text = sort(text);
     return 0;
 }
