@@ -14,7 +14,7 @@ int list_command()
         page = get_plateform_name(text[line]);
         if (page == NULL)
         {
-            exit(1);
+            return 1;
         }
         printf(" > %s\n", page);
         free(page);
