@@ -75,15 +75,6 @@ char *get_plateform_name(char *str)
     return page;
 }
 
-char *string(char *source, char **args, int args_length)
-{
-    for (int i = 0; i < args_length; i++)
-    {
-        strcat(source, args[i]);
-    }
-    return source;
-}
-
 void error_msg(char *message)
 {
     fprintf(stderr, "\n    Error : %s\n\n", message);

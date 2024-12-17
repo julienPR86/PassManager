@@ -88,3 +88,13 @@ char **sort(char **text)
     }
     return text;
 }
+
+char *string(char *source, char **args, int args_length)
+{
+    for (int i = 0; i < args_length; i++)
+    {
+        strcat(source, args[i]);
+    }
+    return source;
+}
+
