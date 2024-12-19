@@ -51,30 +51,15 @@ char **read_file(FILE *file)
     return text;
 }
 
-int get_height(FILE *file)
+void get_dimensions(FILE *file, int *h, int *w)
 {
-    int lines = 1;
+    int lines = 1, width = 0, max_width = 0;
     char c;
     while ((c = fgetc(file)) != EOF)
     {
         if (c == '\n')
         {
             lines++;
-        }
-    }
-    rewind(file);
-    return lines;
-}
-
-int get_width(FILE *file)
-{
-    int width = 0;
-    int max_width = 0;
-    char c;
-    while ((c = fgetc(file)) != EOF)
-    {
-        if (c == '\n')
-        {
             if (width > max_width)
             {
                 max_width = width;
@@ -88,8 +73,10 @@ int get_width(FILE *file)
     {
         max_width = width;
     }
+    *h = lines;
+    *w = max_width;
     rewind(file);
-    return max_width;
+    return;
 }
 
 int write_file()

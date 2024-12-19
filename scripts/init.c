@@ -16,8 +16,8 @@ int init()
         error_msg("Cannot open the file");
         return 1;
     }
-    text_height = get_height(file);
-    text_width = get_width(file);
+    get_dimensions(file, &text_height, &text_width);
+    printf("%d, %d\n", text_height, text_width);
     text = read_file(file);
     if (text == NULL)
     {

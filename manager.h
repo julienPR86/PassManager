@@ -32,11 +32,8 @@ int init();
 /*read a file passed in and return a string array*/
 char **read_file(FILE *file);
 
-/*get the number of line of the file passed in*/
-int get_height(FILE *file);
-
-/*return the longest line of the file passed in*/
-int get_width(FILE *file);
+/*get the number of line and the longest line of a file passed in*/
+void get_dimensions(FILE *file, int *height, int *width);
 
 /*write the content of text in the file passed in*/
 int write_file();
