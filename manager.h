@@ -38,7 +38,7 @@ void get_dimensions(FILE *file, int *height, int *width);
 /*write the content of text in the file passed in*/
 int write_file();
 
-/*check if name exist in text*/
+/*check if name exist in text and return the line index, otherwise it returns -1*/
 int exist(char *name);
 
 /*return the words number in a string*/
@@ -93,7 +93,7 @@ int add_command(char *page, char *identifier, char *password, int overwrite);
 int add_pass(char *name, char *identifier, char *password);
 
 /*overwrite a page, identifier, and password in text*/
-int overwrite_pass(char *name, char *identifier, char *password, int line_num);
+int overwrite_pass(char *name, char *identifier, char *password, int line_index);
 
 /*return a string, source, created with args*/
 char *string(char *source, char **args, int args_length);

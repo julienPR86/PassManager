@@ -17,6 +17,7 @@ int init()
         return 1;
     }
     get_dimensions(file, &text_height, &text_width);
+    printf("h,w : %d,%d\n", text_height, text_width);
     text = read_file(file);
     if (text == NULL)
     {

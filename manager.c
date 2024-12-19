@@ -37,5 +37,6 @@ int main(void)
         free(text[i]);
     }
     free(text);
+    printf("exit ok\n");
     return 0;
 }

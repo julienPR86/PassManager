@@ -2,39 +2,35 @@
 
 int add_command(char *page, char *identifier, char *password, int overwrite)
 {
-    if (exist(page) && !overwrite)
+    if (!(exist(page) < 0) && !overwrite)
     {
         error_msg("This plateform already exist");
         printf("Tap add! to overwrite\n");
         return 1;
     }
-    int new_width;
+
     if (!overwrite)
     {
-        new_width = add_pass(page, identifier, password);
+        if (add_pass(page, identifier, password) < 0)
+        {
+            error_msg("Could not add the password");
+            return 1;
+        }
     }
     else
     {
         int line = exist(page);
-        if (line)
+        if (!(line < 0))
         {
-            new_width = overwrite_pass(page, identifier, password, line);
+            overwrite_pass(page, identifier, password, line);
         }
         else
         {
-            new_width = add_pass(page, identifier, password);
-        }
-    }
-    if (new_width < 0)
-    {
-        error_msg("Cannot add the password");
-        return 1;
-    }
-    else
-    {
-        if (new_width > text_width)
-        {
-            text_width = new_width;
+            if (add_pass(page, identifier, password) < 0)
+            {
+                error_msg("Could not add the password");
+                return 1;
+            }
         }
     }
     text = sort(text);
@@ -48,13 +44,13 @@ int add_pass(char *name, char *identifier, char *password)
     text = (char **)realloc(text, (text_height+1) * sizeof(char *));
     if (text == NULL)
     {
-        printf("realloc ?\n");
         error_msg("Memory allocation error");
         return -1;
     }
     text[text_height] = (char *)malloc(length * sizeof(char));
     if (text[text_height] == NULL)
     {
+        free(text[text_height]);
         error_msg("Memory allocation error");
         return -1;
     }
@@ -67,10 +63,14 @@ int add_pass(char *name, char *identifier, char *password)
     text[text_height][0] = '\0';
     strcat(text[text_height], line);
     text_height++;
-    return length-1;
+    if (length > text_width)
+    {
+        text_width = length;
+    }
+    return 0;
 }
 
-int overwrite_pass(char *name, char *identifier, char *password, int line_num)
+int overwrite_pass(char *name, char *identifier, char *password, int line_index)
 {
     int length = strlen(name)+strlen(identifier)+strlen(password)+strlen(separation)*2+1;
 
@@ -78,6 +78,10 @@ int overwrite_pass(char *name, char *identifier, char *password, int line_num)
     line[0] = '\0';
     char *args[] = {name, (char *)separation, identifier, (char *)separation, password};
     string(line, args, 5);
-    strcpy(text[line_num-1], line);
-    return length-1;
+    strcpy(text[line_index], line);
+    if (length > text_width)
+    {
+        text_width = length;
+    }
+    return 0;
 }

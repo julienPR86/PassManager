@@ -12,11 +12,11 @@ int exist(char *name)
         if (!strcmp(plateform, name))
         {
             free(plateform);
-            return i+1;
+            return i;
         }
         free(plateform);
     }
-    return 0;
+    return -1;
 }
 
 int get_words_num(char *string)

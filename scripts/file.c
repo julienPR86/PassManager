@@ -20,7 +20,7 @@ char **read_file(FILE *file)
             error_msg("Memory allocation error");
             for (int j = 0; j < i; j++)
             {
-                    free(text[j]);
+                free(text[j]);
             }
             free(text);
             return NULL;
