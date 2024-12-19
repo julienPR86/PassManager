@@ -8,7 +8,7 @@ SCRIPTS = scripts/
 all : $(EXEC)
 
 $(EXEC) : $(OBJ)
-	$(CC) -o manager $(OBJ) -(ARGS)
+	$(CC) -o manager $(OBJ) $(ARGS)
 
 $(TMP)manager.o : manager.c
 	$(CC) -o $(TMP)manager.o -c manager.c
