@@ -11,7 +11,7 @@ $(EXEC) : $(OBJ)
 	$(CC) -o manager $(OBJ) $(ARGS)
 
 $(TMP)manager.o : manager.c
-	$(CC) -o $(TMP)manager.o -c manager.c
+	$(CC) -o $@ -c $<
 
 $(TMP)%.o : $(SCRIPTS)%.c
 	$(CC) -o $@ -c $<
