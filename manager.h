@@ -18,7 +18,7 @@
 #endif
 
 extern const char *separation;
-extern const char *data_path;
+extern char *data_path;
 extern int last_msg_is_error;
 extern int is_modifiable;
 extern int running;
@@ -32,13 +32,13 @@ extern int rewrite;
 int init();
 
 /*read a file passed in and return a string array*/
-char **read_file(FILE *file);
+char **read_file(FILE *file, int height, int width);
 
 /*get the number of line and the longest line of a file passed in*/
 void get_dimensions(FILE *file, int *height, int *width);
 
 /*write the content of text in the file passed in*/
-int write_file();
+int write_file(char *name, int height);
 
 /*check if name exist in text and return the line index, otherwise it returns -1*/
 int exist(char *name);

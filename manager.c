@@ -2,7 +2,12 @@
 
 int main(void)
 {
-    if (init())
+    int out = init();
+    if (out < 0)
+    {
+        return 1;
+    }
+    else if (out)
     {
         error_msg("Could not init the variables\n");
         printf("Tap help for more informations\n");
@@ -31,7 +36,7 @@ int main(void)
     }
     if (rewrite)
     {    
-        if (write_file())
+        if (write_file(data_path, text_height))
         {
             error_msg("Could not write in the file");
         }

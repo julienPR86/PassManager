@@ -1,20 +1,20 @@
 #include "../manager.h"
 
-char **read_file(FILE *file)
+char **read_file(FILE *file, int h, int w)
 {
-    char **text = (char **)malloc(sizeof(char *) * text_height);
+    char **text = (char **)malloc(sizeof(char *) * h);
     if (text == NULL)
     {
         error_msg("Memory allocation error");
         return NULL;
     }
-    if (!text_height)
+    if (!h)
     {
         return text;
     }
-    for (int i = 0; i < text_height; i++)
+    for (int i = 0; i < h; i++)
     {
-        text[i] = (char *)malloc(sizeof(char) * text_height);
+        text[i] = (char *)malloc(sizeof(char) * w);
         if (text[i] == NULL)
         {
             error_msg("Memory allocation error");
@@ -73,24 +73,24 @@ void get_dimensions(FILE *file, int *h, int *w)
     {
         max_width = width;
     }
-    *h = lines;
-    *w = max_width;
+    if (NULL != h){*h = lines;}
+    if (NULL != w){*w = max_width;}
     rewind(file);
     return;
 }
 
-int write_file()
+int write_file(char *name, int h)
 {
     text = sort(text);
-    FILE *file = fopen(data_path, "w");
+    FILE *file = fopen(name, "w");
     if (NULL == file)
     {
         error_msg("Cannot open the file");
         return 1;
     }
-    for (int i = 0; i < text_height; i++)
+    for (int i = 0; i < h; i++)
     {
-        if (i == text_height-1)
+        if (i == h-1)
         {
             fprintf(file, "%s", text[i]);
             break;
