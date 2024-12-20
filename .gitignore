@@ -6,3 +6,4 @@
 *.o
 #password file
 *.txt
+!data.txt
