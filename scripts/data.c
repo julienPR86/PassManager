@@ -13,7 +13,7 @@ void data_path_print()
     }
     else
     {
-        printf("\n%s\n", data_path);
+        printf("\n > Path : %s\n\n", data_path);
     }
     return;
 }
