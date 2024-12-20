@@ -18,7 +18,7 @@
 #endif
 
 extern const char *separation;
-extern const char *filename;
+extern const char *data_path;
 extern int last_msg_is_error;
 extern int is_modifiable;
 extern int running;
@@ -99,6 +99,12 @@ int overwrite_pass(char *name, char *identifier, char *password, int line_index)
 
 /*return a string, source, created with args*/
 char *string(char *source, char **args, int args_length);
+
+/*Display the data path*/
+void data_path_print();
+
+/*Change the data path*/
+int data_path_change(char *path);
 
 /*display message as an error msg*/
 void error_msg(char *message);

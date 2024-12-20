@@ -1,7 +1,7 @@
 #include "../manager.h"
 
 const char *separation = "     ";
-const char *filename = "passwords.txt";
+const char *data_path = "passwords.txt";
 int last_msg_is_error = 0;
 int is_modifiable = 0;
 int running = 1;
@@ -12,7 +12,7 @@ int rewrite = 0;
 
 int init()
 {
-    FILE *file = fopen(filename, "rb");
+    FILE *file = fopen(data_path, "rb");
     if (file == NULL)
     {
         error_msg("File not found");

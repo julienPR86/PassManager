@@ -82,7 +82,7 @@ void get_dimensions(FILE *file, int *h, int *w)
 int write_file()
 {
     text = sort(text);
-    FILE *file = fopen(filename, "w");
+    FILE *file = fopen(data_path, "w");
     if (NULL == file)
     {
         error_msg("Cannot open the file");
