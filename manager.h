@@ -100,6 +100,9 @@ int overwrite_pass(char *name, char *identifier, char *password, int line_index)
 /*return a string, source, created with args*/
 char *string(char *source, char **args, int args_length);
 
+/*data command to to action on it*/
+int data_command(int action, char *arg);
+
 /*Display the data path*/
 void data_path_print();
 

@@ -1,6 +1,6 @@
 #include "../manager.h"
 
-int run_command(char *command)
+int run_command(char *command)//have to remake the function, don't work for unknow command if the data file hasn't been found
 {
     int length = get_words_num(command);
     char **args = get_args(command);
@@ -41,34 +41,43 @@ int run_command(char *command)
         free_args(args, length);
         return 0;
     }
-    else if (!strcmp(args[0], "data-path"))
+    else if (!strcmp(args[0], "data"))
     {
-        if (length > 1)
+        if (length > 3)
         {
             error_msg("Too much arguments");
         }
-        else
+        if (length < 2)
         {
-            data_path_print();
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "data-path-change"))
-    {
-        if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 2)
-        {
-            error_msg("not enough arguments");
+            error_msg("Not enough arguments");
         }
         else
         {
-            if (data_path_change(args[1]));
+            if (!strcmp(args[1], "path"))
             {
-                error_msg("Could not change data-path");
+                if (length > 2)
+                {
+                    error_msg("Too much arguments");
+                }
+                else
+                {
+                    data_command(0, NULL);
+                }
+            }
+            else if (!strcmp(args[1], "change"))
+            {
+                if (length < 3)
+                {
+                    error_msg("Not enough arguments");
+                }
+                else
+                {
+                    data_command(1, args[2]);
+                }
+            }
+            else
+            {
+                error_msg("Wrong argument");
             }
         }
         free_args(args, length);
