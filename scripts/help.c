@@ -5,8 +5,7 @@ int help(char *command)
     if (command == NULL)
     {
         printf("\n > add : ADD an identifier and a password with a plateform name you can access with it\n");
-        printf("\n > data-path : DISPLAY the actual data path\n");
-        printf("\n > data-path-change : CHANGE the data path\n");
+        printf("\n > data : DISPLAY or CHANGE the actual data path\n");
         printf("\n > exit : EXIT the program\n");
         printf("\n > get : GET an identifier and a password from a plateform name\n");
         printf("\n > help : DISPLAY the description of the commands and their function\n");
@@ -20,15 +19,12 @@ int help(char *command)
             printf("\n > list []\n");
             printf("\n  > DISPLAY all the plateform's names you can access\n\n");
         }
-        else if (!strcmp(command, "data-path"))
+        else if (!strcmp(command, "data"))
         {
-            printf("\n > data-path []\n");
-            printf("\n  > DISPLAY the actual data path\n\n");
-        }
-        else if (!strcmp(command, "data-path-change"))
-        {
-            printf("\n > data-path-change [absolute path]\n");
-            printf("\n  > CHANGE the data path, use it to change your database location\n\n");
+            printf("\n > data path []\n");
+            printf("\n  > DISPLAY the actual data path\n");
+            printf("\n > data change [path]\n");
+            printf("\n  > Change the data path to [path]\n\n");
         }
         else if (!strcmp(command, "get"))
         {
