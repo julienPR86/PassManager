@@ -5,7 +5,7 @@ int main(void)
     if (init())
     {
         error_msg("Could not init the variables\n");
-        printf("Tap help for more informations\n\n");
+        printf("Tap help for more informations\n");
     }
     else
     {

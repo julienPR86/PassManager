@@ -6,7 +6,44 @@ int run_command(char *command)
     char **args = get_args(command);
     if (NULL == args)
     {
+        return 0;
+    }
+    if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
+    {
+        if (length > 2)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            if (length == 2)
+            {
+                help(args[1]);
+            }
+            else
+            {
+                help(NULL);
+            }
+        }
         free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
+    {
+        if (length > 1)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            running = 0;
+        }
+        free_args(args, length);
+        return 0;
+    }
+    if (!is_modifiable)
+    {
+        error_msg("Cannot access the data due to variable's non-initialisation");
         return 0;
     }
     if (!strcmp(args[0], "list") || !strcmp(args[0], "ls"))
@@ -103,39 +140,6 @@ int run_command(char *command)
             {
                 rewrite = 1;
             }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
-    {
-        if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            if (length == 2)
-            {
-                help(args[1]);
-            }
-            else
-            {
-                help(NULL);
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
-    {
-        if (length > 1)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            running = 0;
         }
         free_args(args, length);
         return 0;
