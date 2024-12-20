@@ -1,20 +1,20 @@
 #include "../manager.h"
 
-char **read_file(FILE *file, int h, int w)
+char **read_file(FILE *file, int height, int width)
 {
-    char **text = (char **)malloc(sizeof(char *) * h);
+    char **text = (char **)malloc(sizeof(char *) * height);
     if (text == NULL)
     {
         error_msg("Memory allocation error");
         return NULL;
     }
-    if (!h)
+    if (!height)
     {
         return text;
     }
-    for (int i = 0; i < h; i++)
+    for (int i = 0; i < height; i++)
     {
-        text[i] = (char *)malloc(sizeof(char) * w);
+        text[i] = (char *)malloc(sizeof(char) * width);
         if (text[i] == NULL)
         {
             error_msg("Memory allocation error");
