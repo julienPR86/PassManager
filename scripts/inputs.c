@@ -13,7 +13,15 @@ char *input(char *str, int returns)
         return NULL;
     }
     
-    printf("%s", str);
+    if (last_msg_is_error)
+    {
+        printf("\n%s", str);
+    }
+    else
+    {
+        printf("%s", str);
+    }
+    
 
     while ((c = getchar()) != '\n' && index < MAX_LENGTH)
     {

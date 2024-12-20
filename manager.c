@@ -5,17 +5,21 @@ int main(void)
     if (init())
     {
         error_msg("Could not init the variables\n");
-        return 1;
+        printf("Tap help for more informations\n\n");
+    }
+    else
+    {
+        printf("\nTap help for more informations\n\n");
     }
     if (!text_width)
     {
         text_height = 0;
     }
-    char *command_line;
-    printf("\nTap help for more informations\n\n");
+    char *command_line;        
     while (running)
     {
         command_line = input("> ", 0);
+        last_msg_is_error = 0;
         if (NULL != command_line)
         {
             if (run_command(command_line))

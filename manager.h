@@ -19,6 +19,8 @@
 
 extern const char *separation;
 extern const char *filename;
+extern int last_msg_is_error;
+extern int is_modifiable;
 extern int running;
 extern int text_height;
 extern int text_width;

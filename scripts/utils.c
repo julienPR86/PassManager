@@ -77,6 +77,14 @@ char *get_plateform_name(char *str)
 
 void error_msg(char *message)
 {
-    fprintf(stderr, "\n    Error : %s\n\n", message);
+    if (last_msg_is_error)
+    {
+        fprintf(stderr, "    Error : %s\n", message);
+    }
+    else
+    {
+        fprintf(stderr, "\n    Error : %s\n", message);
+    }
+    last_msg_is_error = 1;
     return;
 }
