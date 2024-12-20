@@ -41,6 +41,36 @@ int run_command(char *command)
         free_args(args, length);
         return 0;
     }
+    else if (!strcmp(args[0], "data-path"))
+    {
+        if (length > 1)
+        {
+            error_msg("Too much arguments");
+        }
+        else
+        {
+            //display data-path;
+        }
+        free_args(args, length);
+        return 0;
+    }
+    else if (!strcmp(args[0], "data-path-change"))
+    {
+        if (length > 2)
+        {
+            error_msg("Too much arguments");
+        }
+        else if (length < 2)
+        {
+            error_msg("not enough arguments");
+        }
+        else
+        {
+            //change data-path;
+        }
+        free_args(args, length);
+        return 0;
+    }
     if (!is_modifiable)
     {
         error_msg("Cannot access the data due to variable's non-initialisation");

@@ -20,15 +20,15 @@ int help(char *command)
             printf("\n > list []\n");
             printf("\n  > DISPLAY all the plateform's names you can access\n\n");
         }
-        else if (!strcmp(command, "data-path-change"))
-        {
-            printf("\n > data-path-change [absolute path]\n");
-            printf("\n  > CHANGE the data path, use it to change your database location\n\n");
-        }
         else if (!strcmp(command, "data-path"))
         {
             printf("\n > data-path []\n");
             printf("\n  > DISPLAY the actual data path\n\n");
+        }
+        else if (!strcmp(command, "data-path-change"))
+        {
+            printf("\n > data-path-change [absolute path]\n");
+            printf("\n  > CHANGE the data path, use it to change your database location\n\n");
         }
         else if (!strcmp(command, "get"))
         {
