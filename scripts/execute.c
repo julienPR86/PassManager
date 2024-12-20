@@ -49,7 +49,7 @@ int run_command(char *command)
         }
         else
         {
-            //display data-path;
+            data_path_print();
         }
         free_args(args, length);
         return 0;
@@ -66,7 +66,10 @@ int run_command(char *command)
         }
         else
         {
-            //change data-path;
+            if (data_path_change(args[1]));
+            {
+                error_msg("Could not change data-path");
+            }
         }
         free_args(args, length);
         return 0;
