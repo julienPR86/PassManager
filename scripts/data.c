@@ -7,5 +7,13 @@ int data_path_change(char *path)
 
 void data_path_print()
 {
+    if (!strlen(data_path))
+    {
+        error_msg("There is no provided path");
+    }
+    else
+    {
+        printf("\n%s\n", data_path);
+    }
     return;
 }
