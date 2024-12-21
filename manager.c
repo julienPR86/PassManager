@@ -19,7 +19,10 @@ int main(void)
     char *command_line;        
     while (running)
     {
-        command_line = input("> ", 0);
+        if (last_msg_is_error)
+        {command_line = input("> ", 1, 0);}
+        else
+        {command_line = input("> ", 0, 0);}
         last_msg_is_error = 0;
         if (NULL != command_line)
         {

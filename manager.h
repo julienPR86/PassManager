@@ -77,7 +77,7 @@ void free_args(char **args, int length);
 int list_command();
 
 /*return a string write by the user*/
-char *input(char *str, int returns);
+char *input(char *str,int pre_returns, int returns);
 
 /*make the stdin empty*/
 void empty_stdin();

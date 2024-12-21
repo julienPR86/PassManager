@@ -1,6 +1,6 @@
 #include "../manager.h"
 
-char *input(char *str, int returns)
+char *input(char *str, int pre_returns, int returns)
 {
     char *string;
     char c;
@@ -12,15 +12,11 @@ char *input(char *str, int returns)
         error_msg("Memory allocation error");
         return NULL;
     }
-    
-    if (last_msg_is_error)
+    for (int i = 0; i < pre_returns; i++)
     {
-        printf("\n%s", str);
+        printf("\n");
     }
-    else
-    {
-        printf("%s", str);
-    }
+    printf("%s", str);
     
 
     while ((c = getchar()) != '\n' && index < MAX_LENGTH)
