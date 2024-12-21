@@ -1,0 +1,2 @@
+passwords_file_path
+C:\Users\neser\Documents\Developpement\C\PassManager\project\passwords.txt
