@@ -36,7 +36,7 @@ int main(void)
     }
     if (rewrite)
     {    
-        if (write_file(data_path, text_height))
+        if (write_file(passwords_file_path, text_height))
         {
             error_msg("Could not write in the file");
         }

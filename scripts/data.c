@@ -5,10 +5,10 @@ int data_command(int action, char *arg)
     switch (action)
     {
         case 0:
-            data_path_print();
+            passwords_file_path_print();
             break;
         case 1:
-            if(data_path_change(arg))
+            if(passwords_file_path_change(arg))
             {
                 return 1;
             }
@@ -19,20 +19,20 @@ int data_command(int action, char *arg)
     return 0;
 }
 
-int data_path_change(char *path)
+int passwords_file_path_change(char *path)
 {
     return 0;
 }
 
-void data_path_print()
+void passwords_file_path_print()
 {
-    if (!strlen(data_path))
+    if (!strlen(passwords_file_path))
     {
         error_msg("There is no provided path");
     }
     else
     {
-        printf("\n > Path : %s\n\n", data_path);
+        printf("\n > Path : %s\n\n", passwords_file_path);
     }
     return;
 }

@@ -18,7 +18,7 @@
 #endif
 
 extern const char *separation;
-extern char *data_path;
+extern char *passwords_file_path;
 extern int last_msg_is_error;
 extern int is_modifiable;
 extern int running;
@@ -104,10 +104,10 @@ char *string(char *source, char **args, int args_length);
 int data_command(int action, char *arg);
 
 /*Display the data path*/
-void data_path_print();
+void passwords_file_path_print();
 
 /*Change the data path*/
-int data_path_change(char *path);
+int passwords_file_path_change(char *path);
 
 /*display message as an error msg*/
 void error_msg(char *message);
