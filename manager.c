@@ -16,10 +16,6 @@ int main(void)
     {
         printf("\nTap help for more informations\n\n");
     }
-    if (!text_width)
-    {
-        text_height = 0;
-    }
     char *command_line;        
     while (running)
     {

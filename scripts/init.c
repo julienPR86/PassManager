@@ -19,6 +19,10 @@ int init()
         return 1;
     }
     get_dimensions(file, &text_height, &text_width);
+    if (!text_width)
+    {
+        text_height = 0;
+    }
     text = read_file(file, text_height, text_width);
     if (text == NULL)
     {
