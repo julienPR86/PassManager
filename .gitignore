@@ -6,4 +6,6 @@
 *.o
 #password file
 *.txt
-!data.txt
+!options.txt
+
+installer/
