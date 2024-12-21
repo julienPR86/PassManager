@@ -6,6 +6,7 @@
 #include <string.h>
 
 #define MAX_LENGTH 256
+#define NAME(variable) (#variable)
 
 #if defined(_WIN32) || defined(_WIN64)
     #define CLIPBOARD_CMD "clip"
