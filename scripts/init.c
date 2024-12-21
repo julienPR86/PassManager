@@ -28,7 +28,7 @@ int init()
     {
         error_msg("Cannot read the file");
         fclose(file);
-        return 1;
+        return -1;
     }
     fclose(file);
     is_modifiable = 1;
