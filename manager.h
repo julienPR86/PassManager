@@ -104,7 +104,7 @@ char *string(char *source, char **args, int args_length);
 int data_command(int action, char *arg);
 
 /*Display the data path*/
-void passwords_file_path_print();
+int passwords_file_path_print();
 
 /*Change the data path*/
 int passwords_file_path_change(char *path);

@@ -5,7 +5,10 @@ int data_command(int action, char *arg)
     switch (action)
     {
         case 0:
-            passwords_file_path_print();
+            if (passwords_file_path_print())
+            {
+                return 1;
+            }
             break;
         case 1:
             if(passwords_file_path_change(arg))
@@ -24,15 +27,16 @@ int passwords_file_path_change(char *path)
     return 0;
 }
 
-void passwords_file_path_print()
+int passwords_file_path_print()
 {
     if (!strlen(passwords_file_path))
     {
         error_msg("There is no provided path");
+        return 1;
     }
     else
     {
         printf("\n > Path : %s\n\n", passwords_file_path);
     }
-    return;
+    return 0;
 }
