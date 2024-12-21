@@ -77,7 +77,7 @@ int run_command(char *command)//have to remake the function, don't work for unkn
             }
             else
             {
-                error_msg("Wrong argument");
+                error_msg("Unkown argument");
             }
         }
         free_args(args, length);
