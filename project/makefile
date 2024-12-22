@@ -1,6 +1,6 @@
 CC = gcc
 ARGS = -Wall -Werror -Wextra
-OBJ = $(TMP)manager.o $(TMP)init.o $(TMP)data.o $(TMP)add.o $(TMP)file.o $(TMP)get.o $(TMP)help.o $(TMP)inputs.o $(TMP)list.o $(TMP)execute.o $(TMP)remove.o $(TMP)str.o $(TMP)utils.o
+OBJ = $(TMP)manager.o $(TMP)init.o $(TMP)data.o $(TMP)generator.o $(TMP)add.o $(TMP)file.o $(TMP)get.o $(TMP)help.o $(TMP)inputs.o $(TMP)list.o $(TMP)execute.o $(TMP)remove.o $(TMP)str.o $(TMP)utils.o
 EXEC = manager.exe
 TMP = tmp/
 SCRIPTS = scripts/
