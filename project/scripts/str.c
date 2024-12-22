@@ -93,7 +93,7 @@ int str_to_int(char *str)
 {
     if (!is_digit(str))
     {
-        fprintf(stderr, "Cannot convert '%s' to int\n", str);
+        error_msg("Could not convert to int");
         return -1;
     }
     int result = 0;
