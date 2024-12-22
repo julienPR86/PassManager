@@ -75,6 +75,51 @@ char *get_plateform_name(char *str)
     return page;
 }
 
+int is_digit(char *str)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] < 47 || str[i] > 56)
+        {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+int power(int number, int power)
+{
+    if (power == 0)
+    {
+        return 1;
+    }
+    else if (power < 0)
+    {
+        return 0;
+    }
+    int result = 1;
+    for (int i = 0; i < power; i++)
+    {
+        result *= number;
+    }
+    return result;
+}
+
+char *shuffle(char *str)
+{
+    for (int i = 0; i < strlen(str); i++)
+    {
+        int index = rand()%strlen(str);
+        int _index = rand()%strlen(str);
+        char save = str[index];
+        str[index] = str[_index];
+        str[_index] = save;
+    }
+    return str;
+}
+
 void error_msg(char *message)
 {
     if (last_msg_is_error)
