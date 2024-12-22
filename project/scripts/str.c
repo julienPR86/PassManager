@@ -89,6 +89,21 @@ char **sort(char **text)
     return text;
 }
 
+int str_to_int(char *str)
+{
+    if (!is_digit(str))
+    {
+        fprintf(stderr, "Cannot convert '%s' to int\n", str);
+        return -1;
+    }
+    int result = 0;
+    for (int i = 0; i < strlen(str); i++)
+    {
+        result += (str[i]-'0')*power(10, strlen(str)-i-1);
+    }
+    return result;
+}
+
 char *string(char *source, char **args, int args_length)
 {
     for (int i = 0; i < args_length; i++)
