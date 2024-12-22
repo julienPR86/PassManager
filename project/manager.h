@@ -50,6 +50,12 @@ int get_words_num(char *string);
 /*return a string which is a name of a plateform*/
 char *get_plateform_name(char *str);
 
+/*return the power of a number*/
+int power(int num, int power);
+
+/*shuffle a string*/
+char *shuffle(char *srt);
+
 /*compare to characters, they can be modify with value1 and value2*/
 int charcmp(char chr1, char chr2, int value1, int value2);
 
@@ -58,6 +64,12 @@ int str_sort(char *str1, char *str2);
 
 /*sort a string array*/
 char **sort(char **text);
+
+/*return 1 if str is a number, 0 otherwise*/
+int is_digit(char *str);
+
+/*convert a string into a number*/
+int str_to_int(char *str);
 
 /*remove page in text*/
 int remove_command(char *page);
@@ -109,6 +121,9 @@ int passwords_file_path_print();
 
 /*Change the data path*/
 int passwords_file_path_change(char *path);
+
+/*Generate a passwords with lowercase, uppercase, numbers ans specials characters*/
+char *gen_password(int);
 
 /*display message as an error msg*/
 void error_msg(char *message);
