@@ -43,7 +43,8 @@ int help(char *command)
         else if (!strcmp(command, "add"))
         {
             printf("\n > add [name] [identifier] [password]\n");
-            printf("\n  > ADD an identifier and a password with a plateform name you can access with it\n\n");
+            printf("\n  > ADD an identifier and a password with a plateform name you can access with it\n");
+            printf("\n   > Write <rand> for a random passwords in password argument\n\n");
         }
         else if (!strcmp(command, "remove") || !strcmp(command, "rm"))
         {
