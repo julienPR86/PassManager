@@ -9,6 +9,11 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
         return 1;
     }
 
+    if (!strcmp(password, "rand"))
+    {
+        password = gen_password(12);
+    }
+
     if (!overwrite)
     {
         if (add_pass(page, identifier, password) < 0)
@@ -33,6 +38,7 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
             }
         }
     }
+    free(password);
     text = sort(text);
     return 0;
 }

@@ -1,7 +1,7 @@
 #include "../manager.h"
 
 const char *separation = "     ";
-char *passwords_file_path = NULL;
+char *passwords_file_path = "passwords.txt";
 int last_msg_is_error = 0;
 int is_modifiable = 0;
 int running = 1;
