@@ -33,12 +33,12 @@ int help(char *command)
             printf("\n > data path []\n");
             printf("\n  > DISPLAY the actual data path\n");
             printf("\n > data change [path]\n");
-            printf("\n  > Change the data path to [path]\n\n");
+            printf("\n  > Change the data path to <path>\n\n");
         }
         else if (!strcmp(command, "get"))
         {
             printf("\n > get [name]\n");
-            printf("\n  > GET an identifier and a password from a plateform name\n\n");
+            printf("\n  > GET an identifier and a password from <name>\n\n");
         }
         else if (!strcmp(command, "add"))
         {
@@ -49,12 +49,12 @@ int help(char *command)
         else if (!strcmp(command, "remove") || !strcmp(command, "rm"))
         {
             printf("\n > remove [name]\n");
-            printf("\n  > REMOVE an identifier and a password from a plateform name\n\n");
+            printf("\n  > REMOVE an identifier and a password from <name>\n\n");
         }
         else if (!strcmp(command, "help") || !strcmp(command, "?"))
         {
             printf("\n > help [command]\n");
-            printf("\n  > DISPLAY the description of the commands and their function\n\n");
+            printf("\n  > DISPLAY the description of <command> and its functions\n\n");
         }
         else if (!strcmp(command, "exit") || !strcmp(command, "quit"))
         {
