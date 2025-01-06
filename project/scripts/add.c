@@ -70,8 +70,7 @@ int add_pass(char *name, char *identifier, char *password)
     char *args[] = {name, (char *)separation, identifier, (char *)separation, password};
     string(line, args, 5);
 
-    text[text_height][0] = '\0';
-    strcat(text[text_height], line);
+    strcpy(text[text_height], line);
     text_height++;
     if (length > text_width)
     {
