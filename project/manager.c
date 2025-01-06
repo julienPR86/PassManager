@@ -21,7 +21,11 @@ int main(void)
     {
         command_line = input("> ", last_msg_is_error, 0);
         last_msg_is_error = 0;
-        if (NULL != command_line)
+        if (0 == strlen(command_line))
+        {
+            free(command_line);
+        }
+        else if (NULL != command_line)
         {
             if (run_command(command_line))
             {
