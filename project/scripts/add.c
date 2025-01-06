@@ -5,13 +5,15 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
     if (!(exist(page) < 0) && !overwrite)
     {
         error_msg("This plateform already exist");
-        printf("Tap add! to overwrite\n");
+        printf("\nTap add! to overwrite\n");
         return 1;
     }
 
+    int allocated = 0;
     if (!strcmp(password, "rand"))
     {
         password = gen_password(12);
+        allocated = 1;
     }
 
     if (!overwrite)
@@ -38,7 +40,10 @@ int add_command(char *page, char *identifier, char *password, int overwrite)
             }
         }
     }
-    free(password);
+    if(allocated)
+    {
+        free(password);
+    }
     text = sort(text);
     return 0;
 }
@@ -56,7 +61,6 @@ int add_pass(char *name, char *identifier, char *password)
     text[text_height] = (char *)malloc(length * sizeof(char));
     if (text[text_height] == NULL)
     {
-        free(text[text_height]);
         error_msg("Memory allocation error");
         return -1;
     }
