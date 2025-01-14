@@ -16,7 +16,7 @@ int main(void)
     {
         printf("\nTap help for more informations\n\n");
     }
-    char *command_line;        
+    char *command_line;
     while (running)
     {
         command_line = input("> ", last_msg_is_error, 0);
