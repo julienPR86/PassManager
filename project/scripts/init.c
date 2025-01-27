@@ -32,6 +32,5 @@ int init()
     }
     fclose(file);
     is_modifiable = 1;
-    srand(time(NULL));
     return 0;
 }
