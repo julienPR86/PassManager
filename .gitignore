@@ -2,6 +2,8 @@
 .vscode/
 #.exe files
 *.exe
+*.out
+manager
 #obj files
 *.o
 #password file
