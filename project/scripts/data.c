@@ -24,6 +24,7 @@ int data_command(int action, char *arg)
 
 int passwords_file_path_change(char *path)
 {
+	(void)path;
     return 0;
 }
 
