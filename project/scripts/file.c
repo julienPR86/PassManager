@@ -14,7 +14,7 @@ char **read_file(FILE *file, int height, int width)
     }
     for (int i = 0; i < height; i++)
     {
-        text[i] = (char *)malloc(sizeof(char) * width);
+        text[i] = (char *)malloc(sizeof(char) * width + 1);
         if (text[i] == NULL)
         {
             error_msg("Memory allocation error");
