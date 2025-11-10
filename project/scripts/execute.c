@@ -200,7 +200,7 @@ char **get_args(char *command)
     }
     for (int i = 0; i < get_words_num(command); i++)
     {
-        args[i] = (char *)malloc(strlen(command) * sizeof(char));
+        args[i] = (char *)malloc(strlen(command) + 1 * sizeof(char));
         if (NULL == args[i])
         {
             free_args(args, i);
