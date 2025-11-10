@@ -109,7 +109,7 @@ int power(int number, int power)
 
 char *shuffle(char *str)
 {
-    for (int i = 0; i < strlen(str); i++)
+    for (size_t i = 0; i < strlen(str); i++)
     {
         int index = rand()%strlen(str);
         int _index = rand()%strlen(str);
