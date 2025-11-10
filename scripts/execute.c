@@ -231,6 +231,7 @@ char **get_args(char *command)
         else
         {
             error_msg("Name standard isn't respected");
+			free_args(args, get_words_num(command));
             return NULL;
         }
         if (command[command_index+1] == '\0')
