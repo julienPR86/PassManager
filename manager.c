@@ -20,6 +20,8 @@ int main(void)
     while (running)
     {
         command_line = input("> ", last_msg_is_error, 0);
+		if (NULL == command_line)
+			continue;
         last_msg_is_error = 0;
         if (0 == strlen(command_line))
         {
