@@ -1,0 +1,8 @@
+	
+Here is some help about the 'replace' command :
+ 	
+	Command : replace [entry:required] [name:required] [identifier:required] [password:required]
+			Replaces an existing entry with a new one, can be used to modify the identifier or the password.
+ 
+	Aliases : 'replace'
+ 

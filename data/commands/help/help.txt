@@ -1,0 +1,8 @@
+ 
+Here is some help about the 'help' command :
+ 
+	Command : help [command:optional]
+		Display help about a specified command. If no command if provided, display generic help.
+ 
+	Aliases : 'help' , 'man'
+ 

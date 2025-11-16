@@ -1,0 +1,8 @@
+ 
+Here is some help about the 'add' command :
+ 
+	Command : add [name:required] [identifier:required] [password:required]
+		Adds an entry with a unique name, an identifier and a password.
+ 
+	Aliases : 'add'
+ 

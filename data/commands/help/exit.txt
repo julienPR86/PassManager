@@ -1,0 +1,8 @@
+	
+Here is some help about the 'exit' command :
+ 	
+	Command : exit []
+		Exit the program.
+ 
+	Aliases : 'exit' , 'quit'
+ 

@@ -1,0 +1,24 @@
+ 
+Here is a command list you can use to interact with the program :
+ 
+	List command : list []
+		Displays all the known entries in the database.
+ 
+	Get command : get [entry:required]
+		Displays information about an entry in the database.
+ 
+	Add command : add [name:required] [identifier:required] [password:required]
+		Adds an entry with a unique name, an identifier and a password.
+ 
+	Replace command : replace [entry:required] [name:required] [identifier:required] [password:required]
+		Replaces an existing entry with a new one, can be used to modify the identifier or the password.
+ 
+	Remove command : remove [name:required]
+		Removes an existing entry in the database.
+ 
+	Help command : help [command:optional]
+		Display help about a specified command. If no command if provided, display generic help.
+ 
+	Exit command : exit []
+		Exit the program.
+ 

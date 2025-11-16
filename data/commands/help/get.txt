@@ -1,0 +1,8 @@
+	
+Here is some help about the 'get' command :
+ 	
+	Command : get [entry:required]
+		Displays information about an entry in the database.
+ 
+	Aliases : 'get'
+ 

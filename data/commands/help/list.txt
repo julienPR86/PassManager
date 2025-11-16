@@ -1,0 +1,8 @@
+ 
+Here is some help about the 'list' command :
+ 
+	Command : list []
+		Display all the known entries in the database.
+ 
+	Aliases : 'list' , 'ls'
+ 
