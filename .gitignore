@@ -6,8 +6,5 @@
 manager
 #obj files
 *.o
-#password file
-*.txt
-!options.txt
-
-installer/
+#data file
+data.txt
