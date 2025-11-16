@@ -13,7 +13,6 @@ OBJS = 	$(TMP)manager.o \
 		$(TMP)exit.o \
 		$(TMP)inputs.o \
 		$(TMP)outputs.o \
-		$(TMP)split.o \
 		$(TMP)utils.o \
 
 NAME = manager
