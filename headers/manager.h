@@ -102,7 +102,7 @@ void	error_output(char *error);
 int		is_cmd_valid(char *cmd);
 char	*get_cmd_name(char *alias);
 char	**sort_strings(char **strings);
-char	**split(char *str);
+char	**split_strings(char *str);
 char	*get_word(char *str, int word_index);
 t_uint	count_words(char *str);
 t_uint	strings_size(char **strings);
