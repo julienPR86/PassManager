@@ -1,51 +1,36 @@
-#include "../manager.h"
+#include "../headers/manager.h"
 
-char *input(char *str, int pre_returns, int returns)
+char	*input(char *msg)
 {
-    char *string;
-    char c;
-    int index = 0;
+	char	c;
+	char	*str;
+	t_uint	index;
 
-    string = (char *)malloc((MAX_LENGTH+1) * sizeof(char));
-    if (string == NULL)
-    {
-        error_msg("Memory allocation error");
-        return NULL;
-    }
-    for (int i = 0; i < pre_returns; i++)
-    {
-        printf("\n");
-    }
-    printf("%s", str);
-    
-
-    while ((c = getchar()) != '\n' && index < MAX_LENGTH)
-    {
-        if (c == '&' || c == '$' || c == ';')
-        {
-            empty_stdin();
-            error_msg("Forbidden character in input");
-            free(string);
-            return NULL;
-        }
-        string[index] = c;
-        index++;
-    }
-    string[index] = '\0';
-
-    for (int i = 0; i < returns; i++)
-        printf("\n");
-    
-    if (index >= MAX_LENGTH)
-    {
-        empty_stdin();
-    }
-        
-    return string;
+	str = (char *)malloc(sizeof(char) * (MAX_STRING_LENGTH + 1));
+	if (NULL == str)
+		return (NULL);
+	if (NULL != msg)
+		printf("%s", msg);
+	c = 0;
+	index = 0;
+	while (c != '\n' && c != '\r' && index < MAX_STRING_LENGTH)
+	{
+		c = getc(stdin);
+		*(str + index) = c;
+		index++;
+	}
+	*(str + index - 1) = '\0';
+	if (index >= MAX_STRING_LENGTH)
+		empty_stdin();
+	return (str);
 }
 
-void empty_stdin()
+void	empty_stdin(void)
 {
-    while (getchar() != '\n');
-    return;
+	char	c;
+
+	c = 0;
+	while (c != '\n' && c != '\r')
+		c = getc(stdin);
+	return ;
 }

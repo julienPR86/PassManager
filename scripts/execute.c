@@ -1,257 +1,85 @@
-#include "../manager.h"
+#include "../headers/manager.h"
 
-int run_command(char *command)//have to remake the function, don't work for unknow command if the data file hasn't been found
+int	execute_cmd(char *cmd)
 {
-    int length = get_words_num(command);
-    char **args = get_args(command);
-    if (NULL == args)
-    {
-        return 0;
-    }
-    if (!strcmp(args[0], "help") || !strcmp(args[0], "?"))
-    {
-        if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            if (length == 2)
-            {
-                help(args[1]);
-            }
-            else
-            {
-                help(NULL);
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "exit") || !strcmp(args[0], "quit"))
-    {
-        if (length > 1)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            running = 0;
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "data"))
-    {
-        if (length > 3)
-        {
-            error_msg("Too much arguments");
-        }
-        if (length < 2)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!strcmp(args[1], "path"))
-            {
-                if (length > 2)
-                {
-                    error_msg("Too much arguments");
-                }
-                else
-                {
-                    data_command(0, NULL);
-                }
-            }
-            else if (!strcmp(args[1], "change"))
-            {
-                if (length < 3)
-                {
-                    error_msg("Not enough arguments");
-                }
-                else
-                {
-                    data_command(1, args[2]);
-                }
-            }
-            else
-            {
-                error_msg("Unkown argument");
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    if (!is_modifiable)
-    {
-        error_msg("Cannot access the data due to variable's non-initialisation");
-        return 0;
-    }
-    if (!strcmp(args[0], "list") || !strcmp(args[0], "ls"))
-    {
-        if (length > 1)
-        {
-            error_msg("Too much arguments");
-        }
-        else
-        {
-            list_command();
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "get"))
-    {
-        if (!text_height)
-        {
-            error_msg("There is no passwords to get");
-        }
-        else if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 2)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            get_pass(args[1]);
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "add"))
-    {
-        if (length > 4)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 4)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!add_command(args[1],args[2],args[3], 0))
-            {
-                rewrite = 1;
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "add!"))
-    {
-        if (length > 4)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 4)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!add_command(args[1],args[2],args[3], 1))
-            {
-                rewrite = 1;
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    else if (!strcmp(args[0], "remove") || !strcmp(args[0], "rm"))
-    {
-        if (!text_height)
-        {
-            error_msg("There is no passwords to remove");
-        }
-        else if (length > 2)
-        {
-            error_msg("Too much arguments");
-        }
-        else if (length < 2)
-        {
-            error_msg("Not enough arguments");
-        }
-        else
-        {
-            if (!remove_command(args[1]))
-            {
-                rewrite = 1;
-            }
-        }
-        free_args(args, length);
-        return 0;
-    }
-    free_args(args, length);
-    return 1;
+	char	**args;
+	t_uint	index;
+	int		(*command_func)(char **);
+
+	if (NULL == cmd)
+		return (FAILURE);
+	args = split_strings(cmd);
+	index = 0;
+	command_func = NULL;
+	while (*args && index < COMMAND_COUNT && NULL == command_func)
+	{
+		if (!strcmp(*args, (*(commands + index)).name))
+		{
+			command_func = (*(commands + index)).command;
+			break;
+		}
+		for (int i = 0; i < MAX_ALIAS_NUM; i++)
+		{
+			if (!*((*(commands + index)).alias + i))
+				break ;
+			if (strcmp(*args, *((*(commands + index)).alias + i)))
+				continue ;
+			command_func = (*(commands + index)).command;
+			break ;
+		}
+		if (NULL != command_func)
+			break;
+		index++;
+	}
+	if (NULL == command_func)
+	{
+		error_output("Command not found\n");
+		free_strings(args);
+		return (COMMAND_NOT_FOUND);
+	}
+	if (check_cmd_args_number(args, commands + index))
+	{
+		error_output("Wrong arguments number\n");
+		free_strings(args);
+		return (WRONG_COMMAND_ARG_NUM);
+	}
+	switch (command_func(args))
+	{
+		case DATABASE_EMPTY:
+			error_output("There is no entries in database\n");
+			break;
+		case COMMAND_NOT_FOUND:
+			error_output("Unknow command\n");
+			break;
+		case ENTRY_NOT_FOUND:
+			error_output("Unknow entry\n");
+			break;
+		case ENTRY_ALREADY_EXISTS:
+			error_output("Entry already exists in database\n");
+			break;
+		case HELP_ENTRY_NOT_FOUND:
+			error_output("Help about this command does not exists\n");
+			break;
+		case EXIT_PROGRAM:
+			free_strings(args);
+			return (EXIT_PROGRAM);
+		default:
+			break ;
+	}
+	free_strings(args);
+	return (SUCCESS);
 }
 
-char **get_args(char *command)
+int	check_cmd_args_number(char **args, t_Command *cmd)
 {
-    char **args = (char **)malloc(get_words_num(command) * sizeof(char *));
-    if (NULL == args)
-    {
-        error_msg("Memory allocation error");
-        return NULL;
-    }
-    for (int i = 0; i < get_words_num(command); i++)
-    {
-        args[i] = (char *)malloc(strlen(command) + 1 * sizeof(char));
-        if (NULL == args[i])
-        {
-            free_args(args, i);
-            return NULL;
-        }
-    }
-    int command_index = 0, args_index = 0, word_index = 0, is_word = 0;
-    char word[strlen(command)+1];
-    while (command[command_index])
-    {
-        if (command[command_index] >= 33 && command[command_index] <= 126)
-        {
-            word[word_index] = command[command_index];
-            is_word = 1;
-            word_index++;
-        }
-        else if (command[command_index] == ' ')
-        {
-            if (is_word)
-            {
-                word[word_index] = '\0';
-                strcpy(args[args_index], word);
-                args_index++;
-                is_word = 0;
-                word_index = 0;
-            }
-        }
-        else
-        {
-            error_msg("Name standard isn't respected");
-			free_args(args, get_words_num(command));
-            return NULL;
-        }
-        if (command[command_index+1] == '\0')
-        {
-            if (is_word)
-            {
-                word[word_index] = '\0';
-                strcpy(args[args_index], word);
-            }
-        }
-        command_index++;
-    }
-    return args;
-}
+	t_uint	args_num;
 
-void free_args(char **args, int length)
-{
-    for (int i = 0; i < length; i++)
-    {
-        free(args[i]);
-    }
-    free(args);
+	if (NULL == args || NULL == cmd)
+		return (FAILURE);
+	args_num = 0;
+	while (*(args + args_num))
+		args_num++;
+	if (args_num - 1 > cmd->max_args || args_num - 1 < cmd->min_args)
+		return (WRONG_COMMAND_ARG_NUM);
+	return (SUCCESS);
 }

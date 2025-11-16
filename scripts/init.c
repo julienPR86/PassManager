@@ -1,37 +1,23 @@
-#include "../manager.h"
+#include "../headers/manager.h"
 
-const char *separation = "     ";
-char *passwords_file_path = "passwords.txt";
-int last_msg_is_error = 0;
-int is_modifiable = 0;
-int running = 1;
-int text_height = 0;
-int text_width = 0;
-char **text = NULL;
-int rewrite = 0;
+int		rewrite_data_file = 0;
+char	*data_file_name = "data/data.txt";
+char	**data_file_content = NULL;
 
-int init()
+int	init(void)
 {
-    FILE *file = fopen(passwords_file_path, "rb");
-    if (file == NULL)
-    {
-        error_msg("File not found");
-        return 1;
-    }
-    get_dimensions(file, &text_height, &text_width);
-    if (!text_width)
-    {
-        text_height = 0;
-    }
-    text = read_file(file, text_height, text_width);
-    if (text == NULL)
-    {
-        error_msg("Cannot read the file");
-        fclose(file);
-        return -1;
-    }
-    fclose(file);
-    is_modifiable = 1;
-    srand(time(NULL));
-    return 0;
+	FILE	*file;
+
+	file = fopen(data_file_name, "r");
+	if (NULL == file)
+		return (COULD_NOT_OPEN_FILE);
+	data_file_content = read_file(file);
+	if (NULL == data_file_content)
+	{
+		fclose(file);
+		return (FAILED_TO_READ_DATA);
+	}
+	fclose(file);
+	sort_strings(data_file_content);
+	return (SUCCESS);
 }

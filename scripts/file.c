@@ -1,102 +1,114 @@
-#include "../manager.h"
+#include "../headers/manager.h"
 
-char **read_file(FILE *file, int height, int width)
+char	**read_file(FILE *file)
 {
-    char **text = (char **)malloc(sizeof(char *) * height);
-    if (text == NULL)
-    {
-        error_msg("Memory allocation error");
-        return NULL;
-    }
-    if (!height)
-    {
-        return text;
-    }
-    for (int i = 0; i < height; i++)
-    {
-        text[i] = (char *)malloc(sizeof(char) * width + 1);
-        if (text[i] == NULL)
-        {
-            error_msg("Memory allocation error");
-            for (int j = 0; j < i; j++)
-            {
-                free(text[j]);
-            }
-            free(text);
-            return NULL;
-        }
-    }
-    int column = 0, line = 0;
-    char c;
-    while ((c = fgetc(file)) != EOF)
-    {
-        if (c == '\n' || c == '\r')
-        {
-            text[line][column] = '\0';
-            line++;
-            column = 0;
-            if (c == '\r' && (c = fgetc(file)) != '\n')
-            {
-                ungetc(c, file);
-            }
-        }
-        else
-        {
-            text[line][column] = c;
-            column++;
-        }
-    }
-    text[line][column] = '\0';
-    rewind(file);
-    return text;
+	char	**data;
+	char	c;
+	t_uint	width;
+	t_uint	height;
+	t_uint	line_index;
+	t_uint	write_index;
+
+	if (NULL == file)
+		return (NULL);
+	file_dimensions(file, &width, &height);
+	data = (char **)malloc(sizeof(char *) * (height + 1));
+	if (NULL == data)
+		return (NULL);
+	line_index = 0;
+	while (line_index < height)
+	{
+		*(data + line_index) = (char *)malloc(sizeof(char) * (width + 1));
+		if (NULL == *(data + line_index))
+		{
+			free_strings(data);
+			return (NULL);
+		}
+		line_index++;
+	}
+	c = 0;
+	line_index = 0;
+	while (line_index < height)
+	{
+		write_index = 0;
+		c = getc(file);
+		while (c != EOF && c != '\n')
+		{
+			*(*(data + line_index) + write_index) = c;
+			write_index++;
+			c = getc(file);
+		}
+		*(*(data + line_index) + write_index) = '\0';
+		if (write_index)
+			line_index++;
+	}
+	*(data + height) = NULL;
+	rewind(file);
+	return (data);
 }
 
-void get_dimensions(FILE *file, int *h, int *w)
+int	rewrite_file(char **content)
 {
-    int lines = 1, width = 0, max_width = 0;
-    char c;
-    while ((c = fgetc(file)) != EOF)
-    {
-        if (c == '\n')
-        {
-            lines++;
-            if (width > max_width)
-            {
-                max_width = width;
-            }
-            width = 0;
-            continue;
-        }
-        width++;
-    }
-    if (width > max_width)
-    {
-        max_width = width;
-    }
-    if (NULL != h){*h = lines;}
-    if (NULL != w){*w = max_width;}
-    rewind(file);
-    return;
+	FILE	*file;
+	t_uint	index;
+
+	file = fopen(data_file_name, "w");
+	if (NULL == file)
+		return (COULD_NOT_OPEN_FILE);
+	sort_strings(content);
+	index = 0;
+	while (*(content + index))
+	{
+		if (!*(content + index + 1))
+		{
+			fprintf(file, "%s", *(content + index));
+			break;
+		}
+		fprintf(file, "%s\n", *(content + index));
+		index++;
+	}
+	fclose(file);
+	return (SUCCESS);
 }
 
-int write_file(char *name, int h)
+int	file_dimensions(FILE *file, t_uint *w, t_uint *h)
 {
-    text = sort(text);
-    FILE *file = fopen(name, "w");
-    if (NULL == file)
-    {
-        error_msg("Cannot open the file");
-        return 1;
-    }
-    for (int i = 0; i < h; i++)
-    {
-        if (i == h-1)
-        {
-            fprintf(file, "%s", text[i]);
-            break;
-        }
-        fprintf(file, "%s\n", text[i]);
-    }
-    fclose(file);
-    return 0;
+	char			c;
+	t_uint	width;
+
+	if (NULL == file || NULL == w || NULL == h)
+		return (FAILURE);
+	c = 0;
+	*h = 1;
+	*w = 0;
+	width = 0;
+	while (1)
+	{
+		c = getc(file);
+		if (EOF == c)
+			break;
+		if (c == '\n')
+		{
+			if (!width)
+				continue;
+			if (width > *w)
+				*w = width;
+			(*h)++;
+			width = 0;
+			continue;
+		}
+		width++;
+	}
+	if (width > *w)
+	{
+		*w = width;
+		if (*h == 0)
+			(*h)++;
+	}
+	if (width == 0)
+		(*h)--;
+	if (*w == 0)
+		*h = 0;
+	rewind(file);
+	return (SUCCESS);
 }

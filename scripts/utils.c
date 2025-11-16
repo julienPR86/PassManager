@@ -1,135 +1,199 @@
-#include "../manager.h"
+#include "../headers/manager.h"
 
-int exist(char *name)
+int	is_cmd_valid(char *cmd)
 {
-    for (int i = 0; i < text_height; i++)
-    {
-        char *plateform = get_plateform_name(text[i]);
-        if (plateform == NULL)
-        {
-            exit(1);
-        }
-        if (!strcmp(plateform, name))
-        {
-            free(plateform);
-            return i;
-        }
-        free(plateform);
-    }
-    return -1;
+	t_uint	index;
+
+	if (NULL == cmd)
+		return (0);
+	index = 0;
+	while (*(cmd + index))
+	{
+		if (!ISPRINT(*(cmd + index)) || !ISRIGHT(*(cmd + index)))
+			return (0);
+		index++;
+	}
+	return (1);
 }
 
-int get_words_num(char *string)
+char	*get_cmd_name(char *alias)
 {
-    int words = 0, index = 0, is_word = 0;
-    while (string[index])
-    {
-        if (string[index] >= 33 && string[index] <= 126)
-        {
-            is_word = 1;
-        }
-        else if (string[index] == ' ')
-        {
-            if (is_word)
-            {
-                words++;
-                is_word = 0;
-            }
-        }
-        if (string[index+1] == '\0')
-        {
-            if (is_word)
-            {
-                words++;
-            }
-        }
-        index++;
-    }
-    return words;
+	t_uint	index;
+	t_uint	alias_index;
+
+	if (NULL == alias)
+		return (NULL);
+	index = 0;
+	while (index < COMMAND_COUNT)
+	{
+		alias_index = 0;
+		while (alias_index < MAX_ALIAS_NUM)
+		{
+			if (*((*(commands + index)).alias + alias_index) && !strcmp(alias, *((*(commands + index)).alias + alias_index)))
+				return ((*(commands + index)).name);
+			alias_index++;
+		}
+		if (!strcmp(alias, (*(commands + index)).name))
+			return ((*(commands + index)).name);
+		index++;
+	}
+	return (NULL);
 }
 
-char *get_plateform_name(char *str)
+char	*get_word(char *str, int word_index)
 {
-    int index = 0, separation_index, separation_length = strlen(separation);
-    char *page = (char *)malloc(sizeof(char *) * strlen(str));
-    if (page == NULL)
-    {
-        error_msg("Memory allocation error");
-        return NULL;
-    }
-    separation_index = 0;
-    while (separation_index < separation_length && str[index])
-    {
-        if (str[index] == separation[separation_index])
-        {
-            separation_index++;
-        }
-        else
-        {
-            separation_index = 0;
-        }
-        page[index] = str[index];
-        index++;
-    }
-    page[index-separation_length] = '\0';
-    return page;
+	char	*word;
+	int		is_word;
+	int		count;
+	t_uint	index;
+	t_uint	cpy_index;
+
+	if (NULL == str)
+		return (NULL);
+	is_word = 1;
+	count = -1;
+	index = 0;
+	while (*(str + index) && count < word_index)
+	{
+		if (*(str + index) == ' ')
+			is_word = 1;
+		else if (is_word)
+		{
+			count++;
+			is_word = 0;
+		}
+		index++;
+	}
+	index--;
+	cpy_index = 0;
+	while (*(str + index + cpy_index) && *(str + index + cpy_index) != ' ')
+		cpy_index++;
+	word = (char *)malloc(sizeof(char) * (cpy_index + 1));
+	if (NULL == word)
+		return (NULL);
+	cpy_index = 0;
+	while (*(str + index + cpy_index) && *(str + index + cpy_index) != ' ')
+	{
+		*(word + cpy_index) = *(str + index + cpy_index);
+		cpy_index++;
+	}
+	*(word + cpy_index) = '\0';
+	return (word);
 }
 
-int is_digit(char *str)
+t_uint	count_words(char *str)
 {
-    int i = 0;
-    while (str[i])
-    {
-        if (str[i] < 47 || str[i] > 56)
-        {
-            return 0;
-        }
-        i++;
-    }
-    return 1;
+	t_uint	count;
+	t_uint	index;
+	int		is_word;
+
+	if (NULL == str)
+		return (0);
+	is_word = 1;
+	count = 0;
+	index = 0;
+	while (*(str + index))
+	{
+		if (*(str + index) == ' ')
+			is_word = 1;
+		else if (is_word)
+		{
+			count++;
+			is_word = 0;
+		}
+		index++;
+	}
+	return (count);
 }
 
-int power(int number, int power)
+char	**split_strings(char *str)
 {
-    if (power == 0)
-    {
-        return 1;
-    }
-    else if (power < 0)
-    {
-        return 0;
-    }
-    int result = 1;
-    for (int i = 0; i < power; i++)
-    {
-        result *= number;
-    }
-    return result;
+	char	**strings;
+	t_uint	wc;
+	t_uint	start_index;
+	t_uint	end_index;
+	t_uint	counter;
+
+	if (NULL == str)
+		return (NULL);
+	wc = count_words(str);
+	strings = (char **)malloc(sizeof(char *) * (wc + 1));
+	if (NULL == strings)
+		return (NULL);
+	counter = 0;
+	end_index = 0;
+	while (counter < wc)
+	{
+		start_index = end_index;
+		while (*(str + start_index) && *(str + start_index) == ' ')
+			start_index++;
+		end_index = start_index;
+		while (*(str + end_index) && *(str + end_index) != ' ')
+			end_index++;
+		*(strings + counter) = strndup(str + start_index, end_index - start_index);
+		if (NULL == *(strings + counter))
+		{
+			free_strings(strings);
+			return (NULL);
+		}
+		counter++;
+	}
+	*(strings + counter) = NULL;
+	return (strings);
 }
 
-char *shuffle(char *str)
+char	**sort_strings(char **strings)
 {
-    for (size_t i = 0; i < strlen(str); i++)
-    {
-        int index = rand()%strlen(str);
-        int _index = rand()%strlen(str);
-        char save = str[index];
-        str[index] = str[_index];
-        str[_index] = save;
-    }
-    return str;
+	char	*tmp;
+	t_uint	i;
+	t_uint	j;
+
+	if (NULL == strings)
+		return (NULL);
+	i = 0;
+	while (*(strings + i))
+	{
+		j = i;
+		while (*(strings + j))
+		{
+			if (strcmp(*(strings + i), *(strings + j)) > 0)
+			{
+				tmp = *(strings + i);
+				*(strings + i) = *(strings + j);
+				*(strings + j) = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (strings);
 }
 
-void error_msg(char *message)
+t_uint	strings_size(char **strings)
 {
-    if (last_msg_is_error)
-    {
-        fprintf(stderr, "    Error : %s\n", message);
-    }
-    else
-    {
-        fprintf(stderr, "\n    Error : %s\n", message);
-    }
-    last_msg_is_error = 1;
-    return;
+	t_uint	size;
+
+	if (NULL == strings)
+		return (0);
+	size = 0;
+	while (*(strings + size))
+		size++;
+	return (size);
+}
+
+void	free_strings(char **strs)
+{
+	t_uint	index;
+
+	if (NULL == strs)
+		return ;
+	index = 0;
+	while (*(strs + index))
+	{
+		free(*(strs + index));
+		index++;
+	}
+	free(strs);
+	strs = NULL;
+	return ;
 }
