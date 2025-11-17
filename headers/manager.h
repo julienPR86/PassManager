@@ -48,8 +48,8 @@ typedef struct s_Command
 	char	*alias[MAX_ALIAS_NUM];
 	t_uint	min_args;
 	t_uint	max_args;
-	int		callable;
 	int		(*command)(char **);
+	struct s_Command *sub_commands;
 }	t_Command;
 
 extern int			rewrite_data_file;
