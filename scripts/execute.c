@@ -43,7 +43,7 @@ int	execute_cmd(char *cmd)
 		free_strings(args);
 		return (WRONG_COMMAND_ARG_NUM);
 	}
-	switch (command_func(args))
+	switch (command_func(args + 1))
 	{
 		case DATABASE_EMPTY:
 			error_output("There is no entries in database\n");
