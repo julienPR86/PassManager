@@ -81,7 +81,7 @@ char	*get_word(char *str, int word_index)
 	return (word);
 }
 
-t_uint	count_words(char *str)
+t_uint	count_words(char *str, char *set)
 {
 	t_uint	count;
 	t_uint	index;
@@ -94,7 +94,7 @@ t_uint	count_words(char *str)
 	index = 0;
 	while (*(str + index))
 	{
-		if (*(str + index) == ' ')
+		if (strchr(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -106,7 +106,7 @@ t_uint	count_words(char *str)
 	return (count);
 }
 
-char	**split_strings(char *str)
+char	**split_strings(char *str, char *set)
 {
 	char	**strings;
 	t_uint	wc;
@@ -116,7 +116,7 @@ char	**split_strings(char *str)
 
 	if (NULL == str)
 		return (NULL);
-	wc = count_words(str);
+	wc = count_words(str, set);
 	strings = (char **)malloc(sizeof(char *) * (wc + 1));
 	if (NULL == strings)
 		return (NULL);
@@ -125,10 +125,10 @@ char	**split_strings(char *str)
 	while (counter < wc)
 	{
 		start_index = end_index;
-		while (*(str + start_index) && *(str + start_index) == ' ')
+		while (*(str + start_index) && strchr(set, *(str + start_index)))
 			start_index++;
 		end_index = start_index;
-		while (*(str + end_index) && *(str + end_index) != ' ')
+		while (*(str + end_index) && !strchr(set, *(str + end_index)))
 			end_index++;
 		*(strings + counter) = strndup(str + start_index, end_index - start_index);
 		if (NULL == *(strings + counter))
