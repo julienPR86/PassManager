@@ -4,8 +4,8 @@ int	manager(void)
 {
 	int		run;
 	char	*command;
+	char	*data_file_path;
 
-	printf("Tap help for more informations\n");
 	run = 1;
 	while (run)
 	{
@@ -23,7 +23,11 @@ int	manager(void)
 		free(command);
 	}
 	if (rewrite_data_file)
-		rewrite_file(data_file_content);
+	{
+		data_file_path = get_setting("file_path");
+		rewrite_file(data_file_path, data_file_content);
+		free(data_file_path);
+	}
 	return (SUCCESS);
 }
 
@@ -34,11 +38,17 @@ int	main(void)
 		case INITIALISATION_FAILED:
 			error_output("Could not initialise the program\n");
 			return (FAILURE);
+		case COULD_NOT_OPEN_SETTINGS_FILE:
+			error_output("Could not open settings file\n");
+			return (FAILURE);
+		case FAILED_TO_READ_SETTINGS_FILE:
+			error_output("Failed to parse the settings file\n");
+			return (FAILURE);
 		case COULD_NOT_OPEN_FILE:
 			error_output("Could not open data file\n");
-			return (FAILURE);
-		case FAILED_TO_READ_DATA:
-			error_output("Failed to read the data\n");
+			break;
+		case FAILED_TO_READ_DATA_FILE:
+			error_output("Failed to parse the data\n");
 			return (FAILURE);
 		default:
 			break;
