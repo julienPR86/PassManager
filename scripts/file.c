@@ -52,6 +52,8 @@ int	rewrite_file(char *path, char **content)
 	FILE	*file;
 	t_uint	index;
 
+	if (NULL == path || NULL == content)
+		return (FAILURE);
 	file = fopen(path, "w");
 	if (NULL == file)
 		return (COULD_NOT_OPEN_FILE);
