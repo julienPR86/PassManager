@@ -8,6 +8,7 @@
 # define MAX_STRING_LENGTH 256
 # define COMMAND_COUNT 8
 # define MAX_ALIAS_NUM 3
+# define MAX_SUB_COMMAND_NUM 3
 
 # define SETTINGS_PATH "data/settings/settings.txt"
 
@@ -49,7 +50,7 @@ typedef struct s_Command
 	t_uint	min_args;
 	t_uint	max_args;
 	int		(*command)(char **);
-	struct s_Command *sub_commands;
+	struct s_Command sub_commands[MAX_SUB_COMMAND_NUM];
 }	t_Command;
 
 extern int			rewrite_data_file;
