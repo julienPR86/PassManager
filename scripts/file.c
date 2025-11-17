@@ -47,12 +47,12 @@ char	**read_file(FILE *file)
 	return (data);
 }
 
-int	rewrite_file(char **content)
+int	rewrite_file(char *path, char **content)
 {
 	FILE	*file;
 	t_uint	index;
 
-	file = fopen(data_file_name, "w");
+	file = fopen(path, "w");
 	if (NULL == file)
 		return (COULD_NOT_OPEN_FILE);
 	sort_strings(content);
