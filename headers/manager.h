@@ -102,6 +102,7 @@ void	empty_stdin(void);
 
 //Outputs functions
 
+void	message_output(char *msg);
 void	error_output(char *error);
 
 //Settings functions
