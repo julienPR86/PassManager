@@ -48,6 +48,7 @@ typedef struct s_Command
 	char	*alias[MAX_ALIAS_NUM];
 	t_uint	min_args;
 	t_uint	max_args;
+	int		callable;
 	int		(*command)(char **);
 }	t_Command;
 
