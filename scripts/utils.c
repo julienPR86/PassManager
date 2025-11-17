@@ -114,7 +114,7 @@ char	**split_strings(char *str, char *set)
 	t_uint	end_index;
 	t_uint	counter;
 
-	if (NULL == str)
+	if (NULL == str || NULL == set)
 		return (NULL);
 	wc = count_words(str, set);
 	strings = (char **)malloc(sizeof(char *) * (wc + 1));
