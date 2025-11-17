@@ -8,7 +8,7 @@ int	execute_cmd(char *cmd)
 
 	if (NULL == cmd)
 		return (FAILURE);
-	args = split_strings(cmd);
+	args = split_strings(cmd, "\t ");
 	index = 0;
 	command_func = NULL;
 	while (*args && index < COMMAND_COUNT && NULL == command_func)
