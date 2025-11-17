@@ -6,3 +6,8 @@ Here is some help about the 'list' command :
  
 	Aliases : 'list' , 'ls'
  
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
+ 

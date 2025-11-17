@@ -1,8 +1,13 @@
 	
 Here is some help about the 'get' command :
  	
-	Command : get [entry:required]
+	Command : get [entry:R]
 		Displays information about an entry in the database.
  
 	Aliases : 'get'
+ 
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
  

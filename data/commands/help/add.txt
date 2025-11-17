@@ -1,8 +1,13 @@
  
 Here is some help about the 'add' command :
  
-	Command : add [name:required] [identifier:required] [password:required]
+	Command : add [name:R] [identifier:R] [password:R]
 		Adds an entry with a unique name, an identifier and a password.
  
 	Aliases : 'add'
+ 
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
  

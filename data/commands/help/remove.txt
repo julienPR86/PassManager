@@ -1,8 +1,13 @@
 	
 Here is some help about the 'remove' command :
  	
-	Command : remove [name:required]
+	Command : remove [name:R]
 		Removes an existing entry in the database.
  
 	Aliases : 'remove' , 'rm'
+ 
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
  

@@ -6,3 +6,8 @@ Here is some help about the 'exit' command :
  
 	Aliases : 'exit' , 'quit'
  
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
+ 
