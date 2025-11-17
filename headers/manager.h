@@ -6,8 +6,10 @@
 # include <string.h>
 
 # define MAX_STRING_LENGTH 256
-# define COMMAND_COUNT 7
+# define COMMAND_COUNT 8
 # define MAX_ALIAS_NUM 3
+
+# define SETTINGS_PATH "data/settings/settings.txt"
 
 # define ISPRINT(c) (((c) >= 32) && ((c) <= 126))
 # define ISRIGHT(c) (((c) != '$') && ((c) != ';') && ((c) != '|') && ((c) != '&'))
@@ -17,9 +19,11 @@ enum	ERROR_CODES
 	SUCCESS,
 	FAILURE,
 	INITIALISATION_FAILED,
-	FAILED_TO_READ_DATA,
-	DATABASE_EMPTY,
 	COULD_NOT_OPEN_FILE,
+	COULD_NOT_OPEN_SETTINGS_FILE,
+	FAILED_TO_READ_SETTINGS_FILE,
+	FAILED_TO_READ_DATA_FILE,
+	DATABASE_EMPTY,
 	COMMAND_NOT_FOUND,
 	WRONG_COMMAND_ARG_NUM,
 	ENTRY_NOT_FOUND,
@@ -48,8 +52,8 @@ typedef struct s_Command
 }	t_Command;
 
 extern int			rewrite_data_file;
-extern char			*data_file_name;
 extern char			**data_file_content;
+extern char			**settings_file_content;
 extern t_Command	commands[COMMAND_COUNT];
 
 //Init functions
@@ -72,20 +76,21 @@ int		get_cmd(char **args);
 int		add_cmd(char **args);
 int		replace_cmd(char **args);
 int		remove_cmd(char **args);
+int		data_cmd(char **args);
 int		help_cmd(char **args);
 int		exit_cmd(char **args);
 
 //Pass commands
 
 t_Pass	*get_pass(char *name);
-t_uint	get_pass_index(char **content, char *name);
+int		get_pass_index(char **content, char *name);
 void	display_pass(t_Pass *pass);
 void	free_pass(t_Pass *pass);
 
 //Files functions
 
 char	**read_file(FILE *file);
-int		rewrite_file(char **content);
+int		rewrite_file(char *path, char **content);
 int		file_dimensions(FILE *file, t_uint *w, t_uint *h);
 
 //Inputs functions
@@ -96,6 +101,10 @@ void	empty_stdin(void);
 //Outputs functions
 
 void	error_output(char *error);
+
+//Settings functions
+
+char	*get_setting(char *name);
 
 //Utils functions
 
