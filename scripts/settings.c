@@ -10,11 +10,11 @@ char	*get_setting(char *name)
 	index = 0;
 	while (*(settings_file_content + index))
 	{
-		setting = get_word(*(settings_file_content + index), 0);
+		setting = get_word(*(settings_file_content + index), 0, "\t ");
 		if (!strcmp(name, setting))
 		{
 			free(setting);
-			return (get_word(*(settings_file_content + index), 1));
+			return (get_word(*(settings_file_content + index), 1, "\t "));
 		}
 		free(setting);
 		index++;
