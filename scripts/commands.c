@@ -2,13 +2,14 @@
 
 t_Command	commands[COMMAND_COUNT] = 
 {
-	{"list", {"ls"}, 0, 0, &list_cmd},
-	{"get", {}, 1, 1, &get_cmd},
-	{"add", {}, 3, 3, &add_cmd},
-	{"replace", {}, 4, 4, &replace_cmd},
-	{"remove", {"rm"}, 1, 1, &remove_cmd},
-	{"help", {"man"}, 0, 1, &help_cmd},
-	{"exit", {"quit"}, 0, 0, &exit_cmd},
+	{"list", {"ls"}, 0, 0, &list_cmd, {}},
+	{"get", {}, 1, 1, &get_cmd, {}},
+	{"add", {}, 3, 3, &add_cmd, {}},
+	{"replace", {}, 4, 4, &replace_cmd, {}},
+	{"remove", {"rm"}, 1, 1, &remove_cmd, {}},
+	{"data", {}, 1, 1, &data_cmd, {"change", {}, 1, 1, NULL, {}}},
+	{"help", {"man"}, 0, 1, &help_cmd, {}},
+	{"exit", {"quit"}, 0, 0, &exit_cmd, {}},
 };
 
 int	list_cmd(char **args)
@@ -16,11 +17,13 @@ int	list_cmd(char **args)
 	char	*word;
 	t_uint	index;
 
+	if (NULL == data_file_content)
+		return (FAILURE);
 	(void)args;
 	index = 0;
 	while (*(data_file_content + index))
 	{
-		word = get_word(*(data_file_content + index), 0);
+		word = get_word(*(data_file_content + index), 0, "\t ");
 		printf("\t%u : %s\n", index + 1, word);
 		free(word);
 		index++;
@@ -32,17 +35,15 @@ int	list_cmd(char **args)
 
 int	get_cmd(char **args)
 {
-	t_uint	size;
-	t_uint	index;
+	int		index;
 	t_Pass	*pass;
 
-	if (NULL == args)
+	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
-	size = strings_size(data_file_content);
-	index = get_pass_index(data_file_content, args[1]);
-	if (index >= size)
+	index = get_pass_index(data_file_content, *args);
+	if (index < 0)
 		return (DATABASE_EMPTY);
-	pass = get_pass(*(args + 1));
+	pass = get_pass(*args);
 	if (NULL == pass)
 		return (ENTRY_NOT_FOUND);
 	display_pass(pass);
@@ -53,18 +54,18 @@ int	get_cmd(char **args)
 int	add_cmd(char **args)
 {
 	t_uint	size;
-	t_uint	index;
+	int		index;
 
-	if (NULL == args)
+	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
-	size = strings_size(data_file_content);
-	index = get_pass_index(data_file_content, args[1]);
-	if (index < size)
+	index = get_pass_index(data_file_content, *args);
+	if (index >= 0)
 		return (ENTRY_ALREADY_EXISTS);
+	size = strings_size(data_file_content);
 	data_file_content = (char **)realloc(data_file_content, sizeof(char *) * (size + 2));
 	if (NULL == data_file_content)
 		return (FAILURE);
-	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(args[1]) + strlen(args[2]) + strlen(args[3]) + 3));
+	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(*args) + strlen(*(args + 1)) + strlen(*(args + 2)) + 3));
 	if (NULL == *(data_file_content + size))
 	{
 		data_file_content = (char **)realloc(data_file_content, size);
@@ -73,11 +74,11 @@ int	add_cmd(char **args)
 		return (FAILURE);
 	}
 	*(*(data_file_content + size)) = '\0';
-	strcat(*(data_file_content + size), args[1]);
+	strcat(*(data_file_content + size), *args);
 	strcat(*(data_file_content + size), " ");
-	strcat(*(data_file_content + size), args[2]);
+	strcat(*(data_file_content + size), *(args + 1));
 	strcat(*(data_file_content + size), " ");
-	strcat(*(data_file_content + size), args[3]);
+	strcat(*(data_file_content + size), *(args + 2));
 	*(data_file_content + size + 1) = NULL;
 	rewrite_data_file = 1;
 	return (SUCCESS);
@@ -85,24 +86,16 @@ int	add_cmd(char **args)
 
 int	replace_cmd(char **args)
 {
-	t_uint	size;
-	t_uint	index;
+	int	index;
 
-	if (NULL == args)
+	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
-	size = strings_size(data_file_content);
-	index = get_pass_index(data_file_content, args[1]);
-	if (index < size && strcmp(args[1], args[2]))
+	index = get_pass_index(data_file_content, *args);
+	if (index >= 0 && strcmp(*args, *(args + 1)))
 		return (ENTRY_ALREADY_EXISTS);
 	if (ENTRY_NOT_FOUND == remove_cmd(args))
 		return (ENTRY_NOT_FOUND);
-	free(args[1]);
-	args[1] = args[2];
-	args[2] = args[3];
-	args[3] = args[4];
-	args[4] = NULL;
-	free(args[5]);
-	add_cmd(args);
+	add_cmd(args + 1);
 	return (SUCCESS);
 }
 
@@ -110,13 +103,13 @@ int	remove_cmd(char **args)
 {
 	char	*tmp;
 	t_uint	size;
-	t_uint	rm_index;
-
-	if (NULL == args)
+	int		rm_index;
+	
+	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
 	size = strings_size(data_file_content);
-	rm_index = get_pass_index(data_file_content, *(args + 1));
-	if (rm_index >= size)
+	rm_index = get_pass_index(data_file_content, *args);
+	if (rm_index < 0)
 		return (ENTRY_NOT_FOUND);
 	tmp = *(data_file_content + size - 1);
 	*(data_file_content + size - 1) = *(data_file_content + rm_index);
@@ -130,6 +123,14 @@ int	remove_cmd(char **args)
 	return (SUCCESS);
 }
 
+int	data_cmd(char **args)
+{
+	if (NULL == args)
+		return (FAILURE);
+	
+	return (SUCCESS);
+}
+
 int	help_cmd(char **args)
 {
 	FILE	*help_file;
@@ -140,9 +141,9 @@ int	help_cmd(char **args)
 
 	if (NULL == args)
 		return (FAILURE);
-	if (args[1])
+	if (*args)
 	{
-		cmd_name = get_cmd_name(args[1]);
+		cmd_name = get_cmd_name(*args);
 		if (NULL == cmd_name)
 			return (HELP_ENTRY_NOT_FOUND);
 		help_file_name[19] = '\0';
