@@ -4,6 +4,7 @@ int	manager(void)
 {
 	int		run;
 	char	*command;
+	char	**args;
 	char	*data_file_path;
 
 	run = 1;
@@ -12,7 +13,8 @@ int	manager(void)
 		command = input("$>");
 		if (NULL == command)
 			continue ;
-		switch (execute_cmd(command))
+		args = split_string(command, "\t ");
+		switch (execute_cmd(args))
 		{
 			case EXIT_PROGRAM:
 				run = 0;
@@ -20,6 +22,7 @@ int	manager(void)
 			default:
 				break;
 		}
+		free_strings(args);
 		free(command);
 	}
 	if (rewrite_data_file)
