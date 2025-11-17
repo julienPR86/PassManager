@@ -112,7 +112,7 @@ int		is_cmd_valid(char *cmd);
 char	*get_cmd_name(char *alias);
 char	**sort_strings(char **strings);
 char	**split_strings(char *str, char *set);
-char	*get_word(char *str, int word_index);
+char	*get_word(char *str, int word_index, char *set);
 t_uint	count_words(char *str, char *set);
 t_uint	strings_size(char **strings);
 void	free_strings(char **strs);
