@@ -106,7 +106,7 @@ t_uint	count_words(char *str, char *set)
 	return (count);
 }
 
-char	**split_strings(char *str, char *set)
+char	**split_string(char *str, char *set)
 {
 	char	**strings;
 	t_uint	wc;
