@@ -1,14 +1,12 @@
 #include "../headers/manager.h"
 
-int	execute_cmd(char *cmd)
+int	execute_cmd(char **args)
 {
-	char	**args;
 	t_uint	index;
 	int		(*command_func)(char **);
 
-	if (NULL == cmd)
+	if (NULL == args)
 		return (FAILURE);
-	args = split_strings(cmd, "\t ");
 	index = 0;
 	command_func = NULL;
 	while (*args && index < COMMAND_COUNT && NULL == command_func)
@@ -34,13 +32,11 @@ int	execute_cmd(char *cmd)
 	if (NULL == command_func)
 	{
 		error_output("Command not found\n");
-		free_strings(args);
 		return (COMMAND_NOT_FOUND);
 	}
 	if (check_cmd_args_number(args, commands + index))
 	{
 		error_output("Wrong arguments number\n");
-		free_strings(args);
 		return (WRONG_COMMAND_ARG_NUM);
 	}
 	switch (command_func(args + 1))
@@ -61,12 +57,10 @@ int	execute_cmd(char *cmd)
 			error_output("Help about this command does not exists\n");
 			break;
 		case EXIT_PROGRAM:
-			free_strings(args);
 			return (EXIT_PROGRAM);
 		default:
 			break ;
 	}
-	free_strings(args);
 	return (SUCCESS);
 }
 
