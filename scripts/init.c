@@ -1,23 +1,42 @@
 #include "../headers/manager.h"
 
 int		rewrite_data_file = 0;
-char	*data_file_name = "data/data.txt";
 char	**data_file_content = NULL;
+char	**settings_file_content = NULL;
 
 int	init(void)
 {
-	FILE	*file;
+	FILE	*data_file;
+	FILE	*settings_file;
+	char	*data_file_path;
 
-	file = fopen(data_file_name, "r");
-	if (NULL == file)
+	settings_file = fopen(SETTINGS_PATH, "r");
+	if (NULL == settings_file)
+		return (COULD_NOT_OPEN_SETTINGS_FILE);
+	settings_file_content = read_file(settings_file);
+	if (NULL == settings_file_content)
+	{
+		fclose(settings_file);
+		return (FAILED_TO_READ_SETTINGS_FILE);
+	}
+	fclose(settings_file);
+	data_file_path = get_setting("data_path");
+	data_file = fopen(data_file_path, "r");
+	if (NULL == data_file)
+	{
+		free(data_file_path);
 		return (COULD_NOT_OPEN_FILE);
-	data_file_content = read_file(file);
+	}
+	data_file_content = read_file(data_file);
 	if (NULL == data_file_content)
 	{
-		fclose(file);
-		return (FAILED_TO_READ_DATA);
+		fclose(data_file);
+		free(data_file_path);
+		free_strings(settings_file_content);
+		return (FAILED_TO_READ_DATA_FILE);
 	}
-	fclose(file);
+	fclose(data_file);
+	free(data_file_path);
 	sort_strings(data_file_content);
 	return (SUCCESS);
 }
