@@ -4,16 +4,18 @@ CFLAGS = -Wall -Wextra -Werror -g
 TMP = tmp/
 SRCS = scripts/
 
-OBJS = 	$(TMP)manager.o \
-	 	$(TMP)init.o \
+OBJS =	$(TMP)commands.o \
 		$(TMP)execute.o \
-		$(TMP)commands.o \
-		$(TMP)pass.o \
-		$(TMP)file.o \
 		$(TMP)exit.o \
+		$(TMP)file.o \
+	 	$(TMP)init.o \
 		$(TMP)inputs.o \
+		$(TMP)manager.o \
 		$(TMP)outputs.o \
+		$(TMP)pass.o \
+		$(TMP)settings.o \
 		$(TMP)utils.o \
+		
 
 NAME = manager
 
