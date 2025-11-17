@@ -1,5 +1,7 @@
 #include "../headers/manager.h"
 
+t_Command	sub_data_cmd_change = {"change", {}, 1, 1, NULL, {}};
+
 t_Command	commands[COMMAND_COUNT] = 
 {
 	{"list", {"ls"}, 0, 0, &list_cmd, {}},
@@ -7,7 +9,7 @@ t_Command	commands[COMMAND_COUNT] =
 	{"add", {}, 3, 3, &add_cmd, {}},
 	{"replace", {}, 4, 4, &replace_cmd, {}},
 	{"remove", {"rm"}, 1, 1, &remove_cmd, {}},
-	{"data", {}, 1, 1, &data_cmd, {"change", {}, 1, 1, NULL, {}}},
+	{"data", {}, 0, 1, &data_cmd, {&sub_data_cmd_change}},
 	{"help", {"man"}, 0, 1, &help_cmd, {}},
 	{"exit", {"quit"}, 0, 0, &exit_cmd, {}},
 };
@@ -125,9 +127,18 @@ int	remove_cmd(char **args)
 
 int	data_cmd(char **args)
 {
+	char	*data_path;
+
 	if (NULL == args)
 		return (FAILURE);
-	
+	if (NULL == *args)
+	{
+		data_path = get_setting("data_path");
+		message_output(data_path);
+		message_output("\n");
+		free(data_path);
+		return (SUCCESS);
+	}
 	return (SUCCESS);
 }
 
