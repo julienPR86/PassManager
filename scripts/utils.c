@@ -40,7 +40,7 @@ char	*get_cmd_name(char *alias)
 	return (NULL);
 }
 
-char	*get_word(char *str, int word_index)
+char	*get_word(char *str, int word_index, char *set)
 {
 	char	*word;
 	int		is_word;
@@ -48,14 +48,14 @@ char	*get_word(char *str, int word_index)
 	t_uint	index;
 	t_uint	cpy_index;
 
-	if (NULL == str)
+	if (NULL == str || NULL == set)
 		return (NULL);
 	is_word = 1;
 	count = -1;
 	index = 0;
 	while (*(str + index) && count < word_index)
 	{
-		if (*(str + index) == ' ')
+		if (strchr(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -66,13 +66,13 @@ char	*get_word(char *str, int word_index)
 	}
 	index--;
 	cpy_index = 0;
-	while (*(str + index + cpy_index) && *(str + index + cpy_index) != ' ')
+	while (*(str + index + cpy_index) &&  !strchr(set, *(str + index + cpy_index)))
 		cpy_index++;
 	word = (char *)malloc(sizeof(char) * (cpy_index + 1));
 	if (NULL == word)
 		return (NULL);
 	cpy_index = 0;
-	while (*(str + index + cpy_index) && *(str + index + cpy_index) != ' ')
+	while (*(str + index + cpy_index) && !strchr(set, *(str + index + cpy_index)))
 	{
 		*(word + cpy_index) = *(str + index + cpy_index);
 		cpy_index++;
