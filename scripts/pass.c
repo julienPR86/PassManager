@@ -3,14 +3,12 @@
 t_Pass	*get_pass(char *name)
 {
 	t_Pass	*pass;
-	t_uint	size;
-	t_uint	index;
+	int	index;
 
 	if (NULL == name)
 		return (NULL);
-	size = strings_size(data_file_content);
 	index = get_pass_index(data_file_content, name);
-	if (NULL == *(data_file_content + index) || index >= size)
+	if (index < 0 || NULL == *(data_file_content + index))
 		return (NULL);
 	pass = (t_Pass *)malloc(sizeof(t_Pass));
 	if (NULL == pass)
@@ -21,13 +19,13 @@ t_Pass	*get_pass(char *name)
 	return (pass);
 }
 
-t_uint	get_pass_index(char **content, char *name)
+int	get_pass_index(char **content, char *name)
 {
 	char	*word;
-	t_uint	index;
+	int		index;
 
-	if (NULL == content || NULL == name)
-		return (0);
+	if (NULL == data_file_content || NULL == content || NULL == name)
+		return (-1);
 	index = 0;
 	word = get_word(*(data_file_content + index), 0);
 	while (*(content + index) && strcmp(word, name))
@@ -37,6 +35,8 @@ t_uint	get_pass_index(char **content, char *name)
 		word = get_word(*(data_file_content + index), 0);
 	}
 	free(word);
+	if (NULL == *(content + index))
+		return (-1);
 	return (index);
 }
 
