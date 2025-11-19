@@ -1,23 +1,30 @@
 #include "../headers/manager.h"
 
-char	*get_setting(char *name)
+char	*get_setting_value(char *setting_name)
 {
-	char	*setting;
+	char	*value;
 	t_uint	index;
 
-	if (NULL == name)
+	if (NULL == setting_name)
 		return (NULL);
 	index = 0;
 	while (*(settings_file_content + index))
 	{
-		setting = get_word(*(settings_file_content + index), 0, "\t ");
-		if (!strcmp(name, setting))
+		value = get_word(*(settings_file_content + index), 0, "\t ");
+		if (!strcmp(setting_name, value))
 		{
-			free(setting);
+			free(value);
 			return (get_word(*(settings_file_content + index), 1, "\t "));
 		}
-		free(setting);
+		free(value);
 		index++;
 	}
 	return (NULL);
+}
+
+int	change_setting_value(char *setting_name)
+{
+	if (NULL == setting_name)
+		return (FAILURE);
+	return (SUCCESS);
 }
