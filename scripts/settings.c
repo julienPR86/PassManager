@@ -22,6 +22,28 @@ char	*get_setting_value(char *setting_name)
 	return (NULL);
 }
 
+int	get_setting_value_index(char *setting_name)
+{
+	char	*value;
+	int		index;
+
+	if (NULL == setting_name)
+		return (-1);
+	index = 0;
+	while (*(settings_file_content + index))
+	{
+		value = get_word(*(settings_file_content + index), 0, "\t ");
+		if (!strcmp(setting_name, value))
+		{
+			free(value);
+			return (index);
+		}
+		free(value);
+		index++;
+	}
+	return (-1);
+}
+
 int	change_setting_value(char *setting_name)
 {
 	if (NULL == setting_name)
