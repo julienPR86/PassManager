@@ -144,7 +144,7 @@ int	data_cmd(char **args)
 		return (FAILURE);
 	if (NULL == *args)
 	{
-		data_path = get_setting("data_path");
+		data_path = get_setting_value("data_path");
 		message_output(data_path);
 		message_output("\n");
 		free(data_path);

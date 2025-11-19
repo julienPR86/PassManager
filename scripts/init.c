@@ -20,7 +20,7 @@ int	init(void)
 		return (FAILED_TO_READ_SETTINGS_FILE);
 	}
 	fclose(settings_file);
-	data_file_path = get_setting("data_path");
+	data_file_path = get_setting_value("data_path");
 	data_file = fopen(data_file_path, "r");
 	if (NULL == data_file)
 	{

@@ -27,7 +27,7 @@ int	manager(void)
 	}
 	if (rewrite_data_file)
 	{
-		data_file_path = get_setting("data_path");
+		data_file_path = get_setting_value("data_path");
 		rewrite_file(data_file_path, data_file_content);
 		free(data_file_path);
 	}
