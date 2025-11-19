@@ -29,12 +29,12 @@ char	*get_cmd_name(char *alias)
 		alias_index = 0;
 		while (alias_index < MAX_ALIAS_NUM)
 		{
-			if (*((*(commands + index)).alias + alias_index) && !strcmp(alias, *((*(commands + index)).alias + alias_index)))
-				return ((*(commands + index)).name);
+			if (*((*(commands + index))->alias + alias_index) && !strcmp(alias, *((*(commands + index))->alias + alias_index)))
+				return ((*(commands + index))->name);
 			alias_index++;
 		}
-		if (!strcmp(alias, (*(commands + index)).name))
-			return ((*(commands + index)).name);
+		if (!strcmp(alias, (*(commands + index))->name))
+			return ((*(commands + index))->name);
 		index++;
 	}
 	return (NULL);
