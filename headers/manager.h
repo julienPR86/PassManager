@@ -108,6 +108,7 @@ void	error_output(char *error);
 //Settings functions
 
 char	*get_setting_value(char *setting_name);
+int		get_setting_value_index(char *setting_name);
 int		change_setting_value(char *setting_name);
 
 //Utils functions
