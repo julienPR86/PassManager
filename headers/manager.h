@@ -54,6 +54,7 @@ typedef struct s_Command
 }	t_Command;
 
 extern int			rewrite_data_file;
+extern int			rewrite_settings_file;
 extern char			**data_file_content;
 extern char			**settings_file_content;
 extern t_Command	*commands[COMMAND_COUNT];

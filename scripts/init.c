@@ -1,6 +1,7 @@
 #include "../headers/manager.h"
 
 int		rewrite_data_file = 0;
+int		rewrite_settings_file = 0;
 char	**data_file_content = NULL;
 char	**settings_file_content = NULL;
 
