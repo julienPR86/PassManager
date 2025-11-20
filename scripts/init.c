@@ -32,16 +32,15 @@ int	init(void)
 		free(data_file_path);
 		return (COULD_NOT_OPEN_FILE);
 	}
+	free(data_file_path);
 	data_file_content = read_file(data_file);
 	if (NULL == data_file_content)
 	{
 		fclose(data_file);
-		free(data_file_path);
 		free_strings(settings_file_content);
-		return (FAILED_TO_READ_DATA_FILE);
+		return (FAILED_TO_READ_FILE);
 	}
 	fclose(data_file);
-	free(data_file_path);
 	sort_strings(data_file_content);
 	return (SUCCESS);
 }
