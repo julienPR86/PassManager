@@ -1,5 +1,21 @@
 #include "../headers/manager.h"
 
+int get_file_content(char *path, char ***strings)
+{
+	FILE	*file;
+
+	if (NULL == path || NULL == strings)
+		return (FAILURE);
+	file = fopen(path, "r");
+	if (NULL == file)
+		return (COULD_NOT_OPEN_FILE);
+	*strings = read_file(file);
+	fclose(file);
+	if (NULL == *strings)
+		return (FAILED_TO_READ_FILE);
+	return (SUCCESS);
+}
+
 char	**read_file(FILE *file)
 {
 	char	**data;
