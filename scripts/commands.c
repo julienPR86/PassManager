@@ -25,7 +25,7 @@ t_Command	*commands[COMMAND_COUNT] =
 	&command_exit,
 };
 
-int	list_cmd(char **args)
+int	list_cmd(char **args, t_Command *commands_array[])
 {
 	char	*word;
 	t_uint	index;
@@ -33,6 +33,7 @@ int	list_cmd(char **args)
 	if (NULL == data_file_content)
 		return (FAILURE);
 	(void)args;
+	(void)commands_array;
 	index = 0;
 	while (*(data_file_content + index))
 	{
@@ -46,13 +47,14 @@ int	list_cmd(char **args)
 	return (SUCCESS);
 }
 
-int	get_cmd(char **args)
+int	get_cmd(char **args, t_Command *commands_array[])
 {
 	int		index;
 	t_Pass	*pass;
 
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
+	(void)commands_array;
 	index = get_pass_index(data_file_content, *args);
 	if (index < 0)
 		return (DATABASE_EMPTY);
@@ -64,13 +66,14 @@ int	get_cmd(char **args)
 	return (SUCCESS);
 }
 
-int	add_cmd(char **args)
+int	add_cmd(char **args, t_Command *commands_array[])
 {
 	t_uint	size;
 	int		index;
 
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
+	(void)commands_array;
 	index = get_pass_index(data_file_content, *args);
 	if (index >= 0)
 		return (ENTRY_ALREADY_EXISTS);
@@ -97,7 +100,7 @@ int	add_cmd(char **args)
 	return (SUCCESS);
 }
 
-int	replace_cmd(char **args)
+int	replace_cmd(char **args, t_Command *commands_array[])
 {
 	int	index;
 
@@ -106,13 +109,13 @@ int	replace_cmd(char **args)
 	index = get_pass_index(data_file_content, *args);
 	if (index >= 0 && strcmp(*args, *(args + 1)))
 		return (ENTRY_ALREADY_EXISTS);
-	if (ENTRY_NOT_FOUND == remove_cmd(args))
+	if (ENTRY_NOT_FOUND == remove_cmd(args, commands_array))
 		return (ENTRY_NOT_FOUND);
-	add_cmd(args + 1);
+	add_cmd(args + 1, commands_array);
 	return (SUCCESS);
 }
 
-int	remove_cmd(char **args)
+int	remove_cmd(char **args, t_Command *commands_array[])
 {
 	char	*tmp;
 	t_uint	size;
@@ -120,6 +123,7 @@ int	remove_cmd(char **args)
 	
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
+	(void)commands_array;
 	size = strings_size(data_file_content);
 	rm_index = get_pass_index(data_file_content, *args);
 	if (rm_index < 0)
@@ -136,7 +140,7 @@ int	remove_cmd(char **args)
 	return (SUCCESS);
 }
 
-int	data_cmd(char **args)
+int	data_cmd(char **args, t_Command *commands_array[])
 {
 	char	*data_path;
 
@@ -150,10 +154,11 @@ int	data_cmd(char **args)
 		free(data_path);
 		return (SUCCESS);
 	}
+	(void)commands_array;
 	return (SUCCESS);
 }
 
-int	help_cmd(char **args)
+int	help_cmd(char **args, t_Command *commands_array[])
 {
 	FILE	*help_file;
 	char	*cmd_name;
@@ -163,6 +168,7 @@ int	help_cmd(char **args)
 
 	if (NULL == args)
 		return (FAILURE);
+	(void)commands_array;
 	if (*args)
 	{
 		cmd_name = get_cmd_name(*args, commands);
@@ -187,8 +193,9 @@ int	help_cmd(char **args)
 	return (SUCCESS);
 }
 
-int	exit_cmd(char **args)
+int	exit_cmd(char **args, t_Command *commands_array[])
 {
 	(void)args;
+	(void)commands_array;
 	return (EXIT_PROGRAM);
 }
