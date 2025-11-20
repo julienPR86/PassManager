@@ -1,8 +1,16 @@
 	
 Here is some help about the 'replace' command :
- 	
-	Command : replace [entry:R] [name:R] [identifier:R] [password:R]
-			Replaces an existing entry with a new one, can be used to modify the identifier or the password.
+ 
+ 	Description :
+		Replaces an existing entry with a new one, can be used to modify the identifier or the password.
+ 
+	Format : replace [entry:R] [name:R] [identifier:R] [password:R]
+ 
+	Arguments :
+		entry : The unique name of the entry to replace.
+		name : The unique name of the new entry.
+		identifier : The identifier of the new entry.
+		password : The password of the new entry.
  
 	Aliases : 'replace'
  

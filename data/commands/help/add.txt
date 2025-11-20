@@ -1,8 +1,15 @@
  
 Here is some help about the 'add' command :
  
-	Command : add [name:R] [identifier:R] [password:R]
+	Description :
 		Adds an entry with a unique name, an identifier and a password.
+ 
+	Format : add [name:R] [identifier:R] [password:R]
+ 
+	Arguments :
+		name : The unique name of the new entry.
+		identifier : The identifier of the new entry.
+		password : The password of the new entry.
  
 	Aliases : 'add'
  

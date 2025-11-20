@@ -1,8 +1,13 @@
  
 Here is some help about the 'help' command :
  
-	Command : help [command:O]
+	Description :
 		Display help about a specified command. If no command if provided, display generic help.
+ 
+	Format : help [command:O]
+
+	Arguments :
+		command : The command name.
  
 	Aliases : 'help' , 'man'
  

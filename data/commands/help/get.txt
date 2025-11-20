@@ -1,8 +1,13 @@
 	
 Here is some help about the 'get' command :
- 	
-	Command : get [entry:R]
+ 
+	Description :
 		Displays information about an entry in the database.
+ 
+	Format : get [name:R]
+ 
+	Arguments :
+		name : The unique name of the entry to get.
  
 	Aliases : 'get'
  

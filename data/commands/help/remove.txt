@@ -1,8 +1,13 @@
 	
 Here is some help about the 'remove' command :
- 	
-	Command : remove [name:R]
+ 
+	Description :
 		Removes an existing entry in the database.
+ 
+	Format : remove [name:R]
+ 
+	Arguments :
+		name : The unique name of the entry to delete.
  
 	Aliases : 'remove' , 'rm'
  

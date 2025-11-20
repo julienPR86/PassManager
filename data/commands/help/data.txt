@@ -1,13 +1,17 @@
  
 Here is some help about the 'data' command :
  
-	Command : data [action:O]
-		If no arguments are provided, display the path to the data actual file. Otherwise, see actions.
+	Description :
+		Display the path to the actual data file if no arguments are provided. Otherwise, executes the sub-command specified.
  
-	Actions :
-		change : [path:R]
-			Changes the data file path.
+	Format : data [action:O] [path:O]
  
+	Arguments :
+		action : The sub-command to execute. See 'Sub-commands' section for possibilities.
+		path : Path to the new data file.
+ 
+	Sub-commands :
+		change : Changes the data file path to a new one.
  
 	Aliases : 'data'
  

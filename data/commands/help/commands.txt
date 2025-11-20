@@ -16,6 +16,9 @@ Here is a command list you can use to interact with the program :
 	Remove command : remove [name:R]
 		Removes an existing entry in the database.
  
+	Data command : data [action:O] [path:O]
+		If no arguments are provided, display the path to the data actual file. Otherwise, see actions.
+ 
 	Help command : help [command:O]
 		Display help about a specified command. If no command if provided, display generic help.
  

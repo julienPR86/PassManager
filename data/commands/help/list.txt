@@ -1,8 +1,10 @@
  
 Here is some help about the 'list' command :
  
-	Command : list []
+	Description :
 		Display all the known entries in the database.
+ 
+	Format : list []
  
 	Aliases : 'list' , 'ls'
  
