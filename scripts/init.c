@@ -1,9 +1,9 @@
 #include "../headers/manager.h"
 
-int		rewrite_data_file = 0;
-int		rewrite_settings_file = 0;
-char	**data_file_content = NULL;
-char	**settings_file_content = NULL;
+int		rewrite_data_file;
+int		rewrite_settings_file;
+char	**data_file_content;
+char	**settings_file_content;
 
 int	init(void)
 {
@@ -11,6 +11,10 @@ int	init(void)
 	FILE	*settings_file;
 	char	*data_file_path;
 
+	rewrite_data_file = 0;
+	rewrite_settings_file = 0;
+	data_file_content = NULL;
+	settings_file_content = NULL;
 	settings_file = fopen(SETTINGS_PATH, "r");
 	if (NULL == settings_file)
 		return (COULD_NOT_OPEN_SETTINGS_FILE);
