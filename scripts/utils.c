@@ -16,7 +16,7 @@ int	is_cmd_valid(char *cmd)
 	return (1);
 }
 
-char	*get_cmd_name(char *alias)
+char	*get_cmd_name(char *alias, t_Command *commands_array[])
 {
 	t_uint	index;
 	t_uint	alias_index;
@@ -29,12 +29,12 @@ char	*get_cmd_name(char *alias)
 		alias_index = 0;
 		while (alias_index < MAX_ALIAS_NUM)
 		{
-			if (*((*(commands + index))->alias + alias_index) && !strcmp(alias, *((*(commands + index))->alias + alias_index)))
-				return ((*(commands + index))->name);
+			if (*((*(commands_array + index))->alias + alias_index) && !strcmp(alias, *((*(commands_array + index))->alias + alias_index)))
+				return ((*(commands_array + index))->name);
 			alias_index++;
 		}
-		if (!strcmp(alias, (*(commands + index))->name))
-			return ((*(commands + index))->name);
+		if (!strcmp(alias, (*(commands_array + index))->name))
+			return ((*(commands_array + index))->name);
 		index++;
 	}
 	return (NULL);
