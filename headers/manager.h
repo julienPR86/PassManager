@@ -93,6 +93,7 @@ void	free_pass(t_Pass *pass);
 
 //Files functions
 
+int 	get_file_content(char *path, char ***strings);
 char	**read_file(FILE *file);
 int		rewrite_file(char *path, char **content);
 int		file_dimensions(FILE *file, t_uint *w, t_uint *h);
