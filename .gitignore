@@ -7,4 +7,4 @@ manager
 #obj files
 *.o
 #data file
-data/content/data.txt
+data.txt
