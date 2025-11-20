@@ -10,7 +10,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		return (FAILURE);
 	index = 0;
 	command_func = NULL;
-	while (*args && index < COMMAND_COUNT && NULL == command_func)
+	while (*args && *(commands_array + index) && index < COMMAND_COUNT)
 	{
 		if (!strcmp(*args, (*(commands_array + index))->name))
 		{
