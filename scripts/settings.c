@@ -44,7 +44,7 @@ int	get_setting_value_index(char *setting_name)
 	return (-1);
 }
 
-int	change_setting_value(char *setting_name)
+int	change_setting_value(char *setting_name, char *value)
 {
 	if (NULL == setting_name)
 		return (FAILURE);
