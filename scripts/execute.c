@@ -2,8 +2,9 @@
 
 int	execute_cmd(char **args, t_Command *commands_array[])
 {
-	t_uint	index;
-	int		(*command_func)(char **);
+	t_uint		index;
+	int			(*command_func)(char **, t_Command *[]);
+	t_Command	**sub_commands;
 
 	if (NULL == args)
 		return (FAILURE);
@@ -14,6 +15,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		if (!strcmp(*args, (*(commands_array + index))->name))
 		{
 			command_func = (*(commands_array + index))->command;
+			sub_commands = (*(commands_array + index))->sub_commands;
 			break;
 		}
 		for (int i = 0; i < MAX_ALIAS_NUM; i++)
@@ -23,6 +25,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 			if (strcmp(*args, *((*(commands_array + index))->alias + i)))
 				continue ;
 			command_func = (*(commands_array + index))->command;
+			sub_commands = (*(commands_array + index))->sub_commands;
 			break ;
 		}
 		if (NULL != command_func)
@@ -39,7 +42,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		error_output("Wrong arguments number\n");
 		return (WRONG_COMMAND_ARG_NUM);
 	}
-	switch (command_func(args + 1))
+	switch (command_func(args + 1, sub_commands))
 	{
 		case DATABASE_EMPTY:
 			error_output("There is no entries in database\n");
