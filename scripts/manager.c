@@ -28,8 +28,14 @@ int	manager(void)
 	if (rewrite_data_file)
 	{
 		data_file_path = get_setting_value("data_path");
-		rewrite_file(data_file_path, data_file_content);
+		if (COULD_NOT_OPEN_FILE == rewrite_file(data_file_path, data_file_content))
+			error_output("Failed to rewrite data file\n");
 		free(data_file_path);
+	}
+	if (rewrite_settings_file)
+	{
+		if (COULD_NOT_OPEN_FILE == rewrite_file(SETTINGS_PATH, settings_file_content))
+			error_output("Failed to rewrite settings file\n");
 	}
 	return (SUCCESS);
 }
