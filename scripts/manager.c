@@ -14,7 +14,7 @@ int	manager(void)
 		if (NULL == command)
 			continue ;
 		args = split_string(command, "\t ");
-		switch (execute_cmd(args))
+		switch (execute_cmd(args, commands))
 		{
 			case EXIT_PROGRAM:
 				run = 0;
