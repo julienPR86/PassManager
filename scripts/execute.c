@@ -6,7 +6,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 	int			(*command_func)(char **, t_Command *[]);
 	t_Command	**sub_commands;
 
-	if (NULL == args)
+	if (NULL == args || NULL == commands_array)
 		return (FAILURE);
 	index = 0;
 	command_func = NULL;
