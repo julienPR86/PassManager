@@ -69,7 +69,7 @@ void	exit_program(void);
 
 //Execute functions
 
-int		execute_cmd(char **args);
+int		execute_cmd(char **args, t_Command *commands_array[]);
 int		check_cmd_args_number(char **args, t_Command *command);
 
 //Commands functions
@@ -115,7 +115,7 @@ int		change_setting_value(char *setting_name, char *value);
 //Utils functions
 
 int		is_cmd_valid(char *cmd);
-char	*get_cmd_name(char *alias);
+char	*get_cmd_name(char *alias, t_Command *commands_array[]);
 char	**sort_strings(char **strings);
 char	**split_string(char *str, char *set);
 char	*get_word(char *str, int word_index, char *set);
