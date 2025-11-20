@@ -203,9 +203,34 @@ int	exit_cmd(char **args, t_Command *commands_array[])
 
 int	data_change_cmd(char **args, t_Command *commands_array[])
 {
+	FILE	*data_file;
+	char	*data_file_path;
+
 	if (NULL == args)
 		return (FAILURE);
 	(void)commands_array;
+	if (rewrite_data_file)
+	{
+		data_file_path = get_setting_value("data_path");
+		if (COULD_NOT_OPEN_FILE == rewrite_file(data_file_path, data_file_content))
+		{
+			error_output("Failed to rewrite data file\n");
+			return (FAILED_FILE_REWRITE);
+		}
+		free(data_file_path);
+		rewrite_data_file = 0;
+	}
 	change_setting_value("data_path", *args);
+	data_file = fopen(*args, "r");
+	if (NULL == data_file)
+		return (COULD_NOT_OPEN_FILE);
+	free_strings(data_file_content);
+	data_file_content = read_file(data_file);
+	if (NULL == data_file_content)
+	{
+		fclose(data_file);
+		return (FAILED_TO_READ_FILE);
+	}
+	fclose(data_file);
 	return (SUCCESS);
 }
