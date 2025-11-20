@@ -1,6 +1,6 @@
 #include "../headers/manager.h"
 
-int	execute_cmd(char **args)
+int	execute_cmd(char **args, t_Command *commands_array[])
 {
 	t_uint	index;
 	int		(*command_func)(char **);
@@ -11,18 +11,18 @@ int	execute_cmd(char **args)
 	command_func = NULL;
 	while (*args && index < COMMAND_COUNT && NULL == command_func)
 	{
-		if (!strcmp(*args, (*(commands + index))->name))
+		if (!strcmp(*args, (*(commands_array + index))->name))
 		{
-			command_func = (*(commands + index))->command;
+			command_func = (*(commands_array + index))->command;
 			break;
 		}
 		for (int i = 0; i < MAX_ALIAS_NUM; i++)
 		{
-			if (!*((*(commands + index))->alias + i))
+			if (!*((*(commands_array + index))->alias + i))
 				break ;
-			if (strcmp(*args, *((*(commands + index))->alias + i)))
+			if (strcmp(*args, *((*(commands_array + index))->alias + i)))
 				continue ;
-			command_func = (*(commands + index))->command;
+			command_func = (*(commands_array + index))->command;
 			break ;
 		}
 		if (NULL != command_func)
@@ -34,7 +34,7 @@ int	execute_cmd(char **args)
 		error_output("Command not found\n");
 		return (COMMAND_NOT_FOUND);
 	}
-	if (check_cmd_args_number(args, *(commands + index)))
+	if (check_cmd_args_number(args, *(commands_array + index)))
 	{
 		error_output("Wrong arguments number\n");
 		return (WRONG_COMMAND_ARG_NUM);
