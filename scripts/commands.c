@@ -1,7 +1,8 @@
 #include "../headers/manager.h"
+#include "../headers/sub_commands.h"
 
 //Sub commands
-t_Command	sub_command_data_change = {"change", {}, 1, 1, NULL, {}};
+t_Command	sub_command_data_change = {"change", {}, 1, 1, &data_change_cmd, {}};
 
 //Main commands
 t_Command	command_list = {"list", {"ls"}, 0, 0, &list_cmd, {}};
@@ -9,7 +10,7 @@ t_Command	command_get = {"get", {}, 1, 1, &get_cmd, {}};
 t_Command	command_add = {"add", {}, 3, 3, &add_cmd, {}};
 t_Command	command_replace = {"replace", {}, 4, 4, &replace_cmd, {}};
 t_Command	command_remove = {"remove", {"rm"}, 1, 1, &remove_cmd, {}};
-t_Command	command_data = {"data", {}, 0, 1, &data_cmd, {&sub_command_data_change}};
+t_Command	command_data = {"data", {}, 0, 2, &data_cmd, {&sub_command_data_change}};
 t_Command	command_help = {"help", {"man"}, 0, 1, &help_cmd, {}};
 t_Command	command_exit = {"exit", {"quit"}, 0, 0, &exit_cmd, {}};
 
@@ -154,7 +155,7 @@ int	data_cmd(char **args, t_Command *commands_array[])
 		free(data_path);
 		return (SUCCESS);
 	}
-	(void)commands_array;
+	execute_cmd(args, commands_array);
 	return (SUCCESS);
 }
 
@@ -198,4 +199,13 @@ int	exit_cmd(char **args, t_Command *commands_array[])
 	(void)args;
 	(void)commands_array;
 	return (EXIT_PROGRAM);
+}
+
+int	data_change_cmd(char **args, t_Command *commands_array[])
+{
+	if (NULL == args)
+		return (FAILURE);
+	(void)commands_array;
+	change_setting_value("data_path", *args);
+	return (SUCCESS);
 }
