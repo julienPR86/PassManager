@@ -1,0 +1,18 @@
+ 
+Here is some help about the 'data' command :
+ 
+	Command : data [action:O]
+		If no arguments are provided, display the path to the data actual file. Otherwise, see actions.
+ 
+	Actions :
+		change : [path:R]
+			Changes the data file path.
+ 
+ 
+	Aliases : 'data'
+ 
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
+ 
