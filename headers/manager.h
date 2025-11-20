@@ -49,7 +49,7 @@ typedef struct s_Command
 	char				*alias[MAX_ALIAS_NUM];
 	t_uint				min_args;
 	t_uint				max_args;
-	int					(*command)(char **);
+	int					(*command)(char **, struct s_Command *[]);
 	struct s_Command	*sub_commands[MAX_SUB_COMMAND_NUM];
 }	t_Command;
 
@@ -74,14 +74,14 @@ int		check_cmd_args_number(char **args, t_Command *command);
 
 //Commands functions
 
-int		list_cmd(char **args);
-int		get_cmd(char **args);
-int		add_cmd(char **args);
-int		replace_cmd(char **args);
-int		remove_cmd(char **args);
-int		data_cmd(char **args);
-int		help_cmd(char **args);
-int		exit_cmd(char **args);
+int		list_cmd(char **args, t_Command *commands_array[]);
+int		get_cmd(char **args, t_Command *commands_array[]);
+int		add_cmd(char **args, t_Command *commands_array[]);
+int		replace_cmd(char **args, t_Command *commands_array[]);
+int		remove_cmd(char **args, t_Command *commands_array[]);
+int		data_cmd(char **args, t_Command *commands_array[]);
+int		help_cmd(char **args, t_Command *commands_array[]);
+int		exit_cmd(char **args, t_Command *commands_array[]);
 
 //Pass commands
 
