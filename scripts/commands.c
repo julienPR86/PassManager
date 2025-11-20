@@ -165,7 +165,7 @@ int	help_cmd(char **args)
 		return (FAILURE);
 	if (*args)
 	{
-		cmd_name = get_cmd_name(*args);
+		cmd_name = get_cmd_name(*args, commands);
 		if (NULL == cmd_name)
 			return (HELP_ENTRY_NOT_FOUND);
 		help_file_name[19] = '\0';
