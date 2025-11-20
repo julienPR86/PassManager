@@ -51,13 +51,13 @@ int	main(void)
 			error_output("Could not open settings file\n");
 			return (FAILURE);
 		case FAILED_TO_READ_SETTINGS_FILE:
-			error_output("Failed to parse the settings file\n");
+			error_output("Failed to read the settings file\n");
 			return (FAILURE);
 		case COULD_NOT_OPEN_FILE:
 			error_output("Could not open data file\n");
 			break;
-		case FAILED_TO_READ_DATA_FILE:
-			error_output("Failed to parse the data\n");
+		case FAILED_TO_READ_FILE:
+			error_output("Failed to read content file\n");
 			return (FAILURE);
 		default:
 			break;
