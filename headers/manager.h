@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <time.h>
 
 # define MAX_STRING_LENGTH 256
 # define COMMAND_COUNT 8
@@ -114,14 +115,19 @@ char	*get_setting_value(char *setting_name);
 int		get_setting_value_index(char *setting_name);
 int		change_setting_value(char *setting_name, char *value);
 
+//Password generator
+
+char	*gen_pw(t_uint len);
+
 //Utils functions
 
 int		is_cmd_valid(char *cmd);
 char	*get_cmd_name(char *alias, t_Command *commands_array[]);
-char	**sort_strings(char **strings);
 char	**split_string(char *str, char *set);
 char	*get_word(char *str, int word_index, char *set);
 t_uint	count_words(char *str, char *set);
+char	**sort_strings(char **strings);
+char	*strshuffle(char *str);
 t_uint	strings_size(char **strings);
 void	free_strings(char **strs);
 
