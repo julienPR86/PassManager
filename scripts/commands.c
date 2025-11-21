@@ -7,8 +7,8 @@ t_Command	sub_command_data_change = {"change", {}, 1, 1, &data_change_cmd, {}};
 //Main commands
 t_Command	command_list = {"list", {"ls"}, 0, 0, &list_cmd, {}};
 t_Command	command_get = {"get", {}, 1, 1, &get_cmd, {}};
-t_Command	command_add = {"add", {}, 3, 3, &add_cmd, {}};
-t_Command	command_replace = {"replace", {}, 4, 4, &replace_cmd, {}};
+t_Command	command_add = {"add", {}, 3, 4, &add_cmd, {}};
+t_Command	command_replace = {"replace", {}, 4, 5, &replace_cmd, {}};
 t_Command	command_remove = {"remove", {"rm"}, 1, 1, &remove_cmd, {}};
 t_Command	command_data = {"data", {}, 0, 2, &data_cmd, {&sub_command_data_change}};
 t_Command	command_help = {"help", {"man"}, 0, 1, &help_cmd, {}};
@@ -71,6 +71,7 @@ int	add_cmd(char **args, t_Command *commands_array[])
 {
 	t_uint	size;
 	int		index;
+	int		pw_len;
 
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
@@ -82,6 +83,20 @@ int	add_cmd(char **args, t_Command *commands_array[])
 	data_file_content = (char **)realloc(data_file_content, sizeof(char *) * (size + 2));
 	if (NULL == data_file_content)
 		return (FAILURE);
+	if (!strcmp(*(args + 2), "random"))
+	{
+		free(*(args + 2));
+		pw_len = 12;
+		if (*(args + 3))
+			pw_len = atoi(*(args + 3));
+		*(args + 2) = gen_pw(pw_len);
+		if (NULL == *(args + 2))
+		{
+			free(*(args + 3));
+			*(data_file_content + size) = NULL;
+			return (FAILED_PASSWORD_GEN);
+		}
+	}
 	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(*args) + strlen(*(args + 1)) + strlen(*(args + 2)) + 3));
 	if (NULL == *(data_file_content + size))
 	{
@@ -108,10 +123,9 @@ int	replace_cmd(char **args, t_Command *commands_array[])
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
 	index = get_pass_index(data_file_content, *args);
-	if (index >= 0 && strcmp(*args, *(args + 1)))
-		return (ENTRY_ALREADY_EXISTS);
-	if (ENTRY_NOT_FOUND == remove_cmd(args, commands_array))
+	if (index < 0)
 		return (ENTRY_NOT_FOUND);
+	remove_cmd(args, commands_array);
 	add_cmd(args + 1, commands_array);
 	return (SUCCESS);
 }
