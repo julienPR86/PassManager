@@ -169,6 +169,28 @@ char	**sort_strings(char **strings)
 	return (strings);
 }
 
+char	*strshuffle(char *str)
+{
+	size_t	len;
+	char	c;
+	int		index;
+	int		swap_index;
+
+	if (NULL == str)
+		return (NULL);
+	len = strlen(str);
+	index = 0;
+	while (*(str + index))
+	{
+		swap_index = rand() % len;
+		c = *(str + index);
+		*(str + index) = *(str + swap_index);
+		*(str + swap_index) = c;
+		index++;
+	}
+	return (str);
+}
+
 t_uint	strings_size(char **strings)
 {
 	t_uint	size;
