@@ -36,6 +36,7 @@ int	init(void)
 			break;
 	}
 	free(data_file_path);
+	srand(time(NULL) * (strings_size(data_file_content) + 1));
 	sort_strings(data_file_content);
 	return (SUCCESS);
 }
