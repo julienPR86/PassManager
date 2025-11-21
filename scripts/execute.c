@@ -59,6 +59,9 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		case HELP_ENTRY_NOT_FOUND:
 			error_output("Help about this command does not exists\n");
 			break;
+		case FAILED_PASSWORD_GEN:
+			error_output("Failed to generate random password\n");
+			break;
 		case EXIT_PROGRAM:
 			return (EXIT_PROGRAM);
 		default:
