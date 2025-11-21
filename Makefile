@@ -14,7 +14,8 @@ OBJS =	$(TMP)commands.o \
 		$(TMP)outputs.o \
 		$(TMP)pass.o \
 		$(TMP)settings.o \
-		$(TMP)utils.o \
+		$(TMP)generator.o \
+		$(TMP)utils.o
 		
 
 NAME = manager
