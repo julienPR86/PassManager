@@ -156,7 +156,7 @@ char	**sort_strings(char **strings)
 		j = i;
 		while (*(strings + j))
 		{
-			if (strcmp(*(strings + i), *(strings + j)) > 0)
+			if (strcompare(*(strings + i), *(strings + j)) == 1)
 			{
 				tmp = *(strings + i);
 				*(strings + i) = *(strings + j);
@@ -168,6 +168,33 @@ char	**sort_strings(char **strings)
 	}
 	return (strings);
 }
+
+int strcompare(char *s1, char *s2)
+{
+    size_t index;
+
+    if (NULL == s1 || NULL == s2)
+        return (0);
+    index = 0;
+	while (*(s1 + index) || *(s2 + index))
+    {
+        if (*(s1 + index) == *(s2 + index))
+        {
+            index++;
+            continue;
+        }
+        if ((*(s1 + index) | 32) == (*(s2 + index) | 32))
+        {
+            if (*(s1 + index) >= 'A' && *(s1 + index) <= 'Z' && *(s2 + index) >= 'a' && *(s2 + index) <= 'z')
+                return (1);
+            if (*(s1 + index) >= 'a' && *(s1 + index) <= 'z' && *(s2 + index) >= 'A' && *(s2 + index) <= 'Z')
+                return (-1);
+        }
+        return (*(s1 + index) - *(s2 + index));
+    }
+	return (0);
+}
+
 
 char	*strshuffle(char *str)
 {
