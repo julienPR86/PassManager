@@ -4,12 +4,14 @@ Here is some help about the 'add' command :
 	Description :
 		Adds an entry with a unique name, an identifier and a password.
  
-	Format : add [name:R] [identifier:R] [password:R]
+	Format : add [name:R] [identifier:R] [password:R] [length:O]
  
 	Arguments :
 		name : The unique name of the new entry.
 		identifier : The identifier of the new entry.
-		password : The password of the new entry.
+		password : The password of the new entry. If 'random' is provided, generates a random password.
+		length : The generated password len in base 10. Default is 12.
+ 
  
 	Aliases : 'add'
  
