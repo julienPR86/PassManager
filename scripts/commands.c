@@ -11,6 +11,7 @@ t_Command	command_add = {"add", {}, 3, 4, &add_cmd, {}};
 t_Command	command_replace = {"replace", {}, 4, 5, &replace_cmd, {}};
 t_Command	command_remove = {"remove", {"rm"}, 1, 1, &remove_cmd, {}};
 t_Command	command_data = {"data", {}, 0, 2, &data_cmd, {&sub_command_data_change}};
+t_Command	command_history = {"history", {}, 0, 0, &history_cmd, {}};
 t_Command	command_help = {"help", {"man"}, 0, 1, &help_cmd, {}};
 t_Command	command_exit = {"exit", {"quit"}, 0, 0, &exit_cmd, {}};
 
@@ -22,6 +23,7 @@ t_Command	*commands[COMMAND_COUNT] =
 	&command_replace,
 	&command_remove,
 	&command_data,
+	&command_history,
 	&command_help,
 	&command_exit,
 };
@@ -170,6 +172,26 @@ int	data_cmd(char **args, t_Command *commands_array[])
 		return (SUCCESS);
 	}
 	execute_cmd(args, commands_array);
+	return (SUCCESS);
+}
+
+int	history_cmd(char **args, t_Command *commands_array[])
+{
+	t_uint	index;
+
+	(void)args;
+	(void)commands_array;
+	if (NULL == history_file_content)
+	{
+		message_output("No history available\n");
+		return (SUCCESS);
+	}
+	index = 0;
+	while (*(history_file_content + index))
+	{
+		printf("\t%u : %s\n", index, *(history_file_content + index));
+		++index;
+	}
 	return (SUCCESS);
 }
 
