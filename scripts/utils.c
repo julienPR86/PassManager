@@ -1,21 +1,5 @@
 #include "../headers/manager.h"
 
-int	is_cmd_valid(char *cmd)
-{
-	t_uint	index;
-
-	if (NULL == cmd)
-		return (0);
-	index = 0;
-	while (*(cmd + index))
-	{
-		if (!ISPRINT(*(cmd + index)) || !ISRIGHT(*(cmd + index)))
-			return (0);
-		index++;
-	}
-	return (1);
-}
-
 char	*get_cmd_name(char *alias, t_Command *commands_array[])
 {
 	t_uint	index;
