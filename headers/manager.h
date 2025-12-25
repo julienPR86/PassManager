@@ -13,9 +13,6 @@
 
 # define SETTINGS_PATH "data/settings/settings.txt"
 
-# define ISPRINT(c) (((c) >= 32) && ((c) <= 126))
-# define ISRIGHT(c) (((c) != '$') && ((c) != ';') && ((c) != '|') && ((c) != '&'))
-
 enum	ERROR_CODES
 {
 	SUCCESS,
@@ -129,7 +126,6 @@ char	*gen_pw(t_uint len);
 
 //Utils functions
 
-int		is_cmd_valid(char *cmd);
 char	*get_cmd_name(char *alias, t_Command *commands_array[]);
 char	**split_string(char *str, char *set);
 char	*get_word(char *str, int word_index, char *set);
