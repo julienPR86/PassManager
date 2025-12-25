@@ -199,20 +199,20 @@ int	strs_add_line(char ***strs, char *line)
 {
 	t_uint	size;
 
-	if (NULL == strs || NULL == line)
+	if (NULL == *strs || NULL == line)
 		return (FAILURE);
-	size = strings_size(data_file_content);
-	data_file_content = (char **)realloc(data_file_content, sizeof(char *) * (size + 2));
-	if (NULL == data_file_content)
+	size = strings_size(*strs);
+	*strs = (char **)realloc(*strs, sizeof(char *) * (size + 2));
+	if (NULL == *strs)
 		return (FAILURE);
-	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(line) + 1));
-	if (NULL == *(data_file_content + size))
+	*(*strs + size) = (char *)malloc(sizeof(char) * (strlen(line) + 1));
+	if (NULL == *(*strs + size))
 	{
-		*(data_file_content + size + 1) = NULL;
+		*(*strs + size + 1) = NULL;
 		return (FAILURE);
 	}
-	strcpy(*(data_file_content + size), line);
-	*(data_file_content + size + 1) = NULL;
+	strcpy(*(*strs + size), line);
+	*(*strs + size + 1) = NULL;
 	return (SUCCESS);
 }
 
