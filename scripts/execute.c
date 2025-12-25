@@ -42,7 +42,6 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		error_output("Wrong arguments number\n");
 		return (WRONG_COMMAND_ARG_NUM);
 	}
-	rewrite_history_file = 1;
 	switch (command_func(args + 1, sub_commands))
 	{
 		case DATABASE_EMPTY:
@@ -64,10 +63,14 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 			error_output("Failed to generate random password\n");
 			break;
 		case EXIT_PROGRAM:
+			update_history(args);
+			rewrite_history_file = 1;
 			return (EXIT_PROGRAM);
 		default:
 			break ;
 	}
+	update_history(args);
+	rewrite_history_file = 1;
 	return (SUCCESS);
 }
 
