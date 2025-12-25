@@ -195,6 +195,26 @@ int strcompare(char *s1, char *s2)
 	return (0);
 }
 
+int	strs_add_line(char ***strs, char *line)
+{
+	t_uint	size;
+
+	if (NULL == strs || NULL == line)
+		return (FAILURE);
+	size = strings_size(data_file_content);
+	data_file_content = (char **)realloc(data_file_content, sizeof(char *) * (size + 2));
+	if (NULL == data_file_content)
+		return (FAILURE);
+	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(line) + 1));
+	if (NULL == *(data_file_content + size))
+	{
+		*(data_file_content + size + 1) = NULL;
+		return (FAILURE);
+	}
+	strcpy(*(data_file_content + size), line);
+	*(data_file_content + size + 1) = NULL;
+	return (SUCCESS);
+}
 
 char	*strshuffle(char *str)
 {
