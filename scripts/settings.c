@@ -11,7 +11,7 @@ char	*get_setting_value(char *setting_name)
 	while (*(settings_file_content + index))
 	{
 		value = get_word(*(settings_file_content + index), 0, "\t ");
-		if (!strcmp(setting_name, value))
+		if (NULL != value && !strcmp(setting_name, value))
 		{
 			free(value);
 			return (get_word(*(settings_file_content + index), 1, "\t "));
