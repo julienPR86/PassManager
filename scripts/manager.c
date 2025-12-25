@@ -6,6 +6,7 @@ int	manager(void)
 	char	*command;
 	char	**args;
 	char	*data_file_path;
+	char	*history_file_path;
 
 	run = 1;
 	while (run)
@@ -28,13 +29,20 @@ int	manager(void)
 	if (rewrite_data_file)
 	{
 		data_file_path = get_setting_value("data_path");
-		if (COULD_NOT_OPEN_FILE == rewrite_file(data_file_path, data_file_content))
+		if (SUCCESS != rewrite_file(data_file_path, data_file_content))
 			error_output("Failed to rewrite data file\n");
 		free(data_file_path);
 	}
+	if (rewrite_history_file)
+	{
+		history_file_path = get_setting_value("history_path");
+		if (SUCCESS != rewrite_file(history_file_path, history_file_content))
+			error_output("Failed to rewrite history file\n");
+		free(history_file_path);
+	}
 	if (rewrite_settings_file)
 	{
-		if (COULD_NOT_OPEN_FILE == rewrite_file(SETTINGS_PATH, settings_file_content))
+		if (SUCCESS != rewrite_file(SETTINGS_PATH, settings_file_content))
 			error_output("Failed to rewrite settings file\n");
 	}
 	return (SUCCESS);
