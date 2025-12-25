@@ -16,17 +16,19 @@ OBJS =	$(TMP)commands.o \
 		$(TMP)settings.o \
 		$(TMP)generator.o \
 		$(TMP)utils.o
-		
 
 NAME = manager
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
+$(NAME) : $(OBJS) | $(TMP)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(TMP)%.o : $(SRCS)/%.c
+$(TMP)%.o : $(SRCS)/%.c | $(TMP)
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(TMP) :
+	mkdir -p tmp
 
 clean :
 	rm -f $(OBJS)
