@@ -7,7 +7,7 @@
 # include <time.h>
 
 # define MAX_STRING_LENGTH 256
-# define COMMAND_COUNT 8
+# define COMMAND_COUNT 9
 # define MAX_ALIAS_NUM 3
 # define MAX_SUB_COMMAND_NUM 3
 
@@ -27,6 +27,7 @@ enum	ERROR_CODES
 	FAILED_TO_READ_FILE,
 	FAILED_FILE_REWRITE,
 	DATABASE_EMPTY,
+	SETTING_NOT_FOUND,
 	COMMAND_NOT_FOUND,
 	WRONG_COMMAND_ARG_NUM,
 	ENTRY_NOT_FOUND,
@@ -45,7 +46,6 @@ typedef struct s_Pass
 	char	*password;
 }	t_Pass;
 
-
 typedef struct s_Command
 {
 	char				*name;
@@ -58,8 +58,10 @@ typedef struct s_Command
 
 extern int			rewrite_data_file;
 extern int			rewrite_settings_file;
+extern int			rewrite_history_file;
 extern char			**data_file_content;
 extern char			**settings_file_content;
+extern char			**history_file_content;
 extern t_Command	*commands[COMMAND_COUNT];
 
 //Init functions
@@ -83,6 +85,7 @@ int		add_cmd(char **args, t_Command *commands_array[]);
 int		replace_cmd(char **args, t_Command *commands_array[]);
 int		remove_cmd(char **args, t_Command *commands_array[]);
 int		data_cmd(char **args, t_Command *commands_array[]);
+int		history_cmd(char **args, t_Command *commands_array[]);
 int		help_cmd(char **args, t_Command *commands_array[]);
 int		exit_cmd(char **args, t_Command *commands_array[]);
 
