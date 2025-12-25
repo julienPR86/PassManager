@@ -132,6 +132,7 @@ char	*get_word(char *str, int word_index, char *set);
 t_uint	count_words(char *str, char *set);
 char	**sort_strings(char **strings);
 int		strcompare(char *s1, char *s2);
+int		strs_add_line(char ***strs, char *line);
 char	*strshuffle(char *str);
 t_uint	strings_size(char **strings);
 void	free_strings(char **strs);
