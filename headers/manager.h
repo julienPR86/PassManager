@@ -119,6 +119,10 @@ char	*get_setting_value(char *setting_name);
 int		get_setting_value_index(char *setting_name);
 int		change_setting_value(char *setting_name, char *value);
 
+//History functions
+
+int		update_history(char	**args);
+
 //Password generator
 
 char	*gen_pw(t_uint len);
