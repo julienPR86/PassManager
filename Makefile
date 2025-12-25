@@ -10,6 +10,7 @@ OBJS =	$(TMP)commands.o \
 		$(TMP)file.o \
 	 	$(TMP)init.o \
 		$(TMP)inputs.o \
+		$(TMP)history.o \
 		$(TMP)manager.o \
 		$(TMP)outputs.o \
 		$(TMP)pass.o \
