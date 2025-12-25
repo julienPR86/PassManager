@@ -71,20 +71,15 @@ int	get_cmd(char **args, t_Command *commands_array[])
 
 int	add_cmd(char **args, t_Command *commands_array[])
 {
-	t_uint	size;
-	int		index;
-	int		pw_len;
+	char		*line;
+	int			pw_len;
+	const char	*separation = " ";
 
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
 	(void)commands_array;
-	index = get_pass_index(data_file_content, *args);
-	if (index >= 0)
+	if (get_pass_index(data_file_content, *args) >= 0)
 		return (ENTRY_ALREADY_EXISTS);
-	size = strings_size(data_file_content);
-	data_file_content = (char **)realloc(data_file_content, sizeof(char *) * (size + 2));
-	if (NULL == data_file_content)
-		return (FAILURE);
 	if (!strcmp(*(args + 2), "random"))
 	{
 		free(*(args + 2));
@@ -95,25 +90,22 @@ int	add_cmd(char **args, t_Command *commands_array[])
 		if (NULL == *(args + 2))
 		{
 			free(*(args + 3));
-			*(data_file_content + size) = NULL;
 			return (FAILED_PASSWORD_GEN);
 		}
 	}
-	*(data_file_content + size) = (char *)malloc(sizeof(char) * (strlen(*args) + strlen(*(args + 1)) + strlen(*(args + 2)) + 3));
-	if (NULL == *(data_file_content + size))
+	line = (char *)malloc(sizeof(char) * (strlen(*args) + strlen(*(args + 1)) + strlen(*(args + 2)) + strlen(separation) * 2 + 1));
+	*line = '\0';
+	strcat(line, *args);
+	strcat(line, separation);
+	strcat(line, *(args + 1));
+	strcat(line, separation);
+	strcat(line, *(args + 2));
+	if (SUCCESS != strs_add_line(&data_file_content, line))
 	{
-		data_file_content = (char **)realloc(data_file_content, size);
-		if (NULL == data_file_content)
-			return (FAILURE);
+		free(line);
 		return (FAILURE);
 	}
-	*(*(data_file_content + size)) = '\0';
-	strcat(*(data_file_content + size), *args);
-	strcat(*(data_file_content + size), " ");
-	strcat(*(data_file_content + size), *(args + 1));
-	strcat(*(data_file_content + size), " ");
-	strcat(*(data_file_content + size), *(args + 2));
-	*(data_file_content + size + 1) = NULL;
+	free(line);
 	rewrite_data_file = 1;
 	return (SUCCESS);
 }
