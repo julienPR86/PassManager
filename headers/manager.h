@@ -3,6 +3,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdarg.h>
 # include <string.h>
 # include <time.h>
 
@@ -32,6 +33,13 @@ enum	ERROR_CODES
 	HELP_ENTRY_NOT_FOUND,
 	FAILED_PASSWORD_GEN,
 	EXIT_PROGRAM,
+};
+
+enum	OUTPUT_TYPES
+{
+	MESSAGE,
+	WARNING,
+	ERROR,
 };
 
 typedef unsigned int	t_uint;
@@ -111,8 +119,7 @@ void	empty_stdin(void);
 
 //Outputs functions
 
-void	message_output(char *msg);
-void	error_output(char *error);
+void	message_output(int type, char *msg, ...);
 
 //Settings functions
 
