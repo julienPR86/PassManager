@@ -86,6 +86,10 @@ int		history_cmd(char **args, t_Command *commands_array[]);
 int		help_cmd(char **args, t_Command *commands_array[]);
 int		exit_cmd(char **args, t_Command *commands_array[]);
 
+//Sub-commands functions
+
+int		data_change_cmd(char **args, t_Command *commands_array[]);
+
 //Pass commands
 
 t_Pass	*get_pass(char *name);
