@@ -215,7 +215,7 @@ int	strs_add_line(char ***strs, char *line)
 {
 	t_uint	size;
 
-	if (NULL == *strs || NULL == line)
+	if (NULL == strs || NULL == line)
 		return (FAILURE);
 	size = strings_size(*strs);
 	*strs = (char **)realloc(*strs, sizeof(char *) * (size + 2));
