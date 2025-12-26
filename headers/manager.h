@@ -12,7 +12,7 @@
 # define MAX_ALIAS_NUM 3
 # define MAX_SUB_COMMAND_NUM 3
 
-# define SETTINGS_PATH "data/settings/settings.txt"
+# define SETTINGS_PATH "data/settings/settings"
 
 enum	ERROR_CODES
 {
