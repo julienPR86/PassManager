@@ -7,21 +7,29 @@ void	message_output(int type, char *msg, ...)
 	switch (type)
 	{
 		case MESSAGE :
-			#define output stdout
+			#ifndef output
+				#define output stdout
+			#endif
 			fprintf(output, "\tMessage : ");
 			break ;
 		case WARNING :
-			#define output stdout
+			#ifndef output
+				#define output stdout
+			#endif
 			fprintf(output, "\tWarning : ");
 			break ;
 		case ERROR :
-			#define output stderr
+			#ifndef output
+				#define output stderr
+			#endif
 			fprintf(output, "\tError : ");
 			break ;
 		default :
-			#define output stdout
 			break ;
 	}
+	#ifndef output
+		#define output stdout
+	#endif
 	va_start(args, msg);
 	vfprintf(output, msg, args);
 	printf("\n");
