@@ -1,17 +1,30 @@
 #include "../headers/manager.h"
 
-void	message_output(char *msg)
+void	message_output(int type, char *msg, ...)
 {
-	if (NULL == msg)
-		return ;
-	printf("\t%s", msg);
-	return ;
-}
+	va_list	args;
 
-void	error_output(char *error)
-{
-	if (NULL == error)
-		return ;
-	fprintf(stderr, "\tError : %s", error);
+	switch (type)
+	{
+		case MESSAGE :
+			#define output stdout
+			fprintf(output, "\tMessage : ");
+			break ;
+		case WARNING :
+			#define output stdout
+			fprintf(output, "\tWarning : ");
+			break ;
+		case ERROR :
+			#define output stderr
+			fprintf(output, "\tError : ");
+			break ;
+		default :
+			#define output stdout
+			break ;
+	}
+	va_start(args, msg);
+	vfprintf(output, msg, args);
+	printf("\n");
+	va_end(args);
 	return ;
 }
