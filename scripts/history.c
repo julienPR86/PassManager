@@ -29,6 +29,10 @@ int	update_history(char	**args)
 		++index;
 	}
 	*(line + size + strings_size(args) - 1) = '\0';
+	if (!strcmp(*args, "add"))
+		replace_word(line, 3, "\t ", '*');
+	else if (!strcmp(*args, "replace"))
+		replace_word(line, 4, "\t ", '*');
 	strs_add_line(&history_file_content, line);
 	free(line);
 	return (SUCCESS);
