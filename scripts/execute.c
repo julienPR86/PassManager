@@ -34,33 +34,33 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 	}
 	if (NULL == command_func)
 	{
-		error_output("Command not found\n");
+		message_output(ERROR, "Command not found.");
 		return (COMMAND_NOT_FOUND);
 	}
 	if (check_cmd_args_number(args, *(commands_array + index)))
 	{
-		error_output("Wrong arguments number\n");
+		message_output(ERROR, "Wrong arguments number.");
 		return (WRONG_COMMAND_ARG_NUM);
 	}
 	switch (command_func(args + 1, sub_commands))
 	{
 		case DATABASE_EMPTY:
-			error_output("There is no entries in database\n");
+			message_output(MESSAGE, "There is no entries in database.");
 			break;
 		case COMMAND_NOT_FOUND:
-			error_output("Unknow command\n");
+			message_output(ERROR, "Unknow command.");
 			break;
 		case ENTRY_NOT_FOUND:
-			error_output("Unknow entry\n");
+			message_output(ERROR, "Unknow entry.");
 			break;
 		case ENTRY_ALREADY_EXISTS:
-			error_output("Entry already exists in database\n");
+			message_output(WARNING, "Entry already exists in database.");
 			break;
 		case HELP_ENTRY_NOT_FOUND:
-			error_output("Help about this command does not exists\n");
+			message_output(ERROR, "Help about this command does not exists.");
 			break;
 		case FAILED_PASSWORD_GEN:
-			error_output("Failed to generate random password\n");
+			message_output(ERROR, "Failed to generate random password.");
 			break;
 		case EXIT_PROGRAM:
 			update_history(args);

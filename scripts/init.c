@@ -21,8 +21,10 @@ int	init(void)
 	switch (get_file_content(SETTINGS_PATH, &settings_file_content))
 	{
 		case COULD_NOT_OPEN_FILE :
+			message_output(WARNING, "Failed to open settings file.");
 			return (COULD_NOT_OPEN_SETTINGS_FILE);
 		case FAILED_TO_READ_FILE :
+			message_output(ERROR, "Failed to read settings file.");
 			return (FAILED_TO_READ_SETTINGS_FILE);
 		default :
 			break;
@@ -33,11 +35,10 @@ int	init(void)
 	switch (get_file_content(data_file_path, &data_file_content))
 	{
 		case COULD_NOT_OPEN_FILE :
-			free(data_file_path);
-			return (COULD_NOT_OPEN_FILE);
+			message_output(WARNING, "No data available.");
+			break ;
 		case FAILED_TO_READ_FILE :
-			free(data_file_path);
-			free_strings(settings_file_content);
+			message_output(ERROR, "Failed to read data file.");
 			return (FAILED_TO_READ_FILE);
 		default :
 			break;
@@ -49,8 +50,11 @@ int	init(void)
 	switch (get_file_content(history_file_path, &history_file_content))
 	{
 		case COULD_NOT_OPEN_FILE :
-			message_output("No history available\n");
+			message_output(WARNING, "No history available.");
 			break ;
+		case FAILED_TO_READ_FILE :
+			message_output(ERROR, "Failed to read history file.");
+			return (FAILED_TO_READ_FILE);
 		default :
 			break ;
 	}

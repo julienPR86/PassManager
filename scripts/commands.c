@@ -157,8 +157,7 @@ int	data_cmd(char **args, t_Command *commands_array[])
 	if (NULL == *args)
 	{
 		data_path = get_setting_value("data_path");
-		message_output(data_path);
-		message_output("\n");
+		printf("\t%s\n", data_path);
 		free(data_path);
 		return (SUCCESS);
 	}
@@ -174,7 +173,7 @@ int	history_cmd(char **args, t_Command *commands_array[])
 	(void)commands_array;
 	if (NULL == history_file_content)
 	{
-		message_output("No history available\n");
+		message_output(WARNING, "No history available.");
 		return (SUCCESS);
 	}
 	index = 0;
@@ -241,7 +240,7 @@ int	data_change_cmd(char **args, t_Command *commands_array[])
 		data_file_path = get_setting_value("data_path");
 		if (COULD_NOT_OPEN_FILE == rewrite_file(data_file_path, data_file_content))
 		{
-			error_output("Failed to rewrite data file\n");
+			message_output(ERROR, "Failed to rewrite data file.");
 			return (FAILED_FILE_REWRITE);
 		}
 		free(data_file_path);
@@ -250,12 +249,16 @@ int	data_change_cmd(char **args, t_Command *commands_array[])
 	change_setting_value("data_path", *args);
 	data_file = fopen(*args, "r");
 	if (NULL == data_file)
+	{
+		message_output(ERROR, "Failed to open new data file.");
 		return (COULD_NOT_OPEN_FILE);
+	}
 	free_strings(data_file_content);
 	data_file_content = read_file(data_file);
 	if (NULL == data_file_content)
 	{
 		fclose(data_file);
+		message_output(ERROR, "Failed to read new data file.");
 		return (FAILED_TO_READ_FILE);
 	}
 	fclose(data_file);
