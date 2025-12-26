@@ -246,7 +246,6 @@ int	data_change_cmd(char **args, t_Command *commands_array[])
 		free(data_file_path);
 		rewrite_data_file = 0;
 	}
-	change_setting_value("data_path", *args);
 	data_file = fopen(*args, "r");
 	if (NULL == data_file)
 	{
@@ -262,5 +261,10 @@ int	data_change_cmd(char **args, t_Command *commands_array[])
 		return (FAILED_TO_READ_FILE);
 	}
 	fclose(data_file);
+	if (SUCCESS != change_setting_value("data_path", *args))
+	{
+		message_output(ERROR, "Failed to change new data path in settings.");
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
