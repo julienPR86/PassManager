@@ -1,0 +1,15 @@
+ 
+Here is some help about the 'history' command :
+ 
+	Description :
+		Display the history of the passed used commands.
+ 
+	Format : history []
+ 
+	Aliases : 'history'
+ 
+ 
+	Arguments qualifiers
+		R = required.
+		O = optional.
+ 
