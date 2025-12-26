@@ -46,6 +46,7 @@ int	get_setting_value_index(char *setting_name)
 
 int	change_setting_value(char *setting_name, char *value)
 {
+	const char	*separation = " ";
 	int			setting_index;
 	char		*setting_save;
 	const char	*null_value = "none";
@@ -66,7 +67,7 @@ int	change_setting_value(char *setting_name, char *value)
 	}
 	free(setting_save);
 	strcpy(*(settings_file_content + setting_index), setting_name);
-	strcat(*(settings_file_content + setting_index), " ");
+	strcat(*(settings_file_content + setting_index), separation);
 	strcat(*(settings_file_content + setting_index), value);
 	rewrite_settings_file = 1;
 	return (SUCCESS);
