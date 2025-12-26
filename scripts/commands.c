@@ -74,7 +74,7 @@ int	add_cmd(char **args, t_Command *commands_array[])
 	int			pw_len;
 	const char	*separation = " ";
 
-	if (NULL == args || NULL == data_file_content)
+	if (NULL == args)
 		return (FAILURE);
 	(void)commands_array;
 	if (get_pass_index(data_file_content, *args) >= 0)
