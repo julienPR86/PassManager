@@ -191,7 +191,7 @@ int	help_cmd(char **args, t_Command *commands_array[])
 	FILE	*help_file;
 	char	*cmd_name;
 	char	**help_content;
-	char	help_file_name[MAX_STRING_LENGTH + 24] = "data/commands/help/commands.txt";
+	char	help_file_name[MAX_STRING_LENGTH + 25] = "data/commands/help/commands_help";
 	t_uint	index;
 
 	if (NULL == args)
@@ -204,7 +204,7 @@ int	help_cmd(char **args, t_Command *commands_array[])
 			return (HELP_ENTRY_NOT_FOUND);
 		help_file_name[19] = '\0';
 		strncat(help_file_name, cmd_name, 256);
-		strncat(help_file_name, ".txt", 5);
+		strncat(help_file_name, "_help", 6);
 	}
 	help_file = fopen(help_file_name, "r");
 	if (NULL == help_file)
