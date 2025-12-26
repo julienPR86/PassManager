@@ -90,6 +90,38 @@ t_uint	count_words(char *str, char *set)
 	return (count);
 }
 
+char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
+{
+	t_uint		count;
+	t_uint		index;
+	int			is_word;
+
+	if (NULL == str)
+		return (0);
+	is_word = 1;
+	count = 0;
+	index = 0;
+	while (*(str + index))
+	{
+		if (strchr(set, *(str + index)))
+			is_word = 1;
+		else if (is_word)
+		{
+			count++;
+			is_word = 0;
+		}
+		if (count > word_index)
+			break;
+		index++;
+	}
+	while (*(str + index) && !strchr(set, *(str + index)))
+	{
+		*(str + index) = replace_char;
+		++index;
+	}
+	return (str);
+}
+
 char	**split_string(char *str, char *set)
 {
 	char	**strings;
