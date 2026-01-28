@@ -1,40 +1,44 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 
-TMP = tmp/
-SRCS = scripts/
+VPATH = sources:
+OBJDIR = objs/
 
-OBJS =	$(TMP)commands.o \
-		$(TMP)execute.o \
-		$(TMP)exit.o \
-		$(TMP)file.o \
-	 	$(TMP)init.o \
-		$(TMP)inputs.o \
-		$(TMP)history.o \
-		$(TMP)manager.o \
-		$(TMP)outputs.o \
-		$(TMP)pass.o \
-		$(TMP)settings.o \
-		$(TMP)generator.o \
-		$(TMP)utils.o
+OBJS_REFS =	commands.o \
+			execute.o \
+			exit.o \
+			file.o \
+	 		init.o \
+			inputs.o \
+			history.o \
+			manager.o \
+			outputs.o \
+			pass.o \
+			settings.o \
+			generator.o \
+			utils.o
+
+OBJS = $(addprefix $(OBJDIR), $(OBJS_REFS))
 
 NAME = manager
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) | $(TMP)
+$(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(TMP)%.o : $(SRCS)/%.c | $(TMP)
+$(OBJDIR)%.o : %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(TMP) :
-	mkdir -p tmp
+$(OBJDIR) :
+	mkdir -p $@
 
 clean :
-	rm -f $(OBJS)
+	rm -rf $(OBJDIR)
 
 fclean : clean
 	rm -f $(NAME)
 
 re : fclean all
+
+.PHONY : all clean clean re
