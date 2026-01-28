@@ -1,4 +1,4 @@
-#include "../headers/manager.h"
+#include "../includes/manager.h"
 
 int	execute_cmd(char **args, t_Command *commands_array[])
 {

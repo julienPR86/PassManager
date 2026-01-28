@@ -1,4 +1,4 @@
-#include "../headers/manager.h"
+#include "../includes/manager.h"
 
 void	message_output(int type, char *msg, ...)
 {

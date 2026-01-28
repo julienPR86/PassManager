@@ -1,4 +1,4 @@
-#include "../headers/manager.h"
+#include "../includes/manager.h"
 
 int	manager(void)
 {

@@ -1,4 +1,4 @@
-#include "../headers/manager.h"
+#include "../includes/manager.h"
 
 const char	*digits = "0123456789";
 const char	*lower = "abcdefghijklmnopqrstuvwxyz";

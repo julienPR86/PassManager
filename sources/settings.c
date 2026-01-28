@@ -1,4 +1,4 @@
-#include "../headers/manager.h"
+#include "../includes/manager.h"
 
 char	*get_setting_value(char *setting_name)
 {
