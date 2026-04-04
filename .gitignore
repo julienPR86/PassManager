@@ -7,5 +7,5 @@ manager
 #obj files
 *.o
 #data file
-*passwords
+*file
 *history
