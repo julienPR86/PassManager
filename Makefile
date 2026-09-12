@@ -1,24 +1,25 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
+
+INCLUDES = includes
 
 VPATH = sources:
-OBJDIR = objs/
+SRCS =	commands.c \
+		execute.c \
+		exit.c \
+		file.c \
+		init.c \
+		inputs.c \
+		history.c \
+		manager.c \
+		outputs.c \
+		pass.c \
+		settings.c \
+		generator.c \
+		utils.c
 
-OBJS_REFS =	commands.o \
-			execute.o \
-			exit.o \
-			file.o \
-	 		init.o \
-			inputs.o \
-			history.o \
-			manager.o \
-			outputs.o \
-			pass.o \
-			settings.o \
-			generator.o \
-			utils.o
-
-OBJS = $(addprefix $(OBJDIR), $(OBJS_REFS))
+OBJDIR = objs
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 NAME = manager
 
@@ -27,8 +28,8 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(OBJDIR)%.o : %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -o $@ -c $<
+$(OBJDIR)/%.o : %.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 
 $(OBJDIR) :
 	mkdir -p $@
