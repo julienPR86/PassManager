@@ -3,6 +3,11 @@ CFLAGS = -Wall -Wextra -Werror
 
 INCLUDES = includes
 
+LIBSDIR = libs
+
+LIBSTRDIR = $(LIBSDIR)/libstr
+LIBSTR = $(LIBSTRDIR)/libstr.h
+
 VPATH = sources:
 SRCS =	commands.c \
 		execute.c \
@@ -28,8 +33,17 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(OBJDIR)/%.o : %.c | $(OBJDIR)
-	$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
+$(OBJDIR)/%.o : %.c | $(OBJDIR) $(LIBSTR)
+	$(CC) $(CFLAGS) -o $@ -c $< -I $(INCLUDES) -I $(LIBSTRDIR)
+
+$(LIBSTR) : | $(LIBSTRDIR)
+	git clone https://github.com/julienPR86/libstr.git $(LIBSTRDIR)
+
+$(LIBSTRDIR) : | $(LIBSDIR)
+	mkdir -p $@
+
+$(LIBSDIR) :
+	mkdir -p $@
 
 $(OBJDIR) :
 	mkdir -p $@
