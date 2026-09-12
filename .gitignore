@@ -1,12 +1,15 @@
+#.executable files
+manager
+
 #vs code files
 .vscode/
-#.exe files
-*.exe
-*.out
-manager
+
 #obj files
 *.o
+
+#libs files
+libs/
+
 #data file
 *file
 *history
-
