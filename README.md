@@ -1,13 +1,34 @@
 # PassManager
-This is a personal project to learn the basics about file management in C.
 
-## Requirements
-I you wish to try this project, you'll just need `make` and `gcc` to compile the project !
+## Description
+This is a personal project to learn the basics about strings and file management in C.
 
-Just do :
-`make` or `make all`
+### Dependencies
 
-and then : `./manager` to launch the executable.
+- `make`
+- `gcc`
+
+## Instruction
+
+To compile the project:
+```
+make
+```
+
+To start the executable:
+```
+./manager
+```
+
+To remove object files:
+```
+make clean
+```
+To remove object files and executable:
+```
+make fclean
+```
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
