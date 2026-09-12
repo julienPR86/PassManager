@@ -48,6 +48,8 @@ char	*get_word(char *str, int word_index, char *set)
 		}
 		index++;
 	}
+	if ('\0' == *(str + index))
+		return (NULL);
 	index--;
 	cpy_index = 0;
 	while (*(str + index + cpy_index) &&  !strchr(set, *(str + index + cpy_index)))
