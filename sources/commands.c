@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 //Sub commands
 t_Command	sub_command_data_change = {"change", {}, 1, 1, &data_change_cmd, {}};

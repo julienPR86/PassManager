@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 int get_file_content(char *path, char ***strings)
 {

@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 int		rewrite_data_file;
 int		rewrite_settings_file;

@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 int	update_history(char	**args)
 {

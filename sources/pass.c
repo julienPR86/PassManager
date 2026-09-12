@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 t_Pass	*get_pass(char *name)
 {

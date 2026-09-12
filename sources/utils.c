@@ -1,4 +1,4 @@
-#include "../includes/manager.h"
+#include "manager.h"
 
 char	*get_cmd_name(char *alias, t_Command *commands_array[])
 {
