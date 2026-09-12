@@ -79,7 +79,7 @@ int	add_cmd(char **args, t_Command *commands_array[])
 	(void)commands_array;
 	if (get_pass_index(data_file_content, *args) >= 0)
 		return (ENTRY_ALREADY_EXISTS);
-	if (!strcmp(*(args + 2), "random"))
+	if (!strCompare(*(args + 2), "random"))
 	{
 		free(*(args + 2));
 		pw_len = 12;
@@ -92,13 +92,10 @@ int	add_cmd(char **args, t_Command *commands_array[])
 			return (FAILED_PASSWORD_GEN);
 		}
 	}
-	line = (char *)malloc(sizeof(char) * (strlen(*args) + strlen(*(args + 1)) + strlen(*(args + 2)) + strlen(separation) * 2 + 1));
-	*line = '\0';
-	strcat(line, *args);
-	strcat(line, separation);
-	strcat(line, *(args + 1));
-	strcat(line, separation);
-	strcat(line, *(args + 2));
+	line = strJoin((const char **)args, separation);
+	if(NULL == line)
+		return (FAILURE);
+
 	if (SUCCESS != strs_add_line(&data_file_content, line))
 	{
 		free(line);
@@ -190,20 +187,29 @@ int	help_cmd(char **args, t_Command *commands_array[])
 	FILE	*help_file;
 	char	*cmd_name;
 	char	**help_content;
-	char	help_file_name[MAX_STRING_LENGTH + 25] = "data/commands/help/commands_help";
+	char	*help_file_name = NULL;
 	t_uint	index;
 
 	if (NULL == args)
 		return (FAILURE);
+	help_file_name = strDup("data/commands/help/commands_help");
+	if (NULL == help_file_name)
+		return (FAILURE);
 	(void)commands_array;
 	if (*args)
 	{
+		char	*tmp;
+
 		cmd_name = get_cmd_name(*args, commands);
 		if (NULL == cmd_name)
 			return (HELP_ENTRY_NOT_FOUND);
-		help_file_name[19] = '\0';
-		strncat(help_file_name, cmd_name, 256);
-		strncat(help_file_name, "_help", 6);
+		tmp = strrTrim(help_file_name, "/");
+		free(help_file_name);
+		help_file_name = strAppend(tmp, "/");
+		free(tmp);
+		tmp = strAppend(help_file_name, cmd_name);
+		free(help_file_name);
+		help_file_name = strAppend(tmp, "_help");
 	}
 	help_file = fopen(help_file_name, "r");
 	if (NULL == help_file)
@@ -215,7 +221,7 @@ int	help_cmd(char **args, t_Command *commands_array[])
 		printf("%s\n", *(help_content + index));
 		index++;
 	}
-	free_strings(help_content);
+	strDestroy(help_content);
 	fclose(help_file);
 	return (SUCCESS);
 }
@@ -252,7 +258,7 @@ int	data_change_cmd(char **args, t_Command *commands_array[])
 		message_output(ERROR, "Failed to open new data file.");
 		return (COULD_NOT_OPEN_FILE);
 	}
-	free_strings(data_file_content);
+	strDestroy(data_file_content);
 	data_file_content = read_file(data_file);
 	if (NULL == data_file_content)
 	{

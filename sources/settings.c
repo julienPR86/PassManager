@@ -11,7 +11,7 @@ char	*get_setting_value(char *setting_name)
 	while (*(settings_file_content + index))
 	{
 		value = get_word(*(settings_file_content + index), 0, "\t ");
-		if (NULL != value && !strcmp(setting_name, value))
+		if (NULL != value && !strCompare(setting_name, value))
 		{
 			free(value);
 			return (get_word(*(settings_file_content + index), 1, "\t "));
@@ -33,7 +33,7 @@ int	get_setting_value_index(char *setting_name)
 	while (*(settings_file_content + index))
 	{
 		value = get_word(*(settings_file_content + index), 0, "\t ");
-		if (!strcmp(setting_name, value))
+		if (!strCompare(setting_name, value))
 		{
 			free(value);
 			return (index);
@@ -49,6 +49,8 @@ int	change_setting_value(char *setting_name, char *value)
 	const char	*separation = " ";
 	int			setting_index;
 	char		*setting_save;
+	char		*setting;
+	char		*tmp;
 	const char	*null_value = "none";
 
 	if (NULL == setting_name)
@@ -58,17 +60,30 @@ int	change_setting_value(char *setting_name, char *value)
 		return (FAILURE);
 	if (NULL == value)
 		value = (char *)null_value;
-	setting_save = *(settings_file_content + setting_index);
-	*(settings_file_content + setting_index) = (char *)malloc(sizeof(char) * (strlen(setting_name) + strlen(value) + 2));
-	if (NULL == *(settings_file_content + setting_index))
+	setting = *(settings_file_content + setting_index);
+	setting_save = setting;
+	setting = strDup(setting_name);
+	if (NULL == setting)
 	{
-		*(settings_file_content + setting_index) = setting_save;
+		setting = setting_save;
+		return (FAILURE);
+	}
+	tmp = strAppend(setting, separation);
+	free(setting);
+	if (NULL == tmp)
+	{
+		setting = setting_save;
+		return (FAILURE);
+	}
+	setting = strAppend(tmp, value);
+	free(tmp);
+	if (NULL == setting)
+	{
+		setting = setting_save;
 		return (FAILURE);
 	}
 	free(setting_save);
-	strcpy(*(settings_file_content + setting_index), setting_name);
-	strcat(*(settings_file_content + setting_index), separation);
-	strcat(*(settings_file_content + setting_index), value);
+	*(settings_file_content + setting_index) = setting;
 	rewrite_settings_file = 1;
 	return (SUCCESS);
 }

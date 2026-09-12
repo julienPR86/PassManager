@@ -17,16 +17,16 @@ char	*gen_pw(t_uint len)
 	if (NULL == pw)
 		return (NULL);
 	index = 0;
-	set_len = strlen(digits);
+	set_len = strLength(digits);
 	for (t_uint i = 0; i < (len / 4) && index < len; i++, index++)
 		*(pw + index) = *(digits + (rand() % set_len));
-	set_len = strlen(specials);
+	set_len = strLength(specials);
 	for (t_uint i = 0; i < (len / 4) && index < len; i++, index++)
 		*(pw + index) = *(specials + (rand() % set_len));
-	set_len = strlen(upper);
+	set_len = strLength(upper);
 	for (t_uint i = 0; i < (len / 4) && index < len; i++, index++)
 		*(pw + index) = *(upper + (rand() % set_len));
-	set_len = strlen(lower);
+	set_len = strLength(lower);
 	for (t_uint i = 0; i < (len / 4 + len % 4) && index < len; i++, index++)
 		*(pw + index) = *(lower + (rand() % set_len));
 	*(pw + index) = '\0';

@@ -28,7 +28,7 @@ int	get_pass_index(char **content, char *name)
 		return (-1);
 	index = 0;
 	word = get_word(*(data_file_content + index), 0, "\t ");
-	while (*(content + index) && strcmp(word, name))
+	while (*(content + index) && strCompare(word, name))
 	{
 		free(word);
 		index++;

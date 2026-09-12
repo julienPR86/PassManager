@@ -37,7 +37,7 @@ char	**read_file(FILE *file)
 		*(data + line_index) = (char *)malloc(sizeof(char) * (width + 1));
 		if (NULL == *(data + line_index))
 		{
-			free_strings(data);
+			strDestroy(data);
 			return (NULL);
 		}
 		line_index++;

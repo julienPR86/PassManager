@@ -13,11 +13,11 @@ char	*get_cmd_name(char *alias, t_Command *commands_array[])
 		alias_index = 0;
 		while (alias_index < MAX_ALIAS_NUM)
 		{
-			if (*((*(commands_array + index))->alias + alias_index) && !strcmp(alias, *((*(commands_array + index))->alias + alias_index)))
+			if (*((*(commands_array + index))->alias + alias_index) && !strCompare(alias, *((*(commands_array + index))->alias + alias_index)))
 				return ((*(commands_array + index))->name);
 			alias_index++;
 		}
-		if (!strcmp(alias, (*(commands_array + index))->name))
+		if (!strCompare(alias, (*(commands_array + index))->name))
 			return ((*(commands_array + index))->name);
 		index++;
 	}
@@ -39,7 +39,7 @@ char	*get_word(char *str, int word_index, char *set)
 	index = 0;
 	while (*(str + index) && count < word_index)
 	{
-		if (strchr(set, *(str + index)))
+		if (strChar(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -52,44 +52,19 @@ char	*get_word(char *str, int word_index, char *set)
 		return (NULL);
 	index--;
 	cpy_index = 0;
-	while (*(str + index + cpy_index) &&  !strchr(set, *(str + index + cpy_index)))
+	while (*(str + index + cpy_index) &&  !strChar(set, *(str + index + cpy_index)))
 		cpy_index++;
 	word = (char *)malloc(sizeof(char) * (cpy_index + 1));
 	if (NULL == word)
 		return (NULL);
 	cpy_index = 0;
-	while (*(str + index + cpy_index) && !strchr(set, *(str + index + cpy_index)))
+	while (*(str + index + cpy_index) && !strChar(set, *(str + index + cpy_index)))
 	{
 		*(word + cpy_index) = *(str + index + cpy_index);
 		cpy_index++;
 	}
 	*(word + cpy_index) = '\0';
 	return (word);
-}
-
-t_uint	count_words(char *str, char *set)
-{
-	t_uint	count;
-	t_uint	index;
-	int		is_word;
-
-	if (NULL == str)
-		return (0);
-	is_word = 1;
-	count = 0;
-	index = 0;
-	while (*(str + index))
-	{
-		if (strchr(set, *(str + index)))
-			is_word = 1;
-		else if (is_word)
-		{
-			count++;
-			is_word = 0;
-		}
-		index++;
-	}
-	return (count);
 }
 
 char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
@@ -105,7 +80,7 @@ char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
 	index = 0;
 	while (*(str + index))
 	{
-		if (strchr(set, *(str + index)))
+		if (strChar(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -116,48 +91,12 @@ char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
 			break;
 		index++;
 	}
-	while (*(str + index) && !strchr(set, *(str + index)))
+	while (*(str + index) && !strChar(set, *(str + index)))
 	{
 		*(str + index) = replace_char;
 		++index;
 	}
 	return (str);
-}
-
-char	**split_string(char *str, char *set)
-{
-	char	**strings;
-	t_uint	wc;
-	t_uint	start_index;
-	t_uint	end_index;
-	t_uint	counter;
-
-	if (NULL == str || NULL == set)
-		return (NULL);
-	wc = count_words(str, set);
-	strings = (char **)malloc(sizeof(char *) * (wc + 1));
-	if (NULL == strings)
-		return (NULL);
-	counter = 0;
-	end_index = 0;
-	while (counter < wc)
-	{
-		start_index = end_index;
-		while (*(str + start_index) && strchr(set, *(str + start_index)))
-			start_index++;
-		end_index = start_index;
-		while (*(str + end_index) && !strchr(set, *(str + end_index)))
-			end_index++;
-		*(strings + counter) = strndup(str + start_index, end_index - start_index);
-		if (NULL == *(strings + counter))
-		{
-			free_strings(strings);
-			return (NULL);
-		}
-		counter++;
-	}
-	*(strings + counter) = NULL;
-	return (strings);
 }
 
 char	**sort_strings(char **strings)
@@ -229,7 +168,7 @@ int	strs_add_line(char ***strs, char *line)
 		*(*strs + size + 1) = NULL;
 		return (FAILURE);
 	}
-	strcpy(*(*strs + size), line);
+	strCopy(*(*strs + size), line);
 	*(*strs + size + 1) = NULL;
 	return (SUCCESS);
 }
@@ -266,21 +205,4 @@ t_uint	strings_size(char **strings)
 	while (*(strings + size))
 		size++;
 	return (size);
-}
-
-void	free_strings(char **strs)
-{
-	t_uint	index;
-
-	if (NULL == strs)
-		return ;
-	index = 0;
-	while (*(strs + index))
-	{
-		free(*(strs + index));
-		index++;
-	}
-	free(strs);
-	strs = NULL;
-	return ;
 }

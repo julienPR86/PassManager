@@ -13,10 +13,10 @@ int	update_history(char	**args)
 	index = 0;
 	while (*(args + index))
 	{
-		size += strlen(*(args + index));
+		size += strLength(*(args + index));
 		++index;
 	}
-	line = (char *)malloc(sizeof(char) * (size + (strings_size(args) - 1) * strlen(separation) + 1));
+	line = (char *)malloc(sizeof(char) * (size + (strings_size(args) - 1) * strLength(separation) + 1));
 	if (NULL == line)
 		return (FAILURE);
 	*line = '\0';
@@ -29,9 +29,9 @@ int	update_history(char	**args)
 		++index;
 	}
 	*(line + size + strings_size(args) - 1) = '\0';
-	if (!strcmp(*args, "add"))
+	if (!strCompare(*args, "add"))
 		replace_word(line, 3, "\t ", '*');
-	else if (!strcmp(*args, "replace"))
+	else if (!strCompare(*args, "replace"))
 		replace_word(line, 4, "\t ", '*');
 	strs_add_line(&history_file_content, line);
 	free(line);

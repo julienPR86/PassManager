@@ -1,3 +1,4 @@
+#define LIBSTR_IMPLEMENTATION
 #include "manager.h"
 
 int	manager(void)
@@ -14,7 +15,7 @@ int	manager(void)
 		command = input("$>");
 		if (NULL == command)
 			continue ;
-		args = split_string(command, "\t ");
+		args = strSplit(command, "\t ");
 		switch (execute_cmd(args, commands))
 		{
 			case EXIT_PROGRAM:
@@ -23,7 +24,7 @@ int	manager(void)
 			default:
 				break;
 		}
-		free_strings(args);
+		strDestroy(args);
 		free(command);
 	}
 	if (rewrite_data_file)

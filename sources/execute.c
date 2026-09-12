@@ -12,7 +12,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 	command_func = NULL;
 	while (*args && *(commands_array + index) && index < COMMAND_COUNT)
 	{
-		if (!strcmp(*args, (*(commands_array + index))->name))
+		if (!strCompare(*args, (*(commands_array + index))->name))
 		{
 			command_func = (*(commands_array + index))->command;
 			sub_commands = (*(commands_array + index))->sub_commands;
@@ -22,7 +22,7 @@ int	execute_cmd(char **args, t_Command *commands_array[])
 		{
 			if (!*((*(commands_array + index))->alias + i))
 				break ;
-			if (strcmp(*args, *((*(commands_array + index))->alias + i)))
+			if (strCompare(*args, *((*(commands_array + index))->alias + i)))
 				continue ;
 			command_func = (*(commands_array + index))->command;
 			sub_commands = (*(commands_array + index))->sub_commands;
