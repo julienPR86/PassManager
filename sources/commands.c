@@ -51,15 +51,11 @@ int	list_cmd(char **args, t_Command *commands_array[])
 
 int	get_cmd(char **args, t_Command *commands_array[])
 {
-	int		index;
 	t_Pass	*pass;
 
 	if (NULL == args || NULL == data_file_content)
 		return (FAILURE);
 	(void)commands_array;
-	index = get_pass_index(data_file_content, *args);
-	if (index < 0)
-		return (DATABASE_EMPTY);
 	pass = get_pass(*args);
 	if (NULL == pass)
 		return (ENTRY_NOT_FOUND);
