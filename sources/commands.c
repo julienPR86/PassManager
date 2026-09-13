@@ -198,18 +198,32 @@ int	help_cmd(char **args, t_Command *commands_array[])
 	(void)commands_array;
 	if (*args)
 	{
-		char	*tmp;
+		char	*save;
 
 		cmd_name = get_cmd_name(*args, commands);
 		if (NULL == cmd_name)
 			return (HELP_ENTRY_NOT_FOUND);
-		tmp = strrTrim(help_file_name, "/");
-		free(help_file_name);
-		help_file_name = strAppend(tmp, "/");
-		free(tmp);
-		tmp = strAppend(help_file_name, cmd_name);
-		free(help_file_name);
-		help_file_name = strAppend(tmp, "_help");
+		save = help_file_name;
+		help_file_name = strrTrim(help_file_name, "/");
+		free(save);
+		if (NULL == help_file_name)
+			return (FAILURE);
+
+		if (NULL == strAppend(&help_file_name, "/"))
+		{
+			free(help_file_name);
+			return (FAILURE);
+		}
+		if (NULL == strAppend(&help_file_name, cmd_name))
+		{
+			free(help_file_name);
+			return (FAILURE);
+		}
+		if (NULL == strAppend(&help_file_name, "_help"))
+		{
+			free(help_file_name);
+			return (FAILURE);
+		}
 	}
 	help_file = fopen(help_file_name, "r");
 	if (NULL == help_file)

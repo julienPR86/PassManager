@@ -49,8 +49,6 @@ int	change_setting_value(char *setting_name, char *value)
 	const char	*separation = " ";
 	int			setting_index;
 	char		*setting_save;
-	char		*setting;
-	char		*tmp;
 	const char	*null_value = "none";
 
 	if (NULL == setting_name)
@@ -60,30 +58,25 @@ int	change_setting_value(char *setting_name, char *value)
 		return (FAILURE);
 	if (NULL == value)
 		value = (char *)null_value;
-	setting = *(settings_file_content + setting_index);
-	setting_save = setting;
-	setting = strDup(setting_name);
-	if (NULL == setting)
+	setting_save = *(settings_file_content + setting_index);
+	*(settings_file_content + setting_index) = strDup(setting_name);
+	if (NULL == *(settings_file_content + setting_index))
 	{
-		setting = setting_save;
+		*(settings_file_content + setting_index) = setting_save;
 		return (FAILURE);
 	}
-	tmp = strAppend(setting, separation);
-	free(setting);
-	if (NULL == tmp)
+	if (NULL == strAppend(settings_file_content + setting_index, separation))
 	{
-		setting = setting_save;
+		free(*(settings_file_content + setting_index));
+		*(settings_file_content + setting_index) = setting_save;
 		return (FAILURE);
 	}
-	setting = strAppend(tmp, value);
-	free(tmp);
-	if (NULL == setting)
+	if (NULL == strAppend(settings_file_content + setting_index, value))
 	{
-		setting = setting_save;
+		free(*(settings_file_content + setting_index));
+		*(settings_file_content + setting_index) = setting_save;
 		return (FAILURE);
 	}
-	free(setting_save);
-	*(settings_file_content + setting_index) = setting;
 	rewrite_settings_file = 1;
 	return (SUCCESS);
 }
