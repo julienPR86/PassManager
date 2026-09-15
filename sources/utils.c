@@ -39,7 +39,7 @@ char	*get_word(char *str, int word_index, char *set)
 	index = 0;
 	while (*(str + index) && count < word_index)
 	{
-		if (strChar(set, *(str + index)))
+		if (strFindChar(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -52,13 +52,13 @@ char	*get_word(char *str, int word_index, char *set)
 		return (NULL);
 	index--;
 	cpy_index = 0;
-	while (*(str + index + cpy_index) &&  !strChar(set, *(str + index + cpy_index)))
+	while (*(str + index + cpy_index) &&  !strFindChar(set, *(str + index + cpy_index)))
 		cpy_index++;
 	word = (char *)malloc(sizeof(char) * (cpy_index + 1));
 	if (NULL == word)
 		return (NULL);
 	cpy_index = 0;
-	while (*(str + index + cpy_index) && !strChar(set, *(str + index + cpy_index)))
+	while (*(str + index + cpy_index) && !strFindChar(set, *(str + index + cpy_index)))
 	{
 		*(word + cpy_index) = *(str + index + cpy_index);
 		cpy_index++;
@@ -80,7 +80,7 @@ char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
 	index = 0;
 	while (*(str + index))
 	{
-		if (strChar(set, *(str + index)))
+		if (strFindChar(set, *(str + index)))
 			is_word = 1;
 		else if (is_word)
 		{
@@ -91,7 +91,7 @@ char	*replace_word(char *str, t_uint word_index, char *set, char replace_char)
 			break;
 		index++;
 	}
-	while (*(str + index) && !strChar(set, *(str + index)))
+	while (*(str + index) && !strFindChar(set, *(str + index)))
 	{
 		*(str + index) = replace_char;
 		++index;
