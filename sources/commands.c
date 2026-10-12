@@ -222,6 +222,7 @@ int	help_cmd(char **args, t_Command *commands_array[])
 		}
 	}
 	help_file = fopen(help_file_name, "r");
+	free(help_file_name);
 	if (NULL == help_file)
 		return (COULD_NOT_OPEN_FILE);
 	index = 0;
