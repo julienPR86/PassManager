@@ -54,6 +54,9 @@ clean :
 fclean : clean
 	rm -f $(NAME)
 
+lclean :
+	rm -rf $(LIBSDIR)
+
 re : fclean all
 
-.PHONY : all clean clean re
+.PHONY : all clean fclean lclean re
