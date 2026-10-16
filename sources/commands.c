@@ -200,7 +200,7 @@ int	help_cmd(char **args, t_Command *commands_array[])
 		if (NULL == cmd_name)
 			return (HELP_ENTRY_NOT_FOUND);
 		save = help_file_name;
-		help_file_name = strTrimRight(help_file_name, "abcdefghijklmnopqrtsuvwxyz_");
+		help_file_name = strTrimRightUntil(help_file_name, "/");
 		free(save);
 		if (NULL == help_file_name)
 			return (FAILURE);
